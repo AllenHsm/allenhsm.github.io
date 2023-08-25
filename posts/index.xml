@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Allen Hu</title>
+    <link>http://allenhsm.github.io/posts/</link>
+    <description>Recent content in Posts on Allen Hu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Aug 2023 22:17:32 +0800</lastBuildDate><atom:link href="http://allenhsm.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于 About</title>
+      <link>http://allenhsm.github.io/posts/who-am-i/</link>
+      <pubDate>Thu, 24 Aug 2023 22:17:32 +0800</pubDate>
+      
+      <guid>http://allenhsm.github.io/posts/who-am-i/</guid>
+      <description>Who Am I 关于我 Hello world! Here is Allen Hu, a computer science student at the University of California, Santa Barbara. As you can see, this blog is under construction and will improve gradually :-)
+我叫Allen，出生在江南，后迁至深圳，现居圣塔芭芭拉——一座僻静安宁、美丽如画的海滨小城。
+Reading 阅读 Reading is my biggest hobby. I believe that the god&amp;rsquo;s most precious gift to us is the ability to read and write.I enjoy reading.
+Writing Here I include coding into this topic. Writing, anyways, is a procedure of creating.</description>
+    </item>
+    
+  </channel>
+</rss>
