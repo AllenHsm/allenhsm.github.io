@@ -6,20 +6,11 @@
     <description>Recent content in Tags on Allen Hu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Aug 2023 19:17:56 +0800</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Me</title>
-      <link>http://allenhsm.github.io/tags/me/</link>
-      <pubDate>Fri, 25 Aug 2023 19:17:56 +0800</pubDate>
-      
-      <guid>http://allenhsm.github.io/tags/me/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Sat, 26 Aug 2023 17:00:20 +0800</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cancun</title>
       <link>http://allenhsm.github.io/tags/cancun/</link>
-      <pubDate>Thu, 24 Aug 2023 22:04:20 +0800</pubDate>
+      <pubDate>Sat, 26 Aug 2023 17:00:20 +0800</pubDate>
       
       <guid>http://allenhsm.github.io/tags/cancun/</guid>
       <description></description>
@@ -28,7 +19,7 @@
     <item>
       <title>Mexico</title>
       <link>http://allenhsm.github.io/tags/mexico/</link>
-      <pubDate>Thu, 24 Aug 2023 22:04:20 +0800</pubDate>
+      <pubDate>Sat, 26 Aug 2023 17:00:20 +0800</pubDate>
       
       <guid>http://allenhsm.github.io/tags/mexico/</guid>
       <description></description>
@@ -37,7 +28,7 @@
     <item>
       <title>Travelogue</title>
       <link>http://allenhsm.github.io/tags/travelogue/</link>
-      <pubDate>Thu, 24 Aug 2023 22:04:20 +0800</pubDate>
+      <pubDate>Sat, 26 Aug 2023 17:00:20 +0800</pubDate>
       
       <guid>http://allenhsm.github.io/tags/travelogue/</guid>
       <description></description>
@@ -46,18 +37,27 @@
     <item>
       <title>Tulum</title>
       <link>http://allenhsm.github.io/tags/tulum/</link>
-      <pubDate>Thu, 24 Aug 2023 22:04:20 +0800</pubDate>
+      <pubDate>Sat, 26 Aug 2023 17:00:20 +0800</pubDate>
       
       <guid>http://allenhsm.github.io/tags/tulum/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Yucatan Penisula</title>
-      <link>http://allenhsm.github.io/tags/yucatan-penisula/</link>
-      <pubDate>Thu, 24 Aug 2023 22:04:20 +0800</pubDate>
+      <title>Yucatan Peninsula</title>
+      <link>http://allenhsm.github.io/tags/yucatan-peninsula/</link>
+      <pubDate>Sat, 26 Aug 2023 17:00:20 +0800</pubDate>
       
-      <guid>http://allenhsm.github.io/tags/yucatan-penisula/</guid>
+      <guid>http://allenhsm.github.io/tags/yucatan-peninsula/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Me</title>
+      <link>http://allenhsm.github.io/tags/me/</link>
+      <pubDate>Fri, 25 Aug 2023 19:17:56 +0800</pubDate>
+      
+      <guid>http://allenhsm.github.io/tags/me/</guid>
       <description></description>
     </item>
     
