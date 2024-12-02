@@ -128,32 +128,47 @@ The  following picture is the collapse of a building that housed several clothin
         
         <guid>http://allenhsm.github.io/about/about_me/</guid>
         <description>Allen Hu http://allenhsm.github.io/about/about_me/ -&lt;h1 id=&#34;who-am-i-关于我&#34;&gt;Who Am I 关于我&lt;/h1&gt;
-&lt;p&gt;Hello world! Here is &lt;code&gt;Allen Hu&lt;/code&gt;, a computer science student at the University of California, Santa Barbara.
-As you can see, this blog is under construction and will improve gradually :-)&lt;/p&gt;
-&lt;p&gt;我叫Allen，出生在江南，后迁至深圳，现居圣塔芭芭拉——一座僻静安宁、美丽如画的海滨小城。&lt;/p&gt;
+&lt;p&gt;Hello world! Here is &lt;code&gt;Allen Hu&lt;/code&gt;, a computer science student at UCSB.&lt;/p&gt;
+&lt;p&gt;我在江西长大，后迁至深圳，现居圣塔芭芭拉——一座僻静、安宁、如画的海滨小镇。&lt;/p&gt;
 &lt;h2 id=&#34;reading-阅读&#34;&gt;Reading 阅读&lt;/h2&gt;
 &lt;p&gt;Reading is my biggest hobby. I believe that the god&amp;rsquo;s most precious gift to us is the
-ability to read and write.I enjoy reading.&lt;/p&gt;
+ability to read and write.
+To be more specific, I like both ancient and modern Chinese literature. I enjoy reading
+classical Chinese. For genres, I like all novels, prose, travel notes, sketch, poems, etc.
+阅读是最让我享受的事情之一，不过前提是静下心，安顿下来。
+我是英文文盲，阅读一直局限在中文，无论古典文学还是当代文学，无论题材，
+论语、史书、唐传奇、明清小说、散文、当代文学、台湾文学、现代诗、剧本，都浅尝过。
+回顾过去，最喜欢的大约有几类:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;红楼梦、台北人、纽约客、陶庵梦忆、西湖梦寻这类俯仰今昔、悲悯世人、探讨无常的
+对应的作家大约有曹雪芹、白先勇、张岱、李煜、赵佶、张爱玲&lt;/li&gt;
+&lt;li&gt;汪曾祺、梁实秋这些写散文、小品文极漂亮的，让食物与珍贵记忆交融的&lt;/li&gt;
+&lt;li&gt;短篇小说，有明清的三言二拍、老残游记，有现在的沉沦、封锁、鲁迅短篇、断魂枪、
+山上的小屋。汪曾祺的当然也包含在内；西方读过一点莫泊桑&lt;/li&gt;
+&lt;li&gt;台湾、马来文学，很多包括在短篇小说中，包括白先勇、朱西宁的铁浆，李昂的杀夫
+黎紫书的国北边陲，精品数不胜数&lt;/li&gt;
+&lt;li&gt;我读不懂现代诗，但似乎不妨碍我喜欢他们。喜欢北岛、海子、和一些公共平台的诗作&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;writing&#34;&gt;Writing&lt;/h2&gt;
-&lt;p&gt;Here I include coding into this topic. Writing, anyways, is a procedure of creating.
-I must admit that I am a poor writer, so I do not expect to publish my words. Rather, I
-choose to build up a blog, whose only reader is me myself, and ramble my life on it.&lt;/p&gt;
+&lt;p&gt;This topic includes coding here. Writing, anyways, is a procedure of creating.
+I must admit that I am a poor writer, so I never expect to publish my words. Rather, I
+choose to build up a blog and ramble my life on it.&lt;/p&gt;
 &lt;h2 id=&#34;traveling&#34;&gt;Traveling&lt;/h2&gt;
 &lt;p&gt;Sometimes, I feel like I am a &amp;ldquo;footless&amp;rdquo; bird. Traveling and living in different places is
-another way to enrich my life.&lt;/p&gt;
+another way to rediscover myself.&lt;/p&gt;
 &lt;h1 id=&#34;what-to-expect-here-初衷&#34;&gt;What to expect here 初衷&lt;/h1&gt;
 &lt;p&gt;Record my life and self-recognized progress I make, including:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Reading notes 读书笔记&lt;/li&gt;
+&lt;li&gt;Reading notes 读书笔记（没有）&lt;/li&gt;
 &lt;li&gt;Travelogue 游记&lt;/li&gt;
-&lt;li&gt;Coding reflection 开发随想&lt;/li&gt;
-&lt;li&gt;Miscellaneous notes 琐记、碎碎念&lt;/li&gt;
+&lt;li&gt;Coding reflection 开发随想 (还没开始hhh)&lt;/li&gt;
+&lt;li&gt;Miscellaneous notes 琐记、碎碎念（没有）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;不求华丽，但求真实。&lt;/p&gt;
+&lt;h2 id=&#34;质胜文则野文胜质则史&#34;&gt;质胜文则野，文胜质则史。&lt;/h2&gt;
+&lt;p&gt;力求诚恳、真实，再希望找到一点跳脱、浪漫&lt;/p&gt;
 &lt;h2 id=&#34;license-版权协议&#34;&gt;License 版权协议&lt;/h2&gt;
 &lt;p&gt;This site follows the &lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本站遵循协议：&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;P.S. 目前大部分时间在用一台intel芯片MacBook开发，中文输入法奇卡无比，故暂时用英文书写😂&lt;/em&gt;&lt;/p&gt;
 - http://allenhsm.github.io/about/about_me/ - This is a customized copyright.</description>
         </item>
     
