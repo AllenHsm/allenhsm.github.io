@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Allen Hu</title>
+    <title>Categories on Allen&#39;s Blog</title>
     <link>http://allenhsm.github.io/categories/</link>
-    <description>Recent content in Categories on Allen Hu</description>
+    <description>Recent content in Categories on Allen&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Fri, 10 Jan 2025 13:58:40 +0800</lastBuildDate><atom:link href="http://allenhsm.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Feb 2025 00:53:51 -0800</lastBuildDate><atom:link href="http://allenhsm.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Travelogue</title>
-      <link>http://allenhsm.github.io/categories/travelogue/</link>
-      <pubDate>Fri, 10 Jan 2025 13:58:40 +0800</pubDate>
+      <title>miscellaneous notes</title>
+      <link>http://allenhsm.github.io/categories/miscellaneous-notes/</link>
+      <pubDate>Thu, 13 Feb 2025 00:53:51 -0800</pubDate>
       
-      <guid>http://allenhsm.github.io/categories/travelogue/</guid>
+      <guid>http://allenhsm.github.io/categories/miscellaneous-notes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reading</title>
+      <link>http://allenhsm.github.io/categories/reading/</link>
+      <pubDate>Tue, 11 Feb 2025 00:19:59 -0800</pubDate>
+      
+      <guid>http://allenhsm.github.io/categories/reading/</guid>
       <description></description>
     </item>
     
@@ -23,6 +32,15 @@
       <pubDate>Mon, 16 Oct 2023 00:48:23 -0700</pubDate>
       
       <guid>http://allenhsm.github.io/categories/homework/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Travelogue</title>
+      <link>http://allenhsm.github.io/categories/travelogue/</link>
+      <pubDate>Sun, 27 Aug 2023 11:11:32 +0800</pubDate>
+      
+      <guid>http://allenhsm.github.io/categories/travelogue/</guid>
       <description></description>
     </item>
     

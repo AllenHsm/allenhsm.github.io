@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Me on Allen Hu</title>
+    <title>Me on Allen&#39;s Blog</title>
     <link>http://allenhsm.github.io/tags/me/</link>
-    <description>Recent content in Me on Allen Hu</description>
+    <description>Recent content in Me on Allen&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
     <lastBuildDate>Fri, 25 Aug 2023 19:17:56 +0800</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/me/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Me 我</title>
+      <title>Me</title>
       <link>http://allenhsm.github.io/about/about_me/</link>
       <pubDate>Fri, 25 Aug 2023 19:17:56 +0800</pubDate>
       
       <guid>http://allenhsm.github.io/about/about_me/</guid>
-      <description>Who Am I 关于我 Hello world! Here is Allen Hu, a computer science student at UCSB.
+      <description>Who Am I Hello world! Here is Allen Hu, a computer science student at UCSB.
 我在江西长大，后迁至深圳，在圣塔芭芭拉读书——一座僻静、祥和、如画的海滨小镇。
-Reading 阅读 Reading is my biggest hobby. I believe that the god&amp;rsquo;s most precious gift to us is the ability to read and write. To be more specific, I like both ancient and modern Chinese literature. I enjoy reading classical Chinese. For genres, I like all novels, prose, travel notes, sketch, poems, etc.</description>
+Reading Reading is my biggest hobby. I believe that the god&amp;rsquo;s most precious gift to us is the ability to read and write. To be more specific, I like both ancient and modern Chinese literature. I enjoy reading classical Chinese. For genres, I like all novels, prose, travel notes, sketch, poems, etc.
+阅读是最让我享受的事情之一，不过前提是静下心，安顿下来。 我是英文文盲，阅读一直局限在中文，无论古典文学还是当代文学，无论题材， 儒家经典、史书、唐传奇、明清小说、散文、当代小说、台湾小说、现代诗、剧本，都浅尝过， 就像游客逛小吃街。 现在看，最喜欢的大约有几类:</description>
     </item>
     
   </channel>
