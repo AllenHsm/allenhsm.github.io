@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html><head>
+<title>Virtualization</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Virtualization" />
+<meta property="og:description" content="Virtualization to create independent execution environment, leveraging the abstract form of the hardware capability.
+More Defi of Virtualization abstracts the hardware of computing infrastructure into several different execution environments. Creates the illusion that each separate environment is running on its own private computing infrastructure. Makes servers, workstations, storage, network, and other systems independent of the physical hardware layer. It is the fundamental technology for cloud infrastructure. Virtual resources can be started and stooped easily and quickly on demand." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/virtualization/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-22T21:01:07-05:00" />
+<meta property="article:modified_time" content="2025-11-22T21:01:07-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Virtualization"/>
+<meta name="twitter:description" content="Virtualization to create independent execution environment, leveraging the abstract form of the hardware capability.
+More Defi of Virtualization abstracts the hardware of computing infrastructure into several different execution environments. Creates the illusion that each separate environment is running on its own private computing infrastructure. Makes servers, workstations, storage, network, and other systems independent of the physical hardware layer. It is the fundamental technology for cloud infrastructure. Virtual resources can be started and stooped easily and quickly on demand."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtualization" class="nav-virtualization">
+									Virtualization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#more-defi-of-virtualization" class="nav-more-defi-of-virtualization">
+									More Defi of Virtualization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#related-concepts" class="nav-related-concepts">
+									Related concepts
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#virtualization-types" class="nav-virtualization-types">
+									Virtualization types
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtualization-in-practice" class="nav-virtualization-in-practice">
+									Virtualization in Practice
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#traditional-server-concept" class="nav-traditional-server-concept">
+									Traditional server concept
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtual-server-infrastructure" class="nav-virtual-server-infrastructure">
+									Virtual server infrastructure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtualization-advantages" class="nav-virtualization-advantages">
+									Virtualization advantages:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#hypervisors" class="nav-hypervisors">
+									Hypervisors:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    Virtualization
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-22 21:01
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="virtualization">Virtualization</h1>
+<p>to create independent execution environment, leveraging the abstract form of the hardware capability.</p>
+<h2 id="more-defi-of-virtualization">More Defi of Virtualization</h2>
+<ul>
+<li>abstracts the hardware of computing infrastructure into several different execution environments.
+<ul>
+<li>Creates the illusion that each separate environment is running on its <strong>own private computing infrastructure</strong>.</li>
+<li>Makes servers, workstations, storage, network, and other systems <strong>independent of the physical hardware</strong> layer.</li>
+</ul>
+</li>
+<li>It is the fundamental technology for cloud infrastructure.
+<ul>
+<li>Virtual resources can be started and stooped easily and quickly on demand.</li>
+</ul>
+</li>
+</ul>
+<h3 id="related-concepts">Related concepts</h3>
+<ul>
+<li><strong>virtual machine (VM)</strong>: an instance of a virtualized computing environment that behaves like a separate computer with its own OS, CPU, memory, storage, and network interfaces. A visual representation of a physical machine.</li>
+<li><strong>hypervisor</strong> or <strong>Virtual machine monitor</strong>: A process that separates a computer’s operating system and applications from the underlying physical hardware.
+<ul>
+<li>Hypervisor monitors and manages running virtual machines.</li>
+</ul>
+</li>
+<li><strong>host machine</strong>: the physical machine on which the virtual machine runs.</li>
+<li><strong>guest machine</strong>: the virtual machine that runs on the host machine.</li>
+</ul>
+<h2 id="virtualization-types">Virtualization types</h2>
+<p>The most important three types of virtualization:</p>
+<ul>
+<li>Network: the process of combining hardware and software network resources and network functionality into a single, software-based administrative entity, a virtual network
+<ul>
+<li>Internal network virtualization: software switch, software router, software defined network(SDN)</li>
+<li>external network virtualization: VLAN, VXLAN</li>
+</ul>
+</li>
+<li><strong>Server</strong>: Full, partial, para (most popular on cloud)</li>
+<li>Storage: block-level, file-level
+<ul>
+<li>pools physical storage from multiple network storage mediums to enable a single logical sotrage pool that is managed from a central console</li>
+</ul>
+</li>
+</ul>
+<h2 id="virtualization-in-practice">Virtualization in Practice</h2>
+<h3 id="traditional-server-concept">Traditional server concept</h3>
+<ul>
+<li>Servers are viewed as an <strong>integral</strong> computing unit that each unit includes the hardware, OS, storage, and related apps.</li>
+<li>Servers are often identified and referred to by their <strong>functions</strong>
+<ul>
+<li>File server, web server, database server, exchange server, etc.</li>
+</ul>
+</li>
+<li>When current server is overloaded, we need to add more physical servers to share the load.</li>
+<li>In the pic below, which is a traditional server infrastructure, server is the combination of hardware and software(软硬件互相绑定)
+<img src="/static/images/cloudInfraBasics/traditional_server_failure.png" alt="Traditional server failure"></li>
+<li>Disadvantages:
+<ul>
+<li>Maintenance cost is high: acquisition and hardware repair cost</li>
+<li>Replication is challenging: redundancy is costly and difficult to implement</li>
+<li>Scalability is limited: physical resources are limited</li>
+<li>Highly vulnerable to hardware failure: single point of failure</li>
+<li><strong>Often: Resource utilization is low</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="virtual-server-infrastructure">Virtual server infrastructure</h3>
+<p><strong>Server sprawl</strong> happens especially for on-promise and is the most threat for traditional server. To avoid this, we do virtualization.
+The difference with traditional server infrastructure is that here the server is decoupled from the hardware. We add a new layer between {app, OS, storage} and hardware, which is the virtualization(<strong>hypervisor</strong>) layer.</p>
+<ul>
+<li>Server virtualization enable server Consolidation and Containment
+<ul>
+<li>Eliminating “<strong>server sprawl</strong>” via deployment of systems as “virtual machines” that can run safely and move transparently across shared hardware</li>
+</ul>
+</li>
+<li>A virtual server can be serviced by one or more hosts, and one host may house more than one virtual server.
+<ul>
+<li>This results in increased server utilization rates: from 5-15%, for traditional servers, to 60-80%</li>
+</ul>
+</li>
+<li>Virtual servers can still be referred to by their <strong>function</strong> i.e., email server, database server, etc.</li>
+<li>If the environment is built correctly, virtual servers will <strong>not be affected by the loss of a host</strong>.</li>
+<li>Hosts may be removed and introduced almost at anytime to accommodate maintenance.</li>
+<li>Virtual servers can be scaled up and down easily.</li>
+<li>Server <strong>“cloning”</strong> can be easily achieved
+<ul>
+<li>Multiple, identical virtual servers can be easily created based on server templates</li>
+</ul>
+</li>
+<li>Virtual servers can be migrated from host to host dynamically, as needed.
+<img src="/static/images/cloudInfraBasics/virtualization_structure.png" alt="virtualization image"></li>
+</ul>
+<h3 id="virtualization-advantages">Virtualization advantages:</h3>
+<ul>
+<li><strong>Resource optimization</strong> that would result in reducing hardware, power and space requirement.</li>
+<li>Virtualization allows for the <strong>quick deployment, migration, and replication of VMs</strong></li>
+<li>Support for <strong>Legacy Systems</strong>: Virtualization allows legacy applications to run in a modern cloud environment without requiring significant changes to the underlying infrastructure</li>
+<li>Better <strong>automation</strong>.</li>
+</ul>
+<h3 id="hypervisors">Hypervisors:</h3>
+<p><img src="/static/images/cloudInfraBasics/types_of_hypervisor.png" alt="Two types of hypervisor"></p>
+<ul>
+<li>Type 1 native hypervisor(bare-metal): runs directly on the host&rsquo;s hardware to control the hardware and to manage guest operating systems. Examples: VMware ESXi, Microsoft Hyper-V, Xen</li>
+<li>Type 2 hosted hypervisor: runs as an application on a conventional operating system and supports virtual machines running as individual processes. Examples: VMware Workstation, Oracle VirtualBox, QEMU, JVM, UTM</li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-22</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/intro_to_cloud/">
+			Previous<br>Brief Intro to Cloud
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtualization" class="nav-virtualization">
+									Virtualization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#more-defi-of-virtualization" class="nav-more-defi-of-virtualization">
+									More Defi of Virtualization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#related-concepts" class="nav-related-concepts">
+									Related concepts
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#virtualization-types" class="nav-virtualization-types">
+									Virtualization types
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtualization-in-practice" class="nav-virtualization-in-practice">
+									Virtualization in Practice
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#traditional-server-concept" class="nav-traditional-server-concept">
+									Traditional server concept
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtual-server-infrastructure" class="nav-virtual-server-infrastructure">
+									Virtual server infrastructure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtualization-advantages" class="nav-virtualization-advantages">
+									Virtualization advantages:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#hypervisors" class="nav-hypervisors">
+									Hypervisors:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>

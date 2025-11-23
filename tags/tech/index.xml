@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tech on Allen&#39;s Blog</title>
+    <link>http://allenhsm.github.io/tags/tech/</link>
+    <description>Recent content in tech on Allen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This is a customized copyright.</copyright>
+    <lastBuildDate>Sat, 22 Nov 2025 21:01:07 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Virtualization</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/virtualization/</link>
+      <pubDate>Sat, 22 Nov 2025 21:01:07 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/virtualization/</guid>
+      <description>Virtualization to create independent execution environment, leveraging the abstract form of the hardware capability.
+More Defi of Virtualization abstracts the hardware of computing infrastructure into several different execution environments. Creates the illusion that each separate environment is running on its own private computing infrastructure. Makes servers, workstations, storage, network, and other systems independent of the physical hardware layer. It is the fundamental technology for cloud infrastructure. Virtual resources can be started and stooped easily and quickly on demand.</description>
+    </item>
+    
+    <item>
+      <title>Brief Intro to Cloud</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/</link>
+      <pubDate>Fri, 21 Nov 2025 03:10:21 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/</guid>
+      <description>What is Cloud In simple words, Cloud = SCN (Lots of Storage + Computer C(omputation)ycles nearby + Network bandwidth)
+In the industry, “Cloud” refers to large Internet services running on 10,000s of machines (Amazon, Google, Microsoft, etc.)
+To be specific, Cloud is a model that offers following characteristics:
+On-demand self-service: no human intervention needed to get resources Broad network access: access from anywhere Resource pooling: provider shares resources to serve multiple consumers Rapid elasticity Measured service Multi-tenancy Why Cloud Three main reasons:</description>
+    </item>
+    
+    <item>
+      <title>Cloud Infra Basics - 14848</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/</link>
+      <pubDate>Fri, 21 Nov 2025 02:03:20 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/</guid>
+      <description>Credit: This is a review and summary of the concepts and techniques I have learned so far in CMU course 14848. This course is designed and delivered by Professor Mohamed Farag, a helpful and passionate lecturer, a knowledgeable and chill guy. So most of the materials in this series of posts are from his lectures and slides.
+Intro This course consists of two parts:
+cloud infrastructure components coding in these components This series of posts will follow the same structure and review each specific topics separately.</description>
+    </item>
+    
+  </channel>
+</rss>
