@@ -7,9 +7,242 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 22 Nov 2025 21:01:07 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 22 Nov 2025 22:25:09 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Containerization</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/containerization/</link>
+        <pubDate>Sat, 22 Nov 2025 22:25:09 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/containerization/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/containerization/ -&lt;h1 id=&#34;virtual-machines-to-containers&#34;&gt;Virtual Machines to Containers&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;VM is too &lt;strong&gt;heavy&lt;/strong&gt; for a simple process as it boots a whole OS every time.&lt;/li&gt;
+&lt;li&gt;Containers are &lt;strong&gt;isolated&lt;/strong&gt;, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app. &lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/vm_to_container.png&#34; alt=&#34;VM to Container&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Comparison:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lightweight&lt;/strong&gt;: Containerization avoids duplication of app Bins/libs, and only save the modifications did by different containers, without changing the original binaries.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: VM is more secure because of full isolation while Container has only process level isolation.
+&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/vm_vs_container.png&#34; alt=&#34;VM vs. Container&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;motivation-of-containerization&#34;&gt;Motivation of Containerization&lt;/h1&gt;
+&lt;h2 id=&#34;development-challenges&#34;&gt;Development challenges:&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Containerization makes version control much more easier, and more importantly, safer, to avoid a simple app influence the whole system.&lt;/li&gt;
+&lt;li&gt;Solves the conflict of different dependencies, versions, environments(&lt;code&gt;N x M&lt;/code&gt; configurations， multiplicity of hardware env), multiplicity of stacks, and contents.&lt;/li&gt;
+&lt;li&gt;Modularity and scalability: can be quickly and smoothly migrated &amp;amp; scaled, ensuring compatibility across different environments.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;solution-containerization&#34;&gt;Solution: Containerization&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/sol_by_containerization.png&#34; alt=&#34;solution by containerization&#34;&gt;&lt;/p&gt;
+&lt;h1 id=&#34;docker---leading-container&#34;&gt;Docker - leading container&lt;/h1&gt;
+&lt;h2 id=&#34;why-popular&#34;&gt;Why popular&lt;/h2&gt;
+&lt;p&gt;By mid-2013, &lt;code&gt;dotCloud&lt;/code&gt; company released a tool that used these ideas to provide a better way to deploy encapsulated applications. The tool later became Docker and &lt;code&gt;dotCloud&lt;/code&gt; became Docker Inc&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Most widely known, and used&lt;/li&gt;
+&lt;li&gt;Easy to install and use&lt;/li&gt;
+&lt;li&gt;Free&lt;/li&gt;
+&lt;li&gt;Load fast: sharing library among containers&lt;/li&gt;
+&lt;li&gt;Docker Hub: public registry of container images&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Its file system!&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;union-file-systemufs&#34;&gt;Union File System(UFS)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Union File Systems&lt;/strong&gt; basically allow you to take different file systems and create a union of their contents with the top-most layer superseding any similar files found in the file systems below it.
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/layers_of_image.png&#34;
+           alt=&#34;layers of image&#34; width=&#34;30%&#34;/&gt;
+  &lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;ul&gt;
+&lt;li&gt;Docker images are composed of &lt;strong&gt;layers&lt;/strong&gt; in the UFS. The image is itself a stack of read-only directories. The base is a simplified Linux file system.
+&lt;ul&gt;
+&lt;li&gt;Additional tools that the container needs are then layered on top of this base image, each in its own layer. Each layer represents an instruction in the image’s Dockerfile.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Packages in the hub has &lt;strong&gt;Layers&lt;/strong&gt; which can be some personalized modification upon the original package/app. But the layers can be shared by different app/packages such that the next time you pull some packages sharing same layers, no need to download again.&lt;/li&gt;
+&lt;li&gt;All containers with the same image see the same &lt;strong&gt;directory tree&lt;/strong&gt;, so it loads the directory tree in the memory only once among all instances&lt;/li&gt;
+&lt;li&gt;When the container is run, a final &lt;strong&gt;writable file system&lt;/strong&gt; is layered on top.&lt;/li&gt;
+&lt;li&gt;As an app in the container executes, if it needs to modify an object in the read-only layers, it copies those objects into the writable layer. Otherwise, it uses the data in the read-only layer, which is shared with other container instances.&lt;/li&gt;
+&lt;li&gt;Thus, typically only a little of the container image needs to be actually loaded when a container is run, which means that containers can load and run much faster than virtual machines. Launching a container typically takes less than a second.&lt;/li&gt;
+&lt;li&gt;In addition to the file system layers in the container image, you can mount a &lt;strong&gt;host machine directory&lt;/strong&gt; as a file system in the container’s OS. In this way, a container can share data with the host. Multiple containers can also share these &lt;strong&gt;mounted directories&lt;/strong&gt; and can use them for basic communication of shared data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;docker-dev-workflow&#34;&gt;Docker Dev Workflow&lt;/h2&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/docker_workflow.png&#34;
+           alt=&#34;docker workflow&#34; width=&#34;50%&#34;/&gt;
+  &lt;/figure&gt;
+
+&lt;h3 id=&#34;docker-lifecycle-overview&#34;&gt;Docker Lifecycle Overview&lt;/h3&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/docker_lifecycle.png&#34;
+         alt=&#34;docker lifecycle&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;dockerfile&#34;&gt;Dockerfile&lt;/h3&gt;
+&lt;p&gt;Most important commands:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;strong&gt;Instruction&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ADD&lt;/td&gt;
+&lt;td&gt;Add local or remote files and directories.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ARG&lt;/td&gt;
+&lt;td&gt;Use build-time variables.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CMD&lt;/td&gt;
+&lt;td&gt;Specify default commands.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;COPY&lt;/td&gt;
+&lt;td&gt;Copy files and directories.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ENTRYPOINT&lt;/td&gt;
+&lt;td&gt;Specify default executable.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ENV&lt;/td&gt;
+&lt;td&gt;Set environment variables.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;EXPOSE&lt;/td&gt;
+&lt;td&gt;Describe which ports your application is listening on.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FROM&lt;/td&gt;
+&lt;td&gt;Create a new build stage from a base image.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HEALTHCHECK&lt;/td&gt;
+&lt;td&gt;Check a container&amp;rsquo;s health on startup.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LABEL&lt;/td&gt;
+&lt;td&gt;Add metadata to an image.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MAINTAINER&lt;/td&gt;
+&lt;td&gt;Specify the author of an image.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ONBUILD&lt;/td&gt;
+&lt;td&gt;Specify instructions for when the image is used in a build.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RUN&lt;/td&gt;
+&lt;td&gt;Execute build commands.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SHELL&lt;/td&gt;
+&lt;td&gt;Set the default shell of an image.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;STOPSIGNAL&lt;/td&gt;
+&lt;td&gt;Specify the system call signal for exiting a container.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;USER&lt;/td&gt;
+&lt;td&gt;Set user and group ID.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VOLUME&lt;/td&gt;
+&lt;td&gt;Create volume mounts.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;WORKDIR&lt;/td&gt;
+&lt;td&gt;Change working directory.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;dockerfile-vs-docker-union-filesystem&#34;&gt;Dockerfile vs. Docker Union Filesystem&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/dockerfile_vs_ufs.png&#34; alt=&#34;dockerfile vs UFS&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;docker-commands&#34;&gt;Docker commands&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Build Your Docker Image (and tag it) – Notice the period at the end&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker build -t yourDockerHubID/your_image_name:tag .
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker buildx build --platform linux/amd64,linux/arm64 --push -t allenhu28/hw2-jupyter:latest .
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Test your image&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run (-d) -p 8888:8888 yourDockerHubID/your_image_name:tag
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;or simply&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run  8888:8888 yourDockerHubID/your_image_name:tag
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upload to DockerHub&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker push yourDockerHubID/your_image_name:tag
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;More examples of build and add tag:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker build -t hw2-jupyter . 
+docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Docker Compose&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create and start all the containers listed in the “docker-compose.yml”: &lt;code&gt;docker-compose up -d&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;List all the containers belong to the compose environment instance: &lt;code&gt;docker-compose ps&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Set the number of containers: &lt;code&gt;docker-compose scale web=3&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;multiple-containers&#34;&gt;Multiple containers&lt;/h3&gt;
+&lt;p&gt;Solutions to connect several containers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Docker networking&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kubernetes&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Docker Compose&lt;/strong&gt;: a tool for defining and running multi-container Docker applications. With Compose, you use a single &lt;strong&gt;YAML&lt;/strong&gt; file &lt;code&gt;docker-compose.yml&lt;/code&gt; to configure your multi-container application’s services. Then, with a single command, you create and start all the services from your configuration.
+&lt;ul&gt;
+&lt;li&gt;YML File example:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;version&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;3&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;services&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;web&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;build&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;nginx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;8080:80&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;db&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;mysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;MYSQL_ROOT_PASSWORD&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;example&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;3306:3306&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;volumes&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      - &lt;span style=&#34;color:#ae81ff&#34;&gt;db_data:/var/lib/mysql&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;volumes&lt;/span&gt;: &lt;span style=&#34;color:#75715e&#34;&gt;# Shared across services)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;db_data&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;Network&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;default&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;driver&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;bridge&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;docker-limitations&#34;&gt;Docker Limitations&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: Containers share the host OS kernel, so a malicious container could potentially exploit vulnerabilities in the kernel to compromise the host system or other containers.&lt;/li&gt;
+&lt;li&gt;Does not offer &lt;strong&gt;cross-hardware-architecture portability&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Not easy to use with Desktop applications that &lt;strong&gt;require rich GUI&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Challenging to manage large number of docker containers &lt;strong&gt;manually&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- http://allenhsm.github.io/tech/cloud_infra_basics/containerization/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -73,7 +306,7 @@
 &lt;/li&gt;
 &lt;li&gt;When current server is overloaded, we need to add more physical servers to share the load.&lt;/li&gt;
 &lt;li&gt;In the pic below, which is a traditional server infrastructure, server is the combination of hardware and software(软硬件互相绑定)
-&lt;img src=&#34;http://allenhsm.github.io/static/images/cloudInfraBasics/traditional_server_failure.png&#34; alt=&#34;Traditional server failure&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/traditional_server_failure.png&#34; alt=&#34;Traditional server failure&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Disadvantages:
 &lt;ul&gt;
 &lt;li&gt;Maintenance cost is high: acquisition and hardware repair cost&lt;/li&gt;
@@ -108,7 +341,7 @@ The difference with traditional server infrastructure is that here the server is
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Virtual servers can be migrated from host to host dynamically, as needed.
-&lt;img src=&#34;http://allenhsm.github.io/static/images/cloudInfraBasics/virtualization_structure.png&#34; alt=&#34;virtualization image&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/virtualization_structure.png&#34; alt=&#34;virtualization image&#34;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;virtualization-advantages&#34;&gt;Virtualization advantages:&lt;/h3&gt;
 &lt;ul&gt;
@@ -118,7 +351,7 @@ The difference with traditional server infrastructure is that here the server is
 &lt;li&gt;Better &lt;strong&gt;automation&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;hypervisors&#34;&gt;Hypervisors:&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://allenhsm.github.io/static/images/cloudInfraBasics/types_of_hypervisor.png&#34; alt=&#34;Two types of hypervisor&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/types_of_hypervisor.png&#34; alt=&#34;Two types of hypervisor&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Type 1 native hypervisor(bare-metal): runs directly on the host&amp;rsquo;s hardware to control the hardware and to manage guest operating systems. Examples: VMware ESXi, Microsoft Hyper-V, Xen&lt;/li&gt;
 &lt;li&gt;Type 2 hosted hypervisor: runs as an application on a conventional operating system and supports virtual machines running as individual processes. Examples: VMware Workstation, Oracle VirtualBox, QEMU, JVM, UTM&lt;/li&gt;
@@ -277,14 +510,15 @@ We define the resources that users or service providers manage as follows:
             line-height: 1.4;
             color: rgba(17, 27, 156, 0.8) !important;
             margin-bottom: 1.5rem;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;     每次离家我都是乘船走的。去港口的路很远很远，爸爸开车载着我们，到了之后还要办些手续、托运行李，等一切准备就绪，已经过去两个小时，一路跟着的爷爷有些疲惫了。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     爷爷是个老烟枪，二十多岁下放时染上烟瘾，抽到现在六十多年了。我小时候有鼻炎哮喘，最讨厌烟味，于是我在家时他会把自己关在阳台上抽，抽完也不等等，就裹着满身的烟味回来了。为这事大家说了不止一次，他稍改几天又回到原样。于他而言，此物许是提神解乏的法宝。&lt;/p&gt;
+    &lt;p style=&#39;margin: 0;&#39;&gt;     每次离家我都是乘船走的。去港口的路很远很远，爸爸开车载着我们，到了之后还要办些手续、托运行李，等一切准备就绪，已经过去两个小时，一路跟着我们的爷爷也有些疲惫了。&lt;/p&gt;
+&lt;p style=&#39;margin: 0;&#39;&gt;     爷爷是个老烟枪，二十多岁下放时染上烟瘾，抽到现在有六十多年了。我小时候有鼻炎哮喘，最讨厌烟味，于是我在家时他会把自己关在阳台上抽，抽完也不作等待，就裹着满身的烟味回来了。为这事大家说了不止一次，他稍改几天又回到原样。于他而言，此物最是提神解乏。&lt;/p&gt;
 &lt;p style=&#39;margin: 0;&#39;&gt;     这时候爷爷叫上我：“该办的那些都办好了吧？”&lt;/p&gt;
 &lt;p style=&#39;margin: 0;&#39;&gt;     “都办好了。”&lt;/p&gt;
 &lt;p style=&#39;margin: 0;&#39;&gt;     “好。我们到外头抽口烟去。”&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     登船口在港口的三楼，有一条扶梯直通向正门口。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     我们走出大厅，在门口立住。海风越吹越凶，夕阳刚沉入洋面，港口外围散落着星星点点的灯光。爷爷背着风，远处是黯淡的海水。他眯着眼睛点起烟来，明灭之间，一口白烟吐出，旋即被吹散了，原本熨贴的白发也逐渐被卷得蓬乱。他转向我，仍是被海风迷了眼睛，我一时说不出话来，只是笑着看他吞云吐雾。我已看他抽过几千上万支烟，往往是从容的，一根要分成三次来抽，但我还是希望他抽得再少一点，慢一点。离检票至少还有十分钟，爷爷一口接一口地吸着，一根烟很快燃尽。我知道他是个不愿踩点的人。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     大概我们又谈了几句无关的话，爷爷看看手表，“差不多了，我走得慢，上去吧。”握着他刚捏了烟的手，我们又登上那条通往三楼的长长的扶梯。我站在他的左后方，向左看去，熟悉的大厅里并没有多少行人，中间只有三根巨大的立柱，撑着十余米高的弧形穹顶，笼罩一切，巨大的空间被灯光照得亮堂堂的。我又忍不住想起三年多前第一次离家时，同样是托运完行李后陪爷爷出门抽一支烟，同样是坐着这一条扶梯返回登船口，那次我并排站在爷爷左边，根本不敢看他，下意识的扭头望向这空旷的大厅，尽可能不出声音，深吸一大口气，几滴泪还是不听话地流到脸上，我赶忙用左手去抹，总算没有真的哭出来。想到这里我转头看向爷爷，爷爷还是像以前每次接我时那样挑着眉，笑着看向我，我也笑了起来，有一点酸楚，更多是无奈。这次分别没有人在我面前流下泪来，我自己也没有，大概这些年我们都成长了——或者是，妥协了。每个人或早或晚都会明白，有些路恐怕只能一个人走，中间若偶有人同途，实是万幸；若没有，也不要轻易回头。&lt;/p&gt;
+&lt;p style=&#39;margin: 0;&#39;&gt;     检票处在港口的三楼，那里有一条扶梯直通向一楼正门。&lt;/p&gt;
+&lt;p style=&#39;margin: 0;&#39;&gt;     我们走出大厅，在门口立住。海风吹得愈发凶了，夕阳刚沉入洋面，港口外围散落着星星点点的灯光。爷爷背着风，远处是黯淡的海水。他眯着眼睛点起烟来，明灭之间，一口白烟吐出，旋即被吹散了，原本熨贴的白发也逐渐蓬乱。他转向我，仍是被海风迷了眼睛，我一时说不出话来，只是笑着注视他吞云吐雾。我已看他抽过成千上万支烟，往往是从容的，一根是要分成三次来抽的，但我还是希望他抽得再少一点，慢一点。离检票至少还有十分钟，爷爷一口接一口地吸着，一根烟很快燃尽。他是个不愿踩点的人。&lt;/p&gt;
+&lt;p style=&#39;margin: 0;&#39;&gt;     大概我们又谈了几句无关的话，爷爷看看手表，“差不多了，我走得慢，上去吧。”握着他刚捏了烟的手，我们又登上那条通向三楼的长长的扶梯。我站在他的后方，向左看去，熟悉的大厅里并没有多少行人，中间支着三根巨大的立柱，撑起十余米高的弧形穹顶，笼罩一切，巨大的空间被灯光照得亮堂堂的。我又忍不住想起三年多前第一次离家时，同样是托运完行李后陪爷爷出门抽一支烟，同样是坐着这条扶梯返回登船口，那次我也在左边，和爷爷并排站着，根本不敢看他，下意识的扭头望向这空旷的大厅，尽可能不出声音，深吸一大口气，可几滴泪还是不听话地流到脸上，我赶忙用左手去抹，总算没有真的哭出来。想到这里我转头看向爷爷，爷爷还是像以前每次接我时那样挑着眉，笑着看向我，我也笑了起来，有一点酸楚，更多是无奈。这次分别没有人在我面前流下泪来，我自己也没有，大概这些年我们都进步了——或者是，妥协了。每个人或早或晚都会明白，有些路恐怕只能一个人走，中间若偶有人同途，实是万幸。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
 
 &lt;/div&gt;
 &lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
@@ -717,33 +951,6 @@ The  following picture is the collapse of a building that housed several clothin
 &lt;p&gt;&lt;strong&gt;Cotton growing&lt;/strong&gt;: The most water intensive processes such as dyeing/printing and finishing.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Clothing assembly-to-retail&lt;/strong&gt;: Greenhouse gas emissions arise from transportation and packaging.&lt;/p&gt;
 - http://allenhsm.github.io/posts/working_condition/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Tour Mexico: Mérida &amp; Chichen-Itza, Yucatan Peninsula</title>
-        <link>http://allenhsm.github.io/posts/journals/chichen-itza/</link>
-        <pubDate>Sun, 27 Aug 2023 11:11:32 +0800</pubDate>
-        
-        <guid>http://allenhsm.github.io/posts/journals/chichen-itza/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/posts/journals/chichen-itza/ -&lt;h1 id=&#34;exploring-yucatan-peninsula---mérida--chichen-itza&#34;&gt;Exploring Yucatan Peninsula - Mérida &amp;amp; Chichen-Itza&lt;/h1&gt;
-&lt;h2 id=&#34;引子&#34;&gt;引子&lt;/h2&gt;
-&lt;p&gt;昨天写完墨西哥之旅头五天的行程后，我本打算放一放，没想到今天早上刷ig看到国家地理发的Chichen-Itza的照片。这可爱的巧合让我不得不把流水账记下去了。&lt;/p&gt;
-&lt;h2 id=&#34;from-tulum-to-merida&#34;&gt;From Tulum to Merida&lt;/h2&gt;
-&lt;p&gt;圣诞节的第二天，我们启程前往Merida，一路260公里。路过Chichen-Itza时，已是下午，没想到这附近堵成了一锅粥，艰难爬行了二十分钟才得以脱身。有了这个情报，两天后我们明智地早早前往遗迹。&lt;/p&gt;
-&lt;p&gt;回归正题，我们抵达Merida的当天晚上，馋瘾犯了，十点多钟跑去了酒店对面的7-11，一看还有Tequila卖，想尝尝鲜，没想到结帐时店员告诉我们当地过了晚上10点就不能买酒了，我们一时有些惊讶和疑惑——Cancun凌晨四点夜店门口人流如梭，为何这里的法律和墨西哥奔放、洒脱的风格截然相反？&lt;/p&gt;
-&lt;p&gt;回去路上，同行的z想起了坎昆的士司机的话。之前大家都以为，坎昆是墨西哥最安全的城市——以旅游业为支柱，美国富人络绎不绝地前来度假，挥金如土，随处可见墨西哥军队中最“可靠”的海军陆战队的士兵执勤，安全显然是这座度假城市的金字招牌。可那位司机告诉z同学，有一座城市比Cancun还安全，原来就是现在所在的Merida。大家环顾马路两侧，这个点已经是黑乎乎、静悄悄，连声犬吠都听不到。这样的静谧是自然环境和社会背景共同营造的。&lt;/p&gt;
-&lt;p&gt;Merida是尤卡坦州首府，坐落于尤卡坦半岛的西北角上，墨西哥湾环抱两侧，与佛罗里达、迈阿密的距离仅次于Cancun，风景优美但又不似坎昆那样几乎全是游客，喧闹异常，人多眼杂，流动性强，是个隐蔽的度假处所；此外，Merida气候极佳，是热带稀树草原气候，雨热同期，一年平均最低温是17摄氏度，平均最高温是34摄氏度，四季温暖，周围海洋平均水温浮动在28-30摄氏度，极为稳定、舒适，尤适合冬季避寒、度假。如此优越的自然环境自然是“兵家必争之地”，鉴于稳定的社会状态，宜人的气候，毒枭们往往把家人安置在Merida，本地居民都知道邻居可能大有来头，于是平常连争吵都见不到，更不要说犯罪了。我们从酒店窗户望下去，一座座别墅庭院就隐藏在街区中，树林掩映了行人的目光，但俯视是再清楚不过。这座小城简陋的围墙、普通的门户伪装的是刀上舔血的故事。不过这些对于游客来说却是好事，居住着毒枭们的“软肋”的地方，安全更是有保障。&lt;/p&gt;
-&lt;p&gt;我们一间房两张床住了四个男的，没想到互不干扰，和谐的睡过一晚。新的一天行程安排在Merida市区。Merida因其悠久的历史和文化饱受美誉，其历史文化是玛雅文明与西班牙殖民者的文化融合而成，两次被称为&lt;em&gt;American Capital of Culture&lt;/em&gt;。市中心的单行道小巷子两侧藏着许多停车场，停车费也不贵，更多可能是图个安全好找。停了车后我们沿着中心的公园周围逛游，梅里达大教堂（The Cathedral of Mérida）就在公园旁边。大教堂由玛雅人在16世纪末用石头堆砌而成，是美洲最古老的教堂，很可惜当时教堂内部再翻新装修，没能参观。&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Merida-The_Cathedral_of_M%C3%A9rida.jpeg&#34; alt=&#34;The Cathedral of Mérida&#34;&gt;。除了大教堂之类的古建筑，就是色彩纷呈的低矮的新建筑，开着各种零碎小店，窄窄的路游人和市民混在一起，摩肩接踵，在地广人稀的美国呆久了还有点不习惯。&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Merida-Street.jpeg&#34; alt=&#34;Merida Street&#34;&gt;    &lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Merida-Street_2.jpeg&#34; alt=&#34;Merida Street 2&#34;&gt;
-离开市中心后，因为流量都用差不多了，听说沃尔玛电话卡最靠谱，便开车前去，沿着蒙特霍大道（Paseo de Montejo）有许多价值不菲、历史感十足的建筑。19-20世纪，由于龙舌兰生产的繁荣，Merida生活着大量富豪，从这些建筑可见一斑。图为梅莉达的双胞胎宅邸之一&amp;quot;Las Casas Gemela&amp;quot;。&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Merida-twins.jpeg&#34; alt=&#34;Merida twin mansions&#34;&gt;。到沃尔玛附近已是夜幕低垂，路过了繁华的Alcala Martin广场，街边餐馆热闹非凡，游人如织。路上的一个环岛中心是建造了11年、记载了墨西哥历史的祖国纪念碑，半圆形纪念碑上面雕有数百个人物，中心为一个喷泉，两侧带有上下斜坡。雕塑整体有小几十米直径，夜晚通体打上灯光十分夺人眼球。图为Monumento a La Patria（祖国纪念碑）&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Merida-Patria.jpeg&#34; alt=&#34;Monumento a La Patria&#34;&gt;&lt;/p&gt;
-&lt;p&gt;到了沃尔玛的AT&amp;amp;T柜台，很幸运的遇到了一位会说英语的店员。墨西哥人普遍社牛属性十足，和我们谈笑风生，给我们展示之前跳街舞的视频，后来上语言夜校学英语，语言透着积极乐观的心态。临走前我突然想到，正好可以问问有没有推荐的当地餐馆，免去寻找之苦。他一听说，就把几家餐馆名写了下来，边写边介绍，什么菜式、价格，后来又担心我们找不着位置，打开手机把每一家的地址也查了出来，记在纸上。这天和第二天我们分别去了两家他推荐的餐馆，都是门庭若市、物美价廉。当地人真诚热情的帮助，绝对能大大提高游客对这个国家、这座城市的好感。记录一下餐馆列表： &lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Merida-Restaurants.jpeg&#34; alt=&#34;restaurants&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;chichen-itza&#34;&gt;Chichen-Itza&lt;/h2&gt;
-&lt;p&gt;离开沃尔玛吃完晚饭，我们找了家楼下的高分甜甜圈店，打算买些甜甜圈作明天Chichen-Itza的干粮，没想到这甜甜圈太好吃了，当晚就吃了一大盒。第二天一早七点多钟，我们挣扎着起床出发，九点半开到Chichen-Itza时，还算运气不错，停车场只剩下几个位置被我们抢到，很顺利地进入了景区。&lt;/p&gt;
-&lt;p&gt;走进遗迹，第一眼看到的便是位处中心，规模最宏大的El Castillo（卡斯蒂略金字塔，意为城堡），又称羽蛇神金字塔，这座近千年前的巨大石制建筑现在看仍是人类文明的奇迹。塔身一共九层，方方正正，棱角分明，坡度不陡不徐，敦实稳重，端庄大气；塔顶不时有飞鸟起落盘旋，更添神秘。走近了看，作为宗教建筑，金字塔的压迫感很强，恢弘肃穆，每一面中间的石梯算上塔顶一共365级，呼应玛雅历法，石砖虽经历千年风雨，仍然是严丝合缝、浑然天成。这里附上我拍的白天的金字塔与&lt;a href=&#34;https://instagram.com/natgeo?igshid=MzRlODBiNWFlZA==&#34;&gt;@natgeo&lt;/a&gt;发布的金字塔夜景。&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Chichen-close.jpeg&#34; alt=&#34;close&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Chichen-far.jpeg&#34; alt=&#34;far&#34;&gt; &lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Chichen-night.jpg&#34; alt=&#34;night&#34;&gt;作为曾经奇琴伊察的城市中心，羽蛇神金字塔被许多其他城市建筑包围着，包括足球场、天文台、浴场、武士神庙、“修女院”（政府宫殿）和大大小小的建筑遗迹，就不一一赘述，附上几张图片：武士神庙：&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Chichen-Warrior.jpeg&#34; alt=&#34;warrior&#34;&gt;天文台：&lt;img src=&#34;http://allenhsm.github.io/images/Mexico/Chichen-Astrono.jpeg&#34; alt=&#34;astro&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;尾声&#34;&gt;尾声&lt;/h2&gt;
-&lt;p&gt;写到这里，Merida之旅基本结束，即将回到起点：墨西哥城(CDMX)。如果还有话可说，过几天再写一个转机墨西哥城的番外篇。&lt;/p&gt;
-- http://allenhsm.github.io/posts/journals/chichen-itza/ - This is a customized copyright.</description>
         </item>
     
     

@@ -9,11 +9,11 @@
 }
 
 h1 {
-    letter-spacing: 3px; /* Adjust letter spacing globally */
+    letter-spacing: 1.5px; /* Adjust letter spacing globally */
 }
 
 h2 {
-    letter-spacing: 1.5px;
+    letter-spacing: 1.3px;
 }
 
 @font-face {
@@ -56,4 +56,13 @@ h2 {
     font-weight: 400;
     font-style: normal;
     font-display: swap;
+}
+
+figure.img-center {
+    text-align: center;       /* 让 figure 里的内容居中 */
+}
+
+figure.img-center img {
+    display: block;
+    margin: 0 auto;           /* 让图片本身居中 */
 }

@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html><head>
+<title>Containerization</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Containerization" />
+<meta property="og:description" content="Virtual Machines to Containers VM is too heavy for a simple process as it boots a whole OS every time. Containers are isolated, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app. Comparison:
+Lightweight: Containerization avoids duplication of app Bins/libs, and only save the modifications did by different containers, without changing the original binaries. Security: VM is more secure because of full isolation while Container has only process level isolation." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/containerization/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-22T22:25:09-05:00" />
+<meta property="article:modified_time" content="2025-11-22T22:25:09-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Containerization"/>
+<meta name="twitter:description" content="Virtual Machines to Containers VM is too heavy for a simple process as it boots a whole OS every time. Containers are isolated, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app. Comparison:
+Lightweight: Containerization avoids duplication of app Bins/libs, and only save the modifications did by different containers, without changing the original binaries. Security: VM is more secure because of full isolation while Container has only process level isolation."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtual-machines-to-containers" class="nav-virtual-machines-to-containers">
+									Virtual Machines to Containers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#motivation-of-containerization" class="nav-motivation-of-containerization">
+									Motivation of Containerization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#development-challenges" class="nav-development-challenges">
+									Development challenges:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#solution-containerization" class="nav-solution-containerization">
+									Solution: Containerization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#docker---leading-container" class="nav-docker---leading-container">
+									Docker - leading container
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#why-popular" class="nav-why-popular">
+									Why popular
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#union-file-systemufs" class="nav-union-file-systemufs">
+									Union File System(UFS)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#docker-dev-workflow" class="nav-docker-dev-workflow">
+									Docker Dev Workflow
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#docker-lifecycle-overview" class="nav-docker-lifecycle-overview">
+									Docker Lifecycle Overview
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#dockerfile" class="nav-dockerfile">
+									Dockerfile
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#dockerfile-vs-docker-union-filesystem" class="nav-dockerfile-vs-docker-union-filesystem">
+									Dockerfile vs. Docker Union Filesystem
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#docker-commands" class="nav-docker-commands">
+									Docker commands
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#multiple-containers" class="nav-multiple-containers">
+									Multiple containers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#docker-limitations" class="nav-docker-limitations">
+									Docker Limitations
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/docker_logo.jpeg')"
+                    
+                
+            >
+                <div class="post-title">
+                    Containerization
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-22 22:25
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="virtual-machines-to-containers">Virtual Machines to Containers</h1>
+<ul>
+<li>VM is too <strong>heavy</strong> for a simple process as it boots a whole OS every time.</li>
+<li>Containers are <strong>isolated</strong>, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app. <img src="/images/cloudInfraBasics/vm_to_container.png" alt="VM to Container"></li>
+</ul>
+<p>Comparison:</p>
+<ul>
+<li><strong>Lightweight</strong>: Containerization avoids duplication of app Bins/libs, and only save the modifications did by different containers, without changing the original binaries.</li>
+<li><strong>Security</strong>: VM is more secure because of full isolation while Container has only process level isolation.
+<img src="/images/cloudInfraBasics/vm_vs_container.png" alt="VM vs. Container"></li>
+</ul>
+<h1 id="motivation-of-containerization">Motivation of Containerization</h1>
+<h2 id="development-challenges">Development challenges:</h2>
+<ol>
+<li>Containerization makes version control much more easier, and more importantly, safer, to avoid a simple app influence the whole system.</li>
+<li>Solves the conflict of different dependencies, versions, environments(<code>N x M</code> configurations， multiplicity of hardware env), multiplicity of stacks, and contents.</li>
+<li>Modularity and scalability: can be quickly and smoothly migrated &amp; scaled, ensuring compatibility across different environments.</li>
+</ol>
+<h2 id="solution-containerization">Solution: Containerization</h2>
+<p><img src="/images/cloudInfraBasics/sol_by_containerization.png" alt="solution by containerization"></p>
+<h1 id="docker---leading-container">Docker - leading container</h1>
+<h2 id="why-popular">Why popular</h2>
+<p>By mid-2013, <code>dotCloud</code> company released a tool that used these ideas to provide a better way to deploy encapsulated applications. The tool later became Docker and <code>dotCloud</code> became Docker Inc</p>
+<ul>
+<li>Most widely known, and used</li>
+<li>Easy to install and use</li>
+<li>Free</li>
+<li>Load fast: sharing library among containers</li>
+<li>Docker Hub: public registry of container images</li>
+<li><strong>Its file system!</strong></li>
+</ul>
+<h2 id="union-file-systemufs">Union File System(UFS)</h2>
+<ul>
+<li><strong>Union File Systems</strong> basically allow you to take different file systems and create a union of their contents with the top-most layer superseding any similar files found in the file systems below it.
+<figure class="img-center"><img src="/images/cloudInfraBasics/layers_of_image.png"
+           alt="layers of image" width="30%"/>
+  </figure>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>Docker images are composed of <strong>layers</strong> in the UFS. The image is itself a stack of read-only directories. The base is a simplified Linux file system.
+<ul>
+<li>Additional tools that the container needs are then layered on top of this base image, each in its own layer. Each layer represents an instruction in the image’s Dockerfile.</li>
+</ul>
+</li>
+<li>Packages in the hub has <strong>Layers</strong> which can be some personalized modification upon the original package/app. But the layers can be shared by different app/packages such that the next time you pull some packages sharing same layers, no need to download again.</li>
+<li>All containers with the same image see the same <strong>directory tree</strong>, so it loads the directory tree in the memory only once among all instances</li>
+<li>When the container is run, a final <strong>writable file system</strong> is layered on top.</li>
+<li>As an app in the container executes, if it needs to modify an object in the read-only layers, it copies those objects into the writable layer. Otherwise, it uses the data in the read-only layer, which is shared with other container instances.</li>
+<li>Thus, typically only a little of the container image needs to be actually loaded when a container is run, which means that containers can load and run much faster than virtual machines. Launching a container typically takes less than a second.</li>
+<li>In addition to the file system layers in the container image, you can mount a <strong>host machine directory</strong> as a file system in the container’s OS. In this way, a container can share data with the host. Multiple containers can also share these <strong>mounted directories</strong> and can use them for basic communication of shared data.</li>
+</ul>
+<h2 id="docker-dev-workflow">Docker Dev Workflow</h2>
+<!-- raw HTML omitted -->
+<figure class="img-center"><img src="/images/cloudInfraBasics/docker_workflow.png"
+           alt="docker workflow" width="50%"/>
+  </figure>
+
+<h3 id="docker-lifecycle-overview">Docker Lifecycle Overview</h3>
+<!-- raw HTML omitted -->
+<figure class="img-center"><img src="/images/cloudInfraBasics/docker_lifecycle.png"
+         alt="docker lifecycle" width="60%"/>
+</figure>
+
+<h3 id="dockerfile">Dockerfile</h3>
+<p>Most important commands:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Instruction</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADD</td>
+<td>Add local or remote files and directories.</td>
+</tr>
+<tr>
+<td>ARG</td>
+<td>Use build-time variables.</td>
+</tr>
+<tr>
+<td>CMD</td>
+<td>Specify default commands.</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>Copy files and directories.</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>Specify default executable.</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>Set environment variables.</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>Describe which ports your application is listening on.</td>
+</tr>
+<tr>
+<td>FROM</td>
+<td>Create a new build stage from a base image.</td>
+</tr>
+<tr>
+<td>HEALTHCHECK</td>
+<td>Check a container&rsquo;s health on startup.</td>
+</tr>
+<tr>
+<td>LABEL</td>
+<td>Add metadata to an image.</td>
+</tr>
+<tr>
+<td>MAINTAINER</td>
+<td>Specify the author of an image.</td>
+</tr>
+<tr>
+<td>ONBUILD</td>
+<td>Specify instructions for when the image is used in a build.</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>Execute build commands.</td>
+</tr>
+<tr>
+<td>SHELL</td>
+<td>Set the default shell of an image.</td>
+</tr>
+<tr>
+<td>STOPSIGNAL</td>
+<td>Specify the system call signal for exiting a container.</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>Set user and group ID.</td>
+</tr>
+<tr>
+<td>VOLUME</td>
+<td>Create volume mounts.</td>
+</tr>
+<tr>
+<td>WORKDIR</td>
+<td>Change working directory.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dockerfile-vs-docker-union-filesystem">Dockerfile vs. Docker Union Filesystem</h3>
+<p><img src="/images/cloudInfraBasics/dockerfile_vs_ufs.png" alt="dockerfile vs UFS"></p>
+<h3 id="docker-commands">Docker commands</h3>
+<ul>
+<li>
+<p>Build Your Docker Image (and tag it) – Notice the period at the end</p>
+<pre tabindex="0"><code>docker build -t yourDockerHubID/your_image_name:tag .
+</code></pre><p>Example:</p>
+<pre tabindex="0"><code>docker buildx build --platform linux/amd64,linux/arm64 --push -t allenhu28/hw2-jupyter:latest .
+</code></pre></li>
+<li>
+<p>Test your image</p>
+<pre tabindex="0"><code>docker run (-d) -p 8888:8888 yourDockerHubID/your_image_name:tag
+</code></pre><p>or simply</p>
+<pre tabindex="0"><code>docker run  8888:8888 yourDockerHubID/your_image_name:tag
+</code></pre></li>
+<li>
+<p>Upload to DockerHub</p>
+<pre tabindex="0"><code>docker push yourDockerHubID/your_image_name:tag
+</code></pre></li>
+<li>
+<p>More examples of build and add tag:</p>
+<pre tabindex="0"><code>docker build -t hw2-jupyter . 
+docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
+</code></pre></li>
+<li>
+<p>Docker Compose</p>
+<ul>
+<li>Create and start all the containers listed in the “docker-compose.yml”: <code>docker-compose up -d</code></li>
+<li>List all the containers belong to the compose environment instance: <code>docker-compose ps</code></li>
+<li>Set the number of containers: <code>docker-compose scale web=3</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="multiple-containers">Multiple containers</h3>
+<p>Solutions to connect several containers:</p>
+<ul>
+<li><strong>Docker networking</strong></li>
+<li><strong>Kubernetes</strong></li>
+<li><strong>Docker Compose</strong>: a tool for defining and running multi-container Docker applications. With Compose, you use a single <strong>YAML</strong> file <code>docker-compose.yml</code> to configure your multi-container application’s services. Then, with a single command, you create and start all the services from your configuration.
+<ul>
+<li>YML File example:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">build</span>: <span style="color:#ae81ff">.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8080:80&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">db</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mysql</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">MYSQL_ROOT_PASSWORD</span>: <span style="color:#ae81ff">example</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;3306:3306&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">db_data:/var/lib/mysql</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>: <span style="color:#75715e"># Shared across services)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">db_data</span>: {}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">Network</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">default</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">bridge</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h2 id="docker-limitations">Docker Limitations</h2>
+<ul>
+<li><strong>Security</strong>: Containers share the host OS kernel, so a malicious container could potentially exploit vulnerabilities in the kernel to compromise the host system or other containers.</li>
+<li>Does not offer <strong>cross-hardware-architecture portability</strong></li>
+<li>Not easy to use with Desktop applications that <strong>require rich GUI</strong></li>
+<li>Challenging to manage large number of docker containers <strong>manually</strong></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-22</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/virtualization/">
+			Previous<br>Virtualization
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#virtual-machines-to-containers" class="nav-virtual-machines-to-containers">
+									Virtual Machines to Containers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#motivation-of-containerization" class="nav-motivation-of-containerization">
+									Motivation of Containerization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#development-challenges" class="nav-development-challenges">
+									Development challenges:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#solution-containerization" class="nav-solution-containerization">
+									Solution: Containerization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#docker---leading-container" class="nav-docker---leading-container">
+									Docker - leading container
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#why-popular" class="nav-why-popular">
+									Why popular
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#union-file-systemufs" class="nav-union-file-systemufs">
+									Union File System(UFS)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#docker-dev-workflow" class="nav-docker-dev-workflow">
+									Docker Dev Workflow
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#docker-lifecycle-overview" class="nav-docker-lifecycle-overview">
+									Docker Lifecycle Overview
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#dockerfile" class="nav-dockerfile">
+									Dockerfile
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#dockerfile-vs-docker-union-filesystem" class="nav-dockerfile-vs-docker-union-filesystem">
+									Dockerfile vs. Docker Union Filesystem
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#docker-commands" class="nav-docker-commands">
+									Docker commands
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#multiple-containers" class="nav-multiple-containers">
+									Multiple containers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#docker-limitations" class="nav-docker-limitations">
+									Docker Limitations
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>
