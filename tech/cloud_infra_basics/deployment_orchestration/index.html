@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html><head>
+<title>Deployment Orchestration</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Deployment Orchestration" />
+<meta property="og:description" content="Container Orchestration The automatic process of managing or scheduling the work of individual containers for applications based on microservices within multiple clusters. Orchestration tools: Kubernetes, Docker Swarm, Apache Mesos, CoreOS rkt
+Kubernetes An open-source container management tool which automates container deployment, container (de)scaling, container load balancing Can group &ldquo;n&rdquo; number of containers into one logical unit called &ldquo;POD&rdquo;, easy to manage and deploy Features Automated bin packing: via packaging software and automatically placing it/containers based on their resource requirements and other constraints, while not sacrificing availability." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-23T21:01:28-05:00" />
+<meta property="article:modified_time" content="2025-11-23T21:01:28-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Deployment Orchestration"/>
+<meta name="twitter:description" content="Container Orchestration The automatic process of managing or scheduling the work of individual containers for applications based on microservices within multiple clusters. Orchestration tools: Kubernetes, Docker Swarm, Apache Mesos, CoreOS rkt
+Kubernetes An open-source container management tool which automates container deployment, container (de)scaling, container load balancing Can group &ldquo;n&rdquo; number of containers into one logical unit called &ldquo;POD&rdquo;, easy to manage and deploy Features Automated bin packing: via packaging software and automatically placing it/containers based on their resource requirements and other constraints, while not sacrificing availability."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#container-orchestration" class="nav-container-orchestration">
+									Container Orchestration
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#kubernetes" class="nav-kubernetes">
+									Kubernetes
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#features" class="nav-features">
+									Features
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#k8s-architecture" class="nav-k8s-architecture">
+									K8s Architecture
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#master-and-worker-node" class="nav-master-and-worker-node">
+									Master and Worker Node
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#kubernetes-service" class="nav-kubernetes-service">
+									Kubernetes Service
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#deployment-and-service-combined" class="nav-deployment-and-service-combined">
+									Deployment and Service Combined
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#yaml" class="nav-yaml">
+									YAML
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#basics" class="nav-basics">
+									Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#create-pods" class="nav-create-pods">
+									Create Pods
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#deployment" class="nav-deployment">
+									Deployment
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#service" class="nav-service">
+									Service
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/k8s.jpg')"
+                    
+                
+            >
+                <div class="post-title">
+                    Deployment Orchestration
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-23 21:01
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="container-orchestration">Container Orchestration</h1>
+<p>The <strong>automatic</strong> process of managing or scheduling the work of individual containers for applications based on <strong>microservices</strong> within <strong>multiple clusters</strong>.
+<strong>Orchestration tools</strong>: Kubernetes, Docker Swarm, Apache Mesos, CoreOS rkt</p>
+<h1 id="kubernetes">Kubernetes</h1>
+<ul>
+<li>An open-source container management tool which automates container deployment, container (de)scaling, container load balancing</li>
+<li>Can group &ldquo;n&rdquo; number of containers into one logical unit called &ldquo;<strong>POD</strong>&rdquo;, easy to manage and deploy</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Automated bin packing</strong>: via packaging software and automatically placing it/containers based on their resource requirements and other constraints, while not sacrificing availability. Mix critical and best-effort workloads in order to drive up utilization and save more resources.</li>
+<li><strong>Service Discovery and Load Balancing</strong>: Using auto networking and load balancing configurations</li>
+<li><strong>Storage Orchestration</strong>: Automatically mount the storage system of your choice for the cluster, whether from local storage, a public cloud provider, or a network storage system such as NFS, iSCSI, GlusterFS.</li>
+<li><strong>Self Healing</strong>: Automatically restarts containers that fail, replaces and reschedules containers when nodes die, kills containers that don&rsquo;t respond to your user-defined health check, and doesn&rsquo;t advertise them to clients until they are ready to serve.</li>
+<li><strong>Automated Rollouts and Rollbacks</strong>: Progressively roll out changes to your application or its configuration, while monitoring application health to ensure it doesn&rsquo;t kill all your instances at the same time. Making sure an update or rollback will not disrupt the ongoing traffic.</li>
+<li><strong>Secret and Configuration Management</strong>: dDploy and update secrets and application configuration without rebuilding your image and without exposing secrets in your stack configuration.</li>
+<li><strong>Batch Execution</strong>: In addition to services, Kubernetes can manage your batch and CI workloads.</li>
+<li><strong>Horizontal Scaling</strong>: Scale your application up and down with a simple command, a UI, or automatically scaling based on CPU usage.</li>
+<li><strong>Infrastructure as Code</strong>: Will discuss in later articles.</li>
+</ul>
+<h3 id="k8s-architecture"><strong>K8s Architecture</strong></h3>
+<p><figure class="img-center"><img src="/images/cloudInfraBasics/k8s_architecture.png"
+         alt="k8s architecture" width="40%"/>
+</figure>
+
+<strong>Simple version</strong>: Master -&gt; Nodes -&gt; PODs -&gt; Containers</p>
+<ul>
+<li><strong>Master</strong> controls the clusters and the nodes in it</li>
+<li><strong>Nodes</strong> host the group of containers called <strong>POD</strong></li>
+<li><strong>Containers</strong> in a <code>POD</code> run on the same node and share resources such as filesystems, kernel namespaces, and an IP address.</li>
+<li><strong>Replication Controller</strong> at the <code>Master</code> ensure that requested number of PODs are running on nodes</li>
+<li><strong>Load Balancer</strong> at the <code>Master</code> provide load balancing across a replicated group of PODs</li>
+</ul>
+<h3 id="master-and-worker-node"><strong>Master and Worker Node</strong></h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/master_worker_node.png" width="50%"/>
+</figure>
+
+<ul>
+<li><strong>Kubeproxy</strong>: is used for configuring Kubernetes Proxy Server.</li>
+<li><strong>Kubelet</strong>: is the primary &ldquo;node agent&rdquo; that runs on each node. It can register the node with the Master Node using node specific information.<strong>Controller vs. Scheduler</strong></li>
+<li><strong>Controller</strong>: responsible for regulating the <strong>state</strong> of the system. Used by master to ensure the actual state of the system matches the desired state as specified in Kubernetes resource configurations (e.g., Deployments, StatefulSets). Nodes also can access <code>deployment.yaml</code> to know the desired state.
+<ul>
+<li>Monitors the state of the cluster and takes action to <strong>reconcile</strong> the difference between the desired and actual states.</li>
+</ul>
+</li>
+<li><strong>Scheduler</strong>: determines where new Pods should be placed (i.e., scheduled) on the cluster nodes.
+<ul>
+<li>When a Pod is created but not assigned to a specific node, the Scheduler evaluates available nodes and selects the most suitable one based on resource requirements, node health, other constraints, and policies.</li>
+</ul>
+</li>
+</ul>
+<h3 id="kubernetes-service"><strong>Kubernetes Service</strong></h3>
+<p>An abstraction which defines a <strong>logical set of Pods</strong> running somewhere in your cluster that all provide the same functionality. and a policy by which to access them. The set of Pods targeted by a Service is usually determined by a <strong>label selector</strong>.</p>
+<ul>
+<li>When created, each <code>Service</code> is assigned a unique IP address (<code>ClusterIP</code>) and a DNS name, which remains constant as the underlying Pods change.</li>
+<li><code>Cluster IP</code> addr is tied to the lifespan of the <code>Service</code> and will not change while the <code>Service</code> is alive.</li>
+<li>Pods can be configured to talk to the Service and know that communication to the Service will be automatically load-balanced out to some pod that is a member of the Service.</li>
+<li>All the service-related configurations are specified in <code>services.yaml</code></li>
+</ul>
+<h3 id="deployment-and-service-combined"><strong>Deployment and Service Combined</strong></h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/deployment_and_service.png"
+         alt="deployment and service" width="40%"/>
+</figure>
+
+<h1 id="yaml">YAML</h1>
+<h2 id="basics">Basics</h2>
+<ul>
+<li>YAML (YAML Ain&rsquo;t Markup Language) is a human-readable data serialization standard that can be used in conjunction with all programming languages and is often used to write configuration files.</li>
+<li>There are two main structures in YAML: <strong>Maps</strong> (key-value pairs) and <strong>Lists</strong> (ordered lists).
+<ul>
+<li><strong>Maps</strong>: You can use map when you are trying to assign a scalar value
+<ul>
+<li>Example:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">John Doe</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">age</span>: <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v2.4</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">pod</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li><strong>Lists</strong>: sequences of objects that are treated as a single unit with the same key
+<ul>
+<li>Example:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">webserver1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>: 
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">database-server</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">image</span>: <span style="color:#ae81ff">mysql:5.7</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">3306</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="create-pods">Create Pods</h2>
+<ul>
+<li>A <code>Pod</code> is the smallest and most basic deployable object in K8s. A Pod represents a <strong>single instance of a running process</strong> in your cluster.</li>
+<li>Each pod can obtain <strong>one or more containers</strong>, such as Docker Containers.</li>
+<li>When a Pod runs multiple containers, the containers are managed as a single entity and share the Pod&rsquo;s resources. Generally, running multiple containers in a single Pod is an advanced use case.</li>
+<li>Pods also contain shared networking and storage resources for their containers:
+<ul>
+<li><strong>Network</strong>: Pods are automatically assigned unique IP addresses. Pod containers share the same network namespace, including IP address and network ports. Containers in a Pod communicate with each other inside the Pod on localhost.</li>
+<li><strong>Storage</strong>: Pods can specify a set of shared storage volumes that can be shared among the containers.</li>
+</ul>
+</li>
+<li>You can consider a Pod to be a self-contained unit, isolated &ldquo;logical host&rdquo; that contains the systemic needs of the application it servers.</li>
+<li>A Pod is meant to run a single instance of your application on your cluster. However, it is not recommended to create individual Pods directly. Instead, you generally create a set of identical Pods, called <code>replicas</code>, to run your application. Such a set of replicated Pods are created and managed by a <code>Deployment</code>.</li>
+</ul>
+<h2 id="deployment">Deployment</h2>
+<p>A deployment is a file that defines a pod&rsquo;s desired behavior or characteristics. You create it to:</p>
+<ul>
+<li>Ensure workload <strong>availability</strong></li>
+<li><strong>Scale</strong> workload</li>
+<li>Deployments can be paused, edited and rolled-back</li>
+<li>Simplify the interface with external network</li>
+</ul>
+<p>Example code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-deployment</span> <span style="color:#75715e"># Deployment name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">selector</span>: <span style="color:#75715e"># defines how the created ReplicaSet </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># finds which Pods to manage</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx  </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">template</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">spec</span>: <span style="color:#75715e"># We will run one Pod</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># containing one container</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>                - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:1.14.2</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>                    - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span></code></pre></div><p>To create it, we run: <code>kubectl apply -f deployment.yaml</code></p>
+<h2 id="service">Service</h2>
+<ul>
+<li><strong>Motivation</strong>: We need a way of consistently being able to access our pod-set even if the pods themselves are recreated or lost. This should be transparent to any application or other pods trying to access this pod-set.
+<ul>
+<li>Example: assume we have a Kubernetes deployment that contains web application and a database. When a user searches from our website’s frontend, the search request is directed to a set of pods where our database is defined. If the database pod goes down, Kubernetes master will recreate it, and the frontend will not be aware of this. The search request should still be acknowledged and fulfilled as usual.</li>
+</ul>
+</li>
+<li><strong>Definition</strong>: an abstract way to expose an application running on a set of Pods as a network service.</li>
+<li><strong>Example code</strong>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-service</span> <span style="color:#75715e"># Service name</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span> <span style="color:#75715e"># Service type</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span> <span style="color:#75715e"># a selector that the Service uses </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># to match and identify the pods in </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Nginx Deployment, because the deployment </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># and the pods also have the exact same label.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># This is how all incoming requests to this Nginx service </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># will be automatically routed to the Nginx deployment</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>: <span style="color:#75715e"># Using this NodePort, will be able to access the Nginx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># service on all K8s nodes via port 30500</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30500</span> <span style="color:#75715e"># points to our Nginx deployment</span>
+</span></span></code></pre></div>To create this service, we run: <code>kubectl apply -f service.yaml</code></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-23</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/containerization/">
+			Previous<br>Containerization
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#container-orchestration" class="nav-container-orchestration">
+									Container Orchestration
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#kubernetes" class="nav-kubernetes">
+									Kubernetes
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#features" class="nav-features">
+									Features
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#k8s-architecture" class="nav-k8s-architecture">
+									K8s Architecture
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#master-and-worker-node" class="nav-master-and-worker-node">
+									Master and Worker Node
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#kubernetes-service" class="nav-kubernetes-service">
+									Kubernetes Service
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#deployment-and-service-combined" class="nav-deployment-and-service-combined">
+									Deployment and Service Combined
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#yaml" class="nav-yaml">
+									YAML
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#basics" class="nav-basics">
+									Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#create-pods" class="nav-create-pods">
+									Create Pods
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#deployment" class="nav-deployment">
+									Deployment
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#service" class="nav-service">
+									Service
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>
