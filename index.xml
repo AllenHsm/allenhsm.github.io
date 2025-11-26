@@ -78,11 +78,49 @@
 &lt;li&gt;Pods can be configured to talk to the Service and know that communication to the Service will be automatically load-balanced out to some pod that is a member of the Service.&lt;/li&gt;
 &lt;li&gt;All the service-related configurations are specified in &lt;code&gt;services.yaml&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;deployment-and-service-combined&#34;&gt;&lt;strong&gt;Deployment and Service Combined&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Types of service&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ClusterIP&lt;/strong&gt;: Exposes the service(pod) on a cluster-internal IP. This is the default &lt;code&gt;ServiceType&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NodePort&lt;/strong&gt;: Exposes the service on each Node’s IP at a static port (the &lt;code&gt;NodePort&lt;/code&gt;) to external traffic by fowarding traffic from the port on each node of the cluster to the container port. A &lt;code&gt;ClusterIP&lt;/code&gt; service, to which the &lt;code&gt;NodePort&lt;/code&gt; service routes, is automatically created. It is &lt;strong&gt;cheaper&lt;/strong&gt;, because has no actual traffic control.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LoadBalancer&lt;/strong&gt;: Also exposes the service externally, but using an extra load balancer from cloud provider. It does not have an exposed physical port. &lt;code&gt;NodePort&lt;/code&gt; and &lt;code&gt;ClusterIP&lt;/code&gt; services, to which the external load balancer routes, are automatically created. (It is more &lt;strong&gt;expensive&lt;/strong&gt;, because of traffic distribution management(&lt;strong&gt;TDM&lt;/strong&gt;))&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;deployment--service&#34;&gt;&lt;strong&gt;Deployment + Service&lt;/strong&gt;&lt;/h3&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/deployment_and_service.png&#34;
          alt=&#34;deployment and service&#34; width=&#34;40%&#34;/&gt;
 &lt;/figure&gt;
 
+&lt;h3 id=&#34;commands-on-gke&#34;&gt;Commands on GKE&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a GKE cluster:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gcloud container clusters create &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  —machine-type e2-standard-2 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  —num-nodes 2&lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  —zone us-central1-a &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  —cluster-version latest &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mykubernetescluster
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl get nodes&lt;/code&gt; : list all nodes in the cluster&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl get pods&lt;/code&gt; : list all pods in the cluster&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl apply -f deployment.yaml&lt;/code&gt; : create deployment from &lt;code&gt;deployment.yaml&lt;/code&gt; file. It also creates the pods defined in the deployment file.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl get deployments&lt;/code&gt; : list all deployments in the cluster&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl apply -f service.yaml&lt;/code&gt; : create service to expose app to external traffic.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl scale deployment &amp;lt;deployment-name&amp;gt; --replicas=&amp;lt;number-of-replicas&amp;gt;&lt;/code&gt; : scale the number of replications in a deployment refer to the number of pods in a deployment&lt;/li&gt;
+&lt;li&gt;auto-scaling:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;kubectl autoscale deployment &amp;lt;deployment-name&amp;gt; --min=&amp;lt;min-replicas&amp;gt; --max=&amp;lt;max-replicas&amp;gt; --cpu-percent=&amp;lt;target-cpu-utilization-percentage&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;e.g. &lt;code&gt;kubectl autoscale deployment nginx-deployment --min=2 --max=10 --cpu-percent=80&lt;/code&gt; where cpu  percent is the average cpu usage across all the pods. here it is using HPA(horizontal pod autoscaler)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl get hpa&lt;/code&gt; : list all the HPA in the cluster&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl delete hpa &amp;lt;deployment-name&amp;gt;&lt;/code&gt; : delete the HPA for a deployment&lt;/li&gt;
+&lt;li&gt;2 types of auto-scaling:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Horizontal Pod Autoscaler&lt;/strong&gt; (HPA): scale the number of pods &lt;em&gt;replicas&lt;/em&gt; up or down in a deployment based on cpu/memory usage or other custom metrics. It modifies the &lt;strong&gt;number of&lt;/strong&gt; pods to balance load.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vertical Pod Autoscaler&lt;/strong&gt; (VPA): automatically adjust the cpu and memory requests/limits for the containers in the pods, so it is kind of changing the &lt;strong&gt;size of&lt;/strong&gt; pods, without changing the number of pods.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;To debug K8s application: &lt;a href=&#34;https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/&#34;&gt;https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id=&#34;yaml&#34;&gt;YAML&lt;/h1&gt;
 &lt;h2 id=&#34;basics&#34;&gt;Basics&lt;/h2&gt;
 &lt;ul&gt;
@@ -195,6 +233,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;targetPort&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;nodePort&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;30500&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# points to our Nginx deployment&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;To create this service, we run: &lt;code&gt;kubectl apply -f service.yaml&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;reading&#34;&gt;Reading&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Kubernetes basics first 6 chapters: &lt;a href=&#34;https://kubernetes.io/docs/tutorials/kubernetes-basics/&#34;&gt;https://kubernetes.io/docs/tutorials/kubernetes-basics/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Deploy a Docker containerized web app to GKE: &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app&#34;&gt;https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration/ - This is a customized copyright.</description>
         </item>
