@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html><head>
+<title>Apache Kafka</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Apache Kafka" />
+<meta property="og:description" content="Why Kafka? Problem of Request-Response Architecture: Kubernetes offers the ability to (de)scale your applications to respond to user requests in a meaningful amount of time. Process of request-response architecture: user sends a request to your application k8s master reroutes the request to an available pod, not enough pods HPA Still not enough VPA more requests Connection timeout Interruption If the number of user requests continue to increase beyond your K8s cluster resources, 1) your k8s master won&rsquo;t have enough memory or processing power to reroute the incoming traffic, or 2) there are no available pods to process requests, and no more pods can be created." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-25T22:10:31-05:00" />
+<meta property="article:modified_time" content="2025-11-25T22:10:31-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Apache Kafka"/>
+<meta name="twitter:description" content="Why Kafka? Problem of Request-Response Architecture: Kubernetes offers the ability to (de)scale your applications to respond to user requests in a meaningful amount of time. Process of request-response architecture: user sends a request to your application k8s master reroutes the request to an available pod, not enough pods HPA Still not enough VPA more requests Connection timeout Interruption If the number of user requests continue to increase beyond your K8s cluster resources, 1) your k8s master won&rsquo;t have enough memory or processing power to reroute the incoming traffic, or 2) there are no available pods to process requests, and no more pods can be created."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#why-kafka" class="nav-why-kafka">
+									Why Kafka?
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#digression-1-publish-subscribe-model" class="nav-digression-1-publish-subscribe-model">
+									Digression 1: Publish-Subscribe Model
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#ranking" class="nav-ranking">
+									Ranking
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pub-sub-model-example" class="nav-pub-sub-model-example">
+									Pub-sub model example
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#apache-kafka" class="nav-apache-kafka">
+									Apache Kafka
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#advantages" class="nav-advantages">
+									Advantages
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#structure" class="nav-structure">
+									Structure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#topics" class="nav-topics">
+									Topics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#partitions" class="nav-partitions">
+									Partitions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#brokers" class="nav-brokers">
+									Brokers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#producers" class="nav-producers">
+									Producers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#consumers" class="nav-consumers">
+									Consumers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#zookeeper" class="nav-zookeeper">
+									Zookeeper
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#digression-2-microservices" class="nav-digression-2-microservices">
+									Digression 2: Microservices
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#digression-3-rest" class="nav-digression-3-rest">
+									Digression 3: REST
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#kafka--mircroservices" class="nav-kafka--mircroservices">
+									Kafka &#43; Mircroservices
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#confluent-kafka" class="nav-confluent-kafka">
+									Confluent Kafka
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/kafka.png')"
+                    
+                
+            >
+                <div class="post-title">
+                    Apache Kafka
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-25 22:10
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="why-kafka">Why Kafka?</h1>
+<ul>
+<li><strong>Problem of Request-Response Architecture:</strong> Kubernetes offers the ability to (de)scale your applications to respond to user requests in a meaningful amount of time.
+<ul>
+<li>Process of request-response architecture:
+<ul>
+<li>user sends a request to your application</li>
+<li>k8s master reroutes the request to an available pod,</li>
+<li>not enough pods</li>
+<li>HPA</li>
+<li>Still not enough</li>
+<li>VPA</li>
+<li>more requests</li>
+<li>Connection timeout</li>
+<li>Interruption</li>
+</ul>
+</li>
+<li>If the number of user requests continue to increase beyond your K8s cluster resources, 1) your k8s master won&rsquo;t have enough memory or processing power to reroute the incoming traffic, or 2) there are no available pods to process requests, and no more pods can be created.</li>
+</ul>
+</li>
+<li><strong>Solution: message queues:</strong> Kafka acts as a buffer between user requests and your application to avoid message drop &amp; timeout problems. It is a <strong>scalable</strong> message queue with <strong>publish-subscribe</strong> software support that offers <strong>distributed</strong> <strong>streaming processing</strong>.</li>
+</ul>
+<h2 id="digression-1-publish-subscribe-model">Digression 1: Publish-Subscribe Model</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/publish_subscribe.png"
+         alt="publish-subscribe models" width="95%"/>
+</figure>
+
+<ul>
+<li>Model 1 → <strong>Kafka</strong>: Sub A and B get the same message from the topic they subscribed to. They get the full copy by default. (topic-based pub-sub model)</li>
+<li>Model 4 → <strong>Active MQ</strong>: Load balancing, traffic distribution, such that if messages A and B are sent, then Worker A only gets A, worker B only gets B. (queue-based/broker-mediated model)</li>
+<li>Model 2 → <strong>JMS, AWS Event Bridge</strong>: Subscribers find the condition / set the filters in the queue such that the subs define the rules on how they get the data. The queue is like a pool, does not categorize the messages into categories. Broker applies the subscribers’ rules on every msg. (content-based pub-sub model)</li>
+<li>Model 3 → <strong>Kafka combined with KSQL</strong>: Hybrid version combining 1 and 2. (topic+content)</li>
+</ul>
+<h3 id="ranking">Ranking</h3>
+<ul>
+<li>Scalability: Best: <strong>Topic based</strong>, worst: queue based</li>
+<li>Speed: Best: <strong>topic based</strong>, worst: content-based</li>
+<li>Flexibility: Best: content-based, worst: queue-based</li>
+<li>Therefore, topic based model is the most convenient</li>
+</ul>
+<h3 id="pub-sub-model-example">Pub-sub model example</h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/pub_sub_model.png"
+         alt="pub-sub model example" width="90%"/>
+</figure>
+
+<h1 id="apache-kafka">Apache Kafka</h1>
+<h2 id="advantages">Advantages</h2>
+<ul>
+<li>High throughput: can handle millions of messages per second (LinkedIn 3.2Million msgs/sec)</li>
+<li>High performance: uses in-memory writes and reads</li>
+<li>Fault tolerant: Kafka is highly available and resilient to node failures and supports automatic recovery.</li>
+<li>Elastically scalable, low operational overhead, durable, highly available</li>
+</ul>
+<h2 id="structure">Structure</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/kafka_structure.png"
+         alt="kafka structure" width="70%"/>
+</figure>
+
+<h3 id="topics">Topics</h3>
+<ul>
+<li>Is a particular stream of data</li>
+<li>You can have as many topics as you want</li>
+<li>Identified by a name, divided into partitions</li>
+</ul>
+<h3 id="partitions">Partitions</h3>
+<p>To enhance scalability, we create partitions to the topics, each piece sits in independent space in the memory, and we can have as many partitions as we want for the same topic. But if the producer write  messages into the same partition, we cannot guarantee the consumer to do the changes in the same order. So within the same partition, the messages are ordered through offset, but there is no order across partitions.</p>
+<ul>
+<li>Each partition is ordered</li>
+<li>Each message within a partition has an <code>offset</code> (an incremental, unique id)</li>
+<li>To enable fault tolerance, we can get <strong>duplication of partition</strong> in indifferent brokers.</li>
+<li>Each partition lives in an individual machine, called broker</li>
+</ul>
+<h3 id="brokers">Brokers</h3>
+<ul>
+<li>A Kafka cluster is made up of multiple <code>brokers</code> (servers)</li>
+<li>Each broker is identified by an id (integer)</li>
+<li>Each broker contains one or more partitions for one or more topics</li>
+<li>After connecting to any broker, you will be connected to the entire cluster (If i have the addr of B1, I also got the addr of B2, B3, etc)</li>
+</ul>
+<h3 id="producers">Producers</h3>
+<ul>
+<li>Producers publish/write data to topics (which are made of partitions) while does not know which partition it will write to. Broker will deal with that</li>
+<li>Producers automatically know to which broker and partition they should write to</li>
+<li>In case of Broker failure, producers will automatically recover the failed broker</li>
+<li>Producers choose whether to receive an <strong>acknowledgment</strong> of a successful write (<code>ack</code>), and whether to send a <strong>key</strong> with the message. If two msgs are sent with the same key, we can guarantee they will be sent to the same partition, even though we don&rsquo;t know which partition it is.</li>
+</ul>
+<h3 id="consumers">Consumers</h3>
+<ul>
+<li>Consumers read data from a topic (identified by a topic name)</li>
+<li>Consumers know which broker to read from.</li>
+<li>In case of Broker failures, consumers know how to recover the failed broker.</li>
+<li>Data are read in order within each partition.</li>
+<li><strong>Consumer group</strong>: a set of consumers that share and load-balance the partitions of a topic, ensuring each partition is consumed by <strong>exactly one</strong> consumer in the group. Different groups consume <strong>independently</strong>, so each group receives a full copy of the topic’s messages.</li>
+</ul>
+<h3 id="zookeeper">Zookeeper</h3>
+<ul>
+<li>Connects Partition and OS adding ports or system calls to OS such that partition can interact with the memory, to write and read the memory.</li>
+<li>Manages and coordinates the brokers (keeps a list of them)</li>
+<li>Helps in performing election for partitions</li>
+<li>Sends notification to Kafka in case of changes (new broker added, broker failure, new topic, etc)</li>
+<li>An important component of Kafka.</li>
+<li>Causes the hardness of deploying Kafka as it is on the top of OS to build the communication, and enable the Kafka to run smoothly and directly in different platforms and OS.</li>
+</ul>
+<h2 id="digression-2-microservices">Digression 2: Microservices</h2>
+<ul>
+<li>Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.</li>
+<li><strong>Stateless</strong>: each component does not store any state between requests. Each request is independent.</li>
+<li>In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm</li>
+</ul>
+<h2 id="digression-3-rest">Digression 3: REST</h2>
+<ul>
+<li>provide an interface for distributed hypermedia systems, created by Roy Fielding in 2000</li>
+<li>The key abstraction of information in REST is a resource
+<ul>
+<li>Identified by a resource identifier, i.e. URI</li>
+</ul>
+</li>
+<li>Resources can be retrieved or transformed to another state by aset of methods:
+<ul>
+<li><strong>GET/PUT(update) /POST (add)</strong>/DELETE/PATCH (Update a lot of resources)</li>
+</ul>
+</li>
+<li>The clients and servers exchange representations of resources by using a standardized interface and protocol typically HTTP</li>
+</ul>
+<h2 id="kafka--mircroservices">Kafka + Mircroservices</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/kafka_microservices.png"
+         alt="kafka microservices" width="100%"/>
+</figure>
+
+<h1 id="confluent-kafka">Confluent Kafka</h1>
+<ul>
+<li>Since Handling Kafka requires managing low-level, complex data infrastructure, we have <strong>Confluent Kafka</strong>. It is built on top of Apache Kafka to offer complete, fully managed, cloud-native data streaming that&rsquo;s available wherever your data and applications reside.</li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-25</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/deployment_orchestration/">
+			Previous<br>Deployment Orchestration
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#why-kafka" class="nav-why-kafka">
+									Why Kafka?
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#digression-1-publish-subscribe-model" class="nav-digression-1-publish-subscribe-model">
+									Digression 1: Publish-Subscribe Model
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#ranking" class="nav-ranking">
+									Ranking
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pub-sub-model-example" class="nav-pub-sub-model-example">
+									Pub-sub model example
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#apache-kafka" class="nav-apache-kafka">
+									Apache Kafka
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#advantages" class="nav-advantages">
+									Advantages
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#structure" class="nav-structure">
+									Structure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#topics" class="nav-topics">
+									Topics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#partitions" class="nav-partitions">
+									Partitions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#brokers" class="nav-brokers">
+									Brokers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#producers" class="nav-producers">
+									Producers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#consumers" class="nav-consumers">
+									Consumers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#zookeeper" class="nav-zookeeper">
+									Zookeeper
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#digression-2-microservices" class="nav-digression-2-microservices">
+									Digression 2: Microservices
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#digression-3-rest" class="nav-digression-3-rest">
+									Digression 3: REST
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#kafka--mircroservices" class="nav-kafka--mircroservices">
+									Kafka &#43; Mircroservices
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#confluent-kafka" class="nav-confluent-kafka">
+									Confluent Kafka
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>
