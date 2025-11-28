@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html><head>
+<title>IaC &amp; Terraform</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="IaC &amp; Terraform" />
+<meta property="og:description" content="Infrastructure as Code Definition: Write and execute code to define, deploy update, and destroy our infra. Why we automate deployment? reliable, efficient, repeatable, safe releases, multiple environment, maximum scalability Types of IaC tools Ad-hoc Scripts The easiest and most straightforward approach of automating anything ad-hoc tools run on single core tool, like cloud shell, which connects to a VM with only 5GB storage space, if you need more, you have to upload the file to cloud bucket or sth, and use the shell to read from it." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/terraform/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-28T00:04:22-05:00" />
+<meta property="article:modified_time" content="2025-11-28T00:04:22-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IaC &amp; Terraform"/>
+<meta name="twitter:description" content="Infrastructure as Code Definition: Write and execute code to define, deploy update, and destroy our infra. Why we automate deployment? reliable, efficient, repeatable, safe releases, multiple environment, maximum scalability Types of IaC tools Ad-hoc Scripts The easiest and most straightforward approach of automating anything ad-hoc tools run on single core tool, like cloud shell, which connects to a VM with only 5GB storage space, if you need more, you have to upload the file to cloud bucket or sth, and use the shell to read from it."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#infrastructure-as-code" class="nav-infrastructure-as-code">
+									Infrastructure as Code
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#types-of-iac-tools" class="nav-types-of-iac-tools">
+									Types of IaC tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#ad-hoc-scripts" class="nav-ad-hoc-scripts">
+									Ad-hoc Scripts
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#configuration-management-tools" class="nav-configuration-management-tools">
+									Configuration Management Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#server-templating-tools" class="nav-server-templating-tools">
+									Server Templating Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#provisioning-tools" class="nav-provisioning-tools">
+									Provisioning Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#orchestration-tools" class="nav-orchestration-tools">
+									Orchestration Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#iac-tool-comparison" class="nav-iac-tool-comparison">
+									IaC Tool Comparison
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#mutable-vs-_immutable_" class="nav-mutable-vs-_immutable_">
+									Mutable vs. Immutable
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#declarative-vs-procedural" class="nav-declarative-vs-procedural">
+									Declarative vs. Procedural
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#general-purpose-vs-domain-specific" class="nav-general-purpose-vs-domain-specific">
+									General Purpose vs. Domain-specific
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#master-vs-masterless" class="nav-master-vs-masterless">
+									Master vs. Masterless
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#agent-k8s-vs-agentless" class="nav-agent-k8s-vs-agentless">
+									Agent (k8s) vs. Agentless
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#community-support" class="nav-community-support">
+									Community Support
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#terraform" class="nav-terraform">
+									Terraform
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#hashicorp-configuration-language-hcl" class="nav-hashicorp-configuration-language-hcl">
+									HashiCorp Configuration Language (HCL)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#block-types" class="nav-block-types">
+									Block types
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#workflow" class="nav-workflow">
+									Workflow
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#naming-conventions" class="nav-naming-conventions">
+									Naming conventions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#configuration-structure" class="nav-configuration-structure">
+									Configuration Structure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/terraform_logo.png')"
+                    
+                
+            >
+                <div class="post-title">
+                    IaC &amp; Terraform
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-28 00:04
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="infrastructure-as-code">Infrastructure as Code</h1>
+<ul>
+<li><strong>Definition</strong>: Write and execute code to define, deploy update, and destroy our infra.</li>
+<li>Why we automate deployment? reliable, efficient, repeatable, safe releases, multiple environment, maximum scalability</li>
+</ul>
+<h2 id="types-of-iac-tools">Types of IaC tools</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/types_of_iac.png"
+         alt="IaC Tools" width="50%"/>
+</figure>
+
+<h3 id="ad-hoc-scripts">Ad-hoc Scripts</h3>
+<ul>
+<li>The <strong>easiest</strong> and most straightforward approach of automating anything</li>
+<li><strong>ad-hoc tools</strong> run on single core tool, like cloud shell, which connects to a VM with only 5GB storage space, if you need more, you have to upload the file to cloud bucket or sth, and use the shell to read from it.</li>
+<li><strong>examples</strong> : Bash, Ruby, Perl</li>
+</ul>
+<h3 id="configuration-management-tools">Configuration Management Tools</h3>
+<ul>
+<li>Designed to install and manage software on existing servers.</li>
+<li>These tools offer coding conventions and ability to run scripts on multiple servers.</li>
+<li>ansible assumes the multiple servers that you use work in completely the same way with same hard tool structure. In these cases, even though the servers are of the same, some external small errors, like a sudden network error, cause the machines to diverge in some way, like having different file system structure.</li>
+<li>Examples: Chef, Puppet and Ansible.</li>
+</ul>
+<h3 id="server-templating-tools">Server Templating Tools</h3>
+<ul>
+<li>The idea of server templating tools is to create an image of a server that captures a fully self-contained “snapshot” of the operating system (OS), the software, the files, and all other relevant details.</li>
+<li>Examples: Docker, Packer, Vagrant</li>
+</ul>
+<h3 id="provisioning-tools">Provisioning Tools</h3>
+<ul>
+<li>Most <strong>advanced</strong> IaC tools.</li>
+<li>Provisioning tools are responsible for <strong>creating</strong> these servers, rather than running software or scripts on top of existing servers like other categories.</li>
+<li>You can use provisioning tools to create databases, caches, load balancers, queues, network configurations and SSL certificates.</li>
+<li>Examples: Terraform, CloudFormation, OpenStack Heat, and Pulumi, actively deal with hardware</li>
+</ul>
+<h3 id="orchestration-tools">Orchestration Tools</h3>
+<p>We mentioned previously. Orchestration tools are responsible for managing the lifecycle of containers, including deployment, scaling, and networking.</p>
+<h2 id="iac-tool-comparison">IaC Tool Comparison</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/iac_comparison.png"
+         alt="IaC Tool Comparison" width="100%"/>
+</figure>
+
+<h3 id="mutable-vs-_immutable_">Mutable vs. <em><strong>Immutable</strong></em></h3>
+<ul>
+<li><strong>Mutable</strong>: Configuration management tools (e.g., chef, puppet) default to a mutable infrastructure paradigm.
+<ul>
+<li>like ansible &amp; chef where there is possible mutation to the softwares like the network error mentioned above that causes the infra to diverge between machines.</li>
+<li>Over time, each server becomes slightly different than all the others, leading to subtle configuration bugs that are <strong>difficult to diagnose and reproduce.</strong></li>
+</ul>
+</li>
+<li><strong>Immutable</strong> infrastructure tools don’t allow this deviation to happen.</li>
+</ul>
+<h3 id="declarative-vs-procedural"><em><strong>Declarative</strong></em> vs. Procedural</h3>
+<ul>
+<li>In <strong>Procedural</strong> scripting style, developers will code the application flow in step-by-step commands that does not care about the outcome or the final state, but just complete the preset steps. e.g. chef and ansible</li>
+<li>In <strong>Declarative</strong> scripting style, developers will write code that specifies their desired end state, and the IaC tool itself is responsible for figuring out how to achieve that state.
+<ul>
+<li>e.g. 5 servers, 3 firewall connections, 1 SSL certificate, IaC tool is responsible for figuring out how to achieve these goals. E.g. Terraform, CloudFormation (provisioning), puppet(config management)</li>
+</ul>
+</li>
+</ul>
+<h3 id="general-purpose-vs-domain-specific"><em><strong>General Purpose</strong></em> vs. Domain-specific</h3>
+<ul>
+<li><code>DSLs</code> are designed for use in <strong>one specific domain</strong>, whereas <code>GPLs</code> can be used across a <strong>broad range of domains</strong>.</li>
+<li><code>GPL</code> Examples: Chef supports Ruby; Pulumi supports a wide variety of GPLs, including JavaScript, TypeScript, Python, Go, C#, Java, and others.</li>
+<li><code>DSL</code> Examples: Terraform uses HCL; Puppet uses Puppet Language; Ansible, CloudFormation, and OpenStack Heat use YAML (CloudFormation also supports JSON).</li>
+</ul>
+<h3 id="master-vs-masterless">Master vs. <em><strong>Masterless</strong></em></h3>
+<ul>
+<li>In <strong>Master-centered</strong> infrastructure tools, you should <strong>dedicate a server</strong> to run the IaC tool (e.g., Chef, Puppet).
+<ul>
+<li>Every time you want to update something in your infra, you use a client (e.g., a command-line tool) to issue new commands to the master server, and the master server either pushes the updates out to all the other servers or those servers pull the latest updates down from the master server on a regular basis.</li>
+</ul>
+</li>
+<li>In <strong>masterless</strong> infrastructure tools, tools don’t require a Master or rely on a master server that is part of the existing infra.
+<ul>
+<li>For example, Terraform communicates with cloud providers using the cloud provider’s APIs, so in some sense, the API servers are master servers, except that they don’t require any extra infrastructure or any extra authentication mechanisms (i.e., just use your API keys).</li>
+</ul>
+</li>
+</ul>
+<h3 id="agent-k8s-vs-agentless">Agent (k8s) vs. <em><strong>Agentless</strong></em></h3>
+<ul>
+<li>Some IaC tools require the installation of agent software on each node you need to configure. The agent typically runs in the background on each server and is responsible for installing the latest configuration management updates.
+<ul>
+<li>This introduces a security concern since you need to open the outbound port for the agent to communicate with the master server</li>
+</ul>
+</li>
+</ul>
+<h3 id="community-support">Community Support</h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/iac_community_support.png"
+         alt="IaC Community Support" width="40%"/>
+</figure>
+
+<h1 id="terraform">Terraform</h1>
+<ul>
+<li>An open-source IaC provisioning tool created by HashiCorp and written in GO Lang.</li>
+<li>script automatically detects the environment it is running on (GCP, AWS, etc) and install the corresponding libraries and use a hash map to map the compatible APIs.</li>
+<li>Good readability, can deploy to K8s, declarative, paves the way for massive scalability, Management of infrastructure will be automated, Source of truth for the infra</li>
+</ul>
+<h2 id="hashicorp-configuration-language-hcl">HashiCorp Configuration Language (HCL)</h2>
+<ul>
+<li>The most basic construct is called a <code>block</code>, defined as a “container for other content”.</li>
+<li>The body of the block is nested with {}</li>
+<li>Each block has a type (e.g., resource)</li>
+<li>Each block is identified using labels, the number of labels is identified based on the block type</li>
+</ul>
+<h3 id="block-types">Block types</h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/terraform_block_types.png"
+         alt="Terraform Block Types" width="90%"/>
+</figure>
+
+<ul>
+<li><strong>Resource block</strong>: most popular; to <strong>create components</strong> of your infra, like VM instances, databases, and networking components.</li>
+<li><strong>Provider block</strong>: to define the <strong>cloud provider</strong> (e.g., AWS, GCP, Azure) that you want to use to host and deploy your resources. Terraform decides which mapping table to download based on the cloud provider.</li>
+<li><strong>Variable block</strong>: to define <strong>input variables</strong> that can be used to parameterize your Terraform configuration.</li>
+<li><strong>Output block</strong>: exposes information about specific resources created in your configuration.</li>
+<li><strong>Provisioner</strong>: To execute a script <strong>after your resources have been created</strong>. It waits for your service to be deployed successfully and then run some codes.</li>
+<li><strong>Local</strong>: To create local variables within a specific resource block</li>
+</ul>
+<h2 id="workflow">Workflow</h2>
+<p>A basic Terraform workflow consists of the following two steps:</p>
+<ul>
+<li><strong>Initialization</strong>: using <code>terraform init</code>. Install libraries, binaries executable, for the providers that you have listed in your code. The mapping tables, provider apis, etc. All stored in <code>.terraform</code> folder.
+<ul>
+<li>You must initialize Terraform every time you write a new configuration file.</li>
+</ul>
+</li>
+<li><strong>Execution</strong>.
+<ul>
+<li><strong>Plan</strong>: a log file stored in CI/CD pipeline, keep track what will happen by comparing what we currently have and what we will do (add, delete, change in the current infrastructure).</li>
+<li><strong>Apply</strong>: Once you have confirmed that the plan does what you intended, then execute the plan and Terraform will provision the cloud resources.</li>
+<li>destroy: to remove all resources created by Terraform. Don’t do it by yourself. 解铃还须系铃人</li>
+</ul>
+</li>
+</ul>
+<h2 id="naming-conventions">Naming conventions</h2>
+<ul>
+<li>Terraform does <strong>not care about filenames</strong>. It combines all files with the <code>.tf</code> extension and then creates an execution plan using all the configurations.</li>
+<li><code>provider.tf</code>: contains the provider block declaring provider, which is a translation layer between Terraform and the external API of the provider.</li>
+<li><code>variables.tf</code>:
+<ul>
+<li>
+<ul>
+<li>create all the input global variables you required in your project.</li>
+</ul>
+</li>
+<li><strong>Variables are referenced using the <code>var.&lt;variable_name&gt;</code></strong>.</li>
+<li>When <em>apply</em> it will scan our code to identify what variables or parameters are missing.</li>
+<li>You can create default values in <em>terraform.tfvars</em></li>
+</ul>
+</li>
+<li><code>startup.sh</code>: a bash script that will be executed after the resource is created.</li>
+<li><code>outputs.tf</code>: contains all the output blocks that expose information about specific resources created in your configuration.</li>
+<li><code>main.tf</code>: contains all the resource blocks that define the actual components of your infrastructure. Actual creation of the resource blocks.</li>
+<li><code>terraform.tfvars</code>: There are multiple ways to assign a value to a variable, either through a default value in the declaration or pass it as a value either interactively or via the command-line flag. One common way is to create a file named <code>terraform.tfvars</code> that contains the variable assignments. You can then use them as <code>var.&lt;variable_name&gt;</code> in your code.</li>
+</ul>
+<h2 id="configuration-structure">Configuration Structure</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/terraform_configuration_structure.png"
+         alt="Terraform File Structure" width="60%"/>
+</figure>
+
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-28</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/apache_kafka/">
+			Previous<br>Apache Kafka
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#infrastructure-as-code" class="nav-infrastructure-as-code">
+									Infrastructure as Code
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#types-of-iac-tools" class="nav-types-of-iac-tools">
+									Types of IaC tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#ad-hoc-scripts" class="nav-ad-hoc-scripts">
+									Ad-hoc Scripts
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#configuration-management-tools" class="nav-configuration-management-tools">
+									Configuration Management Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#server-templating-tools" class="nav-server-templating-tools">
+									Server Templating Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#provisioning-tools" class="nav-provisioning-tools">
+									Provisioning Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#orchestration-tools" class="nav-orchestration-tools">
+									Orchestration Tools
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#iac-tool-comparison" class="nav-iac-tool-comparison">
+									IaC Tool Comparison
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#mutable-vs-_immutable_" class="nav-mutable-vs-_immutable_">
+									Mutable vs. Immutable
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#declarative-vs-procedural" class="nav-declarative-vs-procedural">
+									Declarative vs. Procedural
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#general-purpose-vs-domain-specific" class="nav-general-purpose-vs-domain-specific">
+									General Purpose vs. Domain-specific
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#master-vs-masterless" class="nav-master-vs-masterless">
+									Master vs. Masterless
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#agent-k8s-vs-agentless" class="nav-agent-k8s-vs-agentless">
+									Agent (k8s) vs. Agentless
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#community-support" class="nav-community-support">
+									Community Support
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#terraform" class="nav-terraform">
+									Terraform
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#hashicorp-configuration-language-hcl" class="nav-hashicorp-configuration-language-hcl">
+									HashiCorp Configuration Language (HCL)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#block-types" class="nav-block-types">
+									Block types
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#workflow" class="nav-workflow">
+									Workflow
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#naming-conventions" class="nav-naming-conventions">
+									Naming conventions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#configuration-structure" class="nav-configuration-structure">
+									Configuration Structure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>

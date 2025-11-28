@@ -447,6 +447,24 @@
 						
 						
 							<li>
+								<a href="#parallelism" class="nav-parallelism">
+									Parallelism
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
 								<a href="#digression-2-microservices" class="nav-digression-2-microservices">
 									Digression 2: Microservices
 								</a>
@@ -485,6 +503,24 @@
 							<li>
 								<a href="#kafka--mircroservices" class="nav-kafka--mircroservices">
 									Kafka &#43; Mircroservices
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#code-example" class="nav-code-example">
+									Code Example
 								</a>
 							</li>
 						
@@ -668,7 +704,7 @@
 
 <h3 id="topics">Topics</h3>
 <ul>
-<li>Is a particular stream of data</li>
+<li>Is a particular stream of data. Is the <strong>unit of parallelism</strong> in Apache Kafka.</li>
 <li>You can have as many topics as you want</li>
 <li>Identified by a name, divided into partitions</li>
 </ul>
@@ -701,6 +737,13 @@
 <li>In case of Broker failures, consumers know how to recover the failed broker.</li>
 <li>Data are read in order within each partition.</li>
 <li><strong>Consumer group</strong>: a set of consumers that share and load-balance the partitions of a topic, ensuring each partition is consumed by <strong>exactly one</strong> consumer in the group. Different groups consume <strong>independently</strong>, so each group receives a full copy of the topic’s messages.</li>
+<li>Why <code>group.id</code> helps:
+<ul>
+<li><strong>Parallelism</strong>: all consumers with the same group.id share the work of reading a topic, Each partition’s messages go to exactly one consumer in the group. Add more consumers to the group → partitions get redistributed → higher parallelism (up to number of partitions).</li>
+<li>At-least-once delivery/<strong>fault tolerance</strong>: each consumer in the group keeps track of its read offsets. If a consumer crashes and restarts, it resumes reading from its last committed offset, ensuring no messages are missed.</li>
+<li>Multiple independent applications: Different groups consume <strong>independently</strong>, so each group receives a full copy of the topic’s messages.</li>
+</ul>
+</li>
 </ul>
 <h3 id="zookeeper">Zookeeper</h3>
 <ul>
@@ -710,6 +753,26 @@
 <li>Sends notification to Kafka in case of changes (new broker added, broker failure, new topic, etc)</li>
 <li>An important component of Kafka.</li>
 <li>Causes the hardness of deploying Kafka as it is on the top of OS to build the communication, and enable the Kafka to run smoothly and directly in different platforms and OS.</li>
+</ul>
+<h2 id="parallelism">Parallelism</h2>
+<ul>
+<li>A topic partition is the unit of parallelism in Kafka. Each partition can be hosted on a different broker (server) in the Kafka cluster.</li>
+<li>Producers and brokers:
+<ul>
+<li>Writes to different partitions can be done in parallel.</li>
+<li>Parallelism frees up hardware resources for operations like compression.</li>
+</ul>
+</li>
+<li>Consumers:
+<ul>
+<li>You can have up to one consumer instance per partition within a consumer group.</li>
+<li>Any additional consumers beyond the number of partitions will remain idle.</li>
+</ul>
+</li>
+<li>Kafka cluster: more partitions in a Kafka cluster lead to higher system throughput.</li>
+<li>Scalable partitioning: you can increase or decrease the number of partitions in a topic as your data volume and throughput requirements change over time.</li>
+<li>Keyed messages caution: exercise caution when messages are produced with keys, as they are deterministically assigned to partitions.</li>
+<li>Consistent routing: kafka ensures that messages with identical keys are consistently routed to the same partition, preserving the integrity of order-dependent applications.</li>
 </ul>
 <h2 id="digression-2-microservices">Digression 2: Microservices</h2>
 <ul>
@@ -737,6 +800,89 @@
          alt="kafka microservices" width="100%"/>
 </figure>
 
+<h2 id="code-example">Code Example</h2>
+<ul>
+<li>Producer example (Python):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> confluent_kafka <span style="color:#f92672">import</span> Producer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Kafka settings</span>
+</span></span><span style="display:flex;"><span>BROKER <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;localhost:9092&#39;</span>   <span style="color:#75715e"># Change this to your Kafka broker address</span>
+</span></span><span style="display:flex;"><span>TOPIC <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;simple_topic&#39;</span>      <span style="color:#75715e"># Replace with your Kafka topic</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Function to create a Kafka Producer</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_kafka_producer</span>(broker):
+</span></span><span style="display:flex;"><span>    conf <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;bootstrap.servers&#39;</span>: broker,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;client.id&#39;</span>: socket<span style="color:#f92672">.</span>gethostname()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    producer <span style="color:#f92672">=</span> Producer(conf)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> producer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">publish_simple_message</span>():
+</span></span><span style="display:flex;"><span>    producer <span style="color:#f92672">=</span> create_kafka_producer(BROKER)
+</span></span><span style="display:flex;"><span>    producer<span style="color:#f92672">.</span>produce(TOPIC, key<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;message&#34;</span>, value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Yes, it&#39;s me!&#34;</span>)
+</span></span><span style="display:flex;"><span>    producer<span style="color:#f92672">.</span>flush()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    publish_simple_message()
+</span></span></code></pre></div></li>
+<li>Consumer example - creation code:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Creation code</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> confluent_kafka <span style="color:#f92672">import</span> Producer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Kafka settings</span>
+</span></span><span style="display:flex;"><span>BROKER <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;localhost:9092&#39;</span>   <span style="color:#75715e"># Change this to your Kafka broker address</span>
+</span></span><span style="display:flex;"><span>TOPIC <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;simple_topic&#39;</span>      <span style="color:#75715e"># Replace with your Kafka topic</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Function to create a Kafka Producer</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_kafka_producer</span>(broker):
+</span></span><span style="display:flex;"><span>    conf <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;bootstrap.servers&#39;</span>: broker,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;client.id&#39;</span>: socket<span style="color:#f92672">.</span>gethostname()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    producer <span style="color:#f92672">=</span> Producer(conf)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> producer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">publish_simple_message</span>():
+</span></span><span style="display:flex;"><span>    producer <span style="color:#f92672">=</span> create_kafka_producer(BROKER)
+</span></span><span style="display:flex;"><span>    producer<span style="color:#f92672">.</span>produce(TOPIC, key<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;message&#34;</span>, value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Yes, it&#39;s me!&#34;</span>)
+</span></span><span style="display:flex;"><span>    producer<span style="color:#f92672">.</span>flush()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    publish_simple_message()
+</span></span></code></pre></div></li>
+<li>Consumer example: poll loop
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Display data from Kafka</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">display_kafka_data</span>():
+</span></span><span style="display:flex;"><span>    consumer <span style="color:#f92672">=</span> create_kafka_consumer(BROKER, GROUP_ID, TOPIC)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        msg <span style="color:#f92672">=</span> consumer<span style="color:#f92672">.</span>poll(timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> msg <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> msg<span style="color:#f92672">.</span>error():
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> msg<span style="color:#f92672">.</span>error()<span style="color:#f92672">.</span>code() <span style="color:#f92672">==</span> KafkaError<span style="color:#f92672">.</span>_PARTITION_EOF:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                print(msg<span style="color:#f92672">.</span>error())
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        key <span style="color:#f92672">=</span> msg<span style="color:#f92672">.</span>key()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>        value <span style="color:#f92672">=</span> msg<span style="color:#f92672">.</span>value()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Display message with an icon</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;New Message Alert!!&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Key: </span><span style="color:#e6db74">{</span>key<span style="color:#e6db74">}</span><span style="color:#e6db74"> and Value: </span><span style="color:#e6db74">{</span>value<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    consumer<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    display_kafka_data()
+</span></span></code></pre></div></li>
+</ul>
 <h1 id="confluent-kafka">Confluent Kafka</h1>
 <ul>
 <li>Since Handling Kafka requires managing low-level, complex data infrastructure, we have <strong>Confluent Kafka</strong>. It is built on top of Apache Kafka to offer complete, fully managed, cloud-native data streaming that&rsquo;s available wherever your data and applications reside.</li>
@@ -753,8 +899,8 @@
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts">
-			Next<br>No newer posts.
+                <a class="newer-posts" href="/tech/cloud_infra_basics/terraform/">
+			Next<br>IaC &amp; Terraform
                 </a>
                 
                 
@@ -1186,6 +1332,24 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
+								<a href="#parallelism" class="nav-parallelism">
+									Parallelism
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
 								<a href="#digression-2-microservices" class="nav-digression-2-microservices">
 									Digression 2: Microservices
 								</a>
@@ -1224,6 +1388,24 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 							<li>
 								<a href="#kafka--mircroservices" class="nav-kafka--mircroservices">
 									Kafka &#43; Mircroservices
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#code-example" class="nav-code-example">
+									Code Example
 								</a>
 							</li>
 						

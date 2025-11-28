@@ -7,9 +7,181 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Tue, 25 Nov 2025 22:10:31 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 00:04:22 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>IaC &amp; Terraform</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/terraform/</link>
+        <pubDate>Fri, 28 Nov 2025 00:04:22 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/terraform/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/terraform/ -&lt;h1 id=&#34;infrastructure-as-code&#34;&gt;Infrastructure as Code&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Definition&lt;/strong&gt;: Write and execute code to define, deploy update, and destroy our infra.&lt;/li&gt;
+&lt;li&gt;Why we automate deployment? reliable, efficient, repeatable, safe releases, multiple environment, maximum scalability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;types-of-iac-tools&#34;&gt;Types of IaC tools&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/types_of_iac.png&#34;
+         alt=&#34;IaC Tools&#34; width=&#34;50%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;ad-hoc-scripts&#34;&gt;Ad-hoc Scripts&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;strong&gt;easiest&lt;/strong&gt; and most straightforward approach of automating anything&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ad-hoc tools&lt;/strong&gt; run on single core tool, like cloud shell, which connects to a VM with only 5GB storage space, if you need more, you have to upload the file to cloud bucket or sth, and use the shell to read from it.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;examples&lt;/strong&gt; : Bash, Ruby, Perl&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;configuration-management-tools&#34;&gt;Configuration Management Tools&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Designed to install and manage software on existing servers.&lt;/li&gt;
+&lt;li&gt;These tools offer coding conventions and ability to run scripts on multiple servers.&lt;/li&gt;
+&lt;li&gt;ansible assumes the multiple servers that you use work in completely the same way with same hard tool structure. In these cases, even though the servers are of the same, some external small errors, like a sudden network error, cause the machines to diverge in some way, like having different file system structure.&lt;/li&gt;
+&lt;li&gt;Examples: Chef, Puppet and Ansible.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;server-templating-tools&#34;&gt;Server Templating Tools&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;The idea of server templating tools is to create an image of a server that captures a fully self-contained “snapshot” of the operating system (OS), the software, the files, and all other relevant details.&lt;/li&gt;
+&lt;li&gt;Examples: Docker, Packer, Vagrant&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;provisioning-tools&#34;&gt;Provisioning Tools&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Most &lt;strong&gt;advanced&lt;/strong&gt; IaC tools.&lt;/li&gt;
+&lt;li&gt;Provisioning tools are responsible for &lt;strong&gt;creating&lt;/strong&gt; these servers, rather than running software or scripts on top of existing servers like other categories.&lt;/li&gt;
+&lt;li&gt;You can use provisioning tools to create databases, caches, load balancers, queues, network configurations and SSL certificates.&lt;/li&gt;
+&lt;li&gt;Examples: Terraform, CloudFormation, OpenStack Heat, and Pulumi, actively deal with hardware&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;orchestration-tools&#34;&gt;Orchestration Tools&lt;/h3&gt;
+&lt;p&gt;We mentioned previously. Orchestration tools are responsible for managing the lifecycle of containers, including deployment, scaling, and networking.&lt;/p&gt;
+&lt;h2 id=&#34;iac-tool-comparison&#34;&gt;IaC Tool Comparison&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/iac_comparison.png&#34;
+         alt=&#34;IaC Tool Comparison&#34; width=&#34;100%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;mutable-vs-_immutable_&#34;&gt;Mutable vs. &lt;em&gt;&lt;strong&gt;Immutable&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mutable&lt;/strong&gt;: Configuration management tools (e.g., chef, puppet) default to a mutable infrastructure paradigm.
+&lt;ul&gt;
+&lt;li&gt;like ansible &amp;amp; chef where there is possible mutation to the softwares like the network error mentioned above that causes the infra to diverge between machines.&lt;/li&gt;
+&lt;li&gt;Over time, each server becomes slightly different than all the others, leading to subtle configuration bugs that are &lt;strong&gt;difficult to diagnose and reproduce.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Immutable&lt;/strong&gt; infrastructure tools don’t allow this deviation to happen.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;declarative-vs-procedural&#34;&gt;&lt;em&gt;&lt;strong&gt;Declarative&lt;/strong&gt;&lt;/em&gt; vs. Procedural&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;In &lt;strong&gt;Procedural&lt;/strong&gt; scripting style, developers will code the application flow in step-by-step commands that does not care about the outcome or the final state, but just complete the preset steps. e.g. chef and ansible&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;Declarative&lt;/strong&gt; scripting style, developers will write code that specifies their desired end state, and the IaC tool itself is responsible for figuring out how to achieve that state.
+&lt;ul&gt;
+&lt;li&gt;e.g. 5 servers, 3 firewall connections, 1 SSL certificate, IaC tool is responsible for figuring out how to achieve these goals. E.g. Terraform, CloudFormation (provisioning), puppet(config management)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;general-purpose-vs-domain-specific&#34;&gt;&lt;em&gt;&lt;strong&gt;General Purpose&lt;/strong&gt;&lt;/em&gt; vs. Domain-specific&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DSLs&lt;/code&gt; are designed for use in &lt;strong&gt;one specific domain&lt;/strong&gt;, whereas &lt;code&gt;GPLs&lt;/code&gt; can be used across a &lt;strong&gt;broad range of domains&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GPL&lt;/code&gt; Examples: Chef supports Ruby; Pulumi supports a wide variety of GPLs, including JavaScript, TypeScript, Python, Go, C#, Java, and others.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DSL&lt;/code&gt; Examples: Terraform uses HCL; Puppet uses Puppet Language; Ansible, CloudFormation, and OpenStack Heat use YAML (CloudFormation also supports JSON).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;master-vs-masterless&#34;&gt;Master vs. &lt;em&gt;&lt;strong&gt;Masterless&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;In &lt;strong&gt;Master-centered&lt;/strong&gt; infrastructure tools, you should &lt;strong&gt;dedicate a server&lt;/strong&gt; to run the IaC tool (e.g., Chef, Puppet).
+&lt;ul&gt;
+&lt;li&gt;Every time you want to update something in your infra, you use a client (e.g., a command-line tool) to issue new commands to the master server, and the master server either pushes the updates out to all the other servers or those servers pull the latest updates down from the master server on a regular basis.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;masterless&lt;/strong&gt; infrastructure tools, tools don’t require a Master or rely on a master server that is part of the existing infra.
+&lt;ul&gt;
+&lt;li&gt;For example, Terraform communicates with cloud providers using the cloud provider’s APIs, so in some sense, the API servers are master servers, except that they don’t require any extra infrastructure or any extra authentication mechanisms (i.e., just use your API keys).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;agent-k8s-vs-agentless&#34;&gt;Agent (k8s) vs. &lt;em&gt;&lt;strong&gt;Agentless&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Some IaC tools require the installation of agent software on each node you need to configure. The agent typically runs in the background on each server and is responsible for installing the latest configuration management updates.
+&lt;ul&gt;
+&lt;li&gt;This introduces a security concern since you need to open the outbound port for the agent to communicate with the master server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;community-support&#34;&gt;Community Support&lt;/h3&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/iac_community_support.png&#34;
+         alt=&#34;IaC Community Support&#34; width=&#34;40%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&#34;terraform&#34;&gt;Terraform&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;An open-source IaC provisioning tool created by HashiCorp and written in GO Lang.&lt;/li&gt;
+&lt;li&gt;script automatically detects the environment it is running on (GCP, AWS, etc) and install the corresponding libraries and use a hash map to map the compatible APIs.&lt;/li&gt;
+&lt;li&gt;Good readability, can deploy to K8s, declarative, paves the way for massive scalability, Management of infrastructure will be automated, Source of truth for the infra&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hashicorp-configuration-language-hcl&#34;&gt;HashiCorp Configuration Language (HCL)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The most basic construct is called a &lt;code&gt;block&lt;/code&gt;, defined as a “container for other content”.&lt;/li&gt;
+&lt;li&gt;The body of the block is nested with {}&lt;/li&gt;
+&lt;li&gt;Each block has a type (e.g., resource)&lt;/li&gt;
+&lt;li&gt;Each block is identified using labels, the number of labels is identified based on the block type&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;block-types&#34;&gt;Block types&lt;/h3&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/terraform_block_types.png&#34;
+         alt=&#34;Terraform Block Types&#34; width=&#34;90%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource block&lt;/strong&gt;: most popular; to &lt;strong&gt;create components&lt;/strong&gt; of your infra, like VM instances, databases, and networking components.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Provider block&lt;/strong&gt;: to define the &lt;strong&gt;cloud provider&lt;/strong&gt; (e.g., AWS, GCP, Azure) that you want to use to host and deploy your resources. Terraform decides which mapping table to download based on the cloud provider.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Variable block&lt;/strong&gt;: to define &lt;strong&gt;input variables&lt;/strong&gt; that can be used to parameterize your Terraform configuration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Output block&lt;/strong&gt;: exposes information about specific resources created in your configuration.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Provisioner&lt;/strong&gt;: To execute a script &lt;strong&gt;after your resources have been created&lt;/strong&gt;. It waits for your service to be deployed successfully and then run some codes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local&lt;/strong&gt;: To create local variables within a specific resource block&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;workflow&#34;&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;A basic Terraform workflow consists of the following two steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Initialization&lt;/strong&gt;: using &lt;code&gt;terraform init&lt;/code&gt;. Install libraries, binaries executable, for the providers that you have listed in your code. The mapping tables, provider apis, etc. All stored in &lt;code&gt;.terraform&lt;/code&gt; folder.
+&lt;ul&gt;
+&lt;li&gt;You must initialize Terraform every time you write a new configuration file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Execution&lt;/strong&gt;.
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Plan&lt;/strong&gt;: a log file stored in CI/CD pipeline, keep track what will happen by comparing what we currently have and what we will do (add, delete, change in the current infrastructure).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Apply&lt;/strong&gt;: Once you have confirmed that the plan does what you intended, then execute the plan and Terraform will provision the cloud resources.&lt;/li&gt;
+&lt;li&gt;destroy: to remove all resources created by Terraform. Don’t do it by yourself. 解铃还须系铃人&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;naming-conventions&#34;&gt;Naming conventions&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Terraform does &lt;strong&gt;not care about filenames&lt;/strong&gt;. It combines all files with the &lt;code&gt;.tf&lt;/code&gt; extension and then creates an execution plan using all the configurations.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;provider.tf&lt;/code&gt;: contains the provider block declaring provider, which is a translation layer between Terraform and the external API of the provider.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;variables.tf&lt;/code&gt;:
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;create all the input global variables you required in your project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Variables are referenced using the &lt;code&gt;var.&amp;lt;variable_name&amp;gt;&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;When &lt;em&gt;apply&lt;/em&gt; it will scan our code to identify what variables or parameters are missing.&lt;/li&gt;
+&lt;li&gt;You can create default values in &lt;em&gt;terraform.tfvars&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;startup.sh&lt;/code&gt;: a bash script that will be executed after the resource is created.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;outputs.tf&lt;/code&gt;: contains all the output blocks that expose information about specific resources created in your configuration.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;main.tf&lt;/code&gt;: contains all the resource blocks that define the actual components of your infrastructure. Actual creation of the resource blocks.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;terraform.tfvars&lt;/code&gt;: There are multiple ways to assign a value to a variable, either through a default value in the declaration or pass it as a value either interactively or via the command-line flag. One common way is to create a file named &lt;code&gt;terraform.tfvars&lt;/code&gt; that contains the variable assignments. You can then use them as &lt;code&gt;var.&amp;lt;variable_name&amp;gt;&lt;/code&gt; in your code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;configuration-structure&#34;&gt;Configuration Structure&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/terraform_configuration_structure.png&#34;
+         alt=&#34;Terraform File Structure&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+- http://allenhsm.github.io/tech/cloud_infra_basics/terraform/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -79,7 +251,7 @@
 
 &lt;h3 id=&#34;topics&#34;&gt;Topics&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;Is a particular stream of data&lt;/li&gt;
+&lt;li&gt;Is a particular stream of data. Is the &lt;strong&gt;unit of parallelism&lt;/strong&gt; in Apache Kafka.&lt;/li&gt;
 &lt;li&gt;You can have as many topics as you want&lt;/li&gt;
 &lt;li&gt;Identified by a name, divided into partitions&lt;/li&gt;
 &lt;/ul&gt;
@@ -112,6 +284,13 @@
 &lt;li&gt;In case of Broker failures, consumers know how to recover the failed broker.&lt;/li&gt;
 &lt;li&gt;Data are read in order within each partition.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Consumer group&lt;/strong&gt;: a set of consumers that share and load-balance the partitions of a topic, ensuring each partition is consumed by &lt;strong&gt;exactly one&lt;/strong&gt; consumer in the group. Different groups consume &lt;strong&gt;independently&lt;/strong&gt;, so each group receives a full copy of the topic’s messages.&lt;/li&gt;
+&lt;li&gt;Why &lt;code&gt;group.id&lt;/code&gt; helps:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Parallelism&lt;/strong&gt;: all consumers with the same group.id share the work of reading a topic, Each partition’s messages go to exactly one consumer in the group. Add more consumers to the group → partitions get redistributed → higher parallelism (up to number of partitions).&lt;/li&gt;
+&lt;li&gt;At-least-once delivery/&lt;strong&gt;fault tolerance&lt;/strong&gt;: each consumer in the group keeps track of its read offsets. If a consumer crashes and restarts, it resumes reading from its last committed offset, ensuring no messages are missed.&lt;/li&gt;
+&lt;li&gt;Multiple independent applications: Different groups consume &lt;strong&gt;independently&lt;/strong&gt;, so each group receives a full copy of the topic’s messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;zookeeper&#34;&gt;Zookeeper&lt;/h3&gt;
 &lt;ul&gt;
@@ -121,6 +300,26 @@
 &lt;li&gt;Sends notification to Kafka in case of changes (new broker added, broker failure, new topic, etc)&lt;/li&gt;
 &lt;li&gt;An important component of Kafka.&lt;/li&gt;
 &lt;li&gt;Causes the hardness of deploying Kafka as it is on the top of OS to build the communication, and enable the Kafka to run smoothly and directly in different platforms and OS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;parallelism&#34;&gt;Parallelism&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;A topic partition is the unit of parallelism in Kafka. Each partition can be hosted on a different broker (server) in the Kafka cluster.&lt;/li&gt;
+&lt;li&gt;Producers and brokers:
+&lt;ul&gt;
+&lt;li&gt;Writes to different partitions can be done in parallel.&lt;/li&gt;
+&lt;li&gt;Parallelism frees up hardware resources for operations like compression.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Consumers:
+&lt;ul&gt;
+&lt;li&gt;You can have up to one consumer instance per partition within a consumer group.&lt;/li&gt;
+&lt;li&gt;Any additional consumers beyond the number of partitions will remain idle.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Kafka cluster: more partitions in a Kafka cluster lead to higher system throughput.&lt;/li&gt;
+&lt;li&gt;Scalable partitioning: you can increase or decrease the number of partitions in a topic as your data volume and throughput requirements change over time.&lt;/li&gt;
+&lt;li&gt;Keyed messages caution: exercise caution when messages are produced with keys, as they are deterministically assigned to partitions.&lt;/li&gt;
+&lt;li&gt;Consistent routing: kafka ensures that messages with identical keys are consistently routed to the same partition, preserving the integrity of order-dependent applications.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;digression-2-microservices&#34;&gt;Digression 2: Microservices&lt;/h2&gt;
 &lt;ul&gt;
@@ -148,6 +347,89 @@
          alt=&#34;kafka microservices&#34; width=&#34;100%&#34;/&gt;
 &lt;/figure&gt;
 
+&lt;h2 id=&#34;code-example&#34;&gt;Code Example&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Producer example (Python):
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; socket
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; confluent_kafka &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Producer
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Kafka settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BROKER &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;localhost:9092&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#75715e&#34;&gt;# Change this to your Kafka broker address&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TOPIC &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;simple_topic&amp;#39;&lt;/span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;# Replace with your Kafka topic&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Function to create a Kafka Producer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;create_kafka_producer&lt;/span&gt;(broker):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    conf &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bootstrap.servers&amp;#39;&lt;/span&gt;: broker,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;client.id&amp;#39;&lt;/span&gt;: socket&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gethostname()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Producer(conf)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; producer
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;publish_simple_message&lt;/span&gt;():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; create_kafka_producer(BROKER)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;produce(TOPIC, key&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;, value&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Yes, it&amp;#39;s me!&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flush()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    publish_simple_message()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Consumer example - creation code:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Creation code&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; socket
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; confluent_kafka &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Producer
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Kafka settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BROKER &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;localhost:9092&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#75715e&#34;&gt;# Change this to your Kafka broker address&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TOPIC &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;simple_topic&amp;#39;&lt;/span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;# Replace with your Kafka topic&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Function to create a Kafka Producer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;create_kafka_producer&lt;/span&gt;(broker):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    conf &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;bootstrap.servers&amp;#39;&lt;/span&gt;: broker,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;client.id&amp;#39;&lt;/span&gt;: socket&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gethostname()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Producer(conf)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; producer
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;publish_simple_message&lt;/span&gt;():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; create_kafka_producer(BROKER)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;produce(TOPIC, key&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;, value&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Yes, it&amp;#39;s me!&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    producer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flush()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    publish_simple_message()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Consumer example: poll loop
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Display data from Kafka&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;display_kafka_data&lt;/span&gt;():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    consumer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; create_kafka_consumer(BROKER, GROUP_ID, TOPIC)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        msg &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; consumer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;poll(timeout&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; msg &lt;span style=&#34;color:#f92672&#34;&gt;is&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; msg&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;error():
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; msg&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;error()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;code() &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; KafkaError&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;_PARTITION_EOF:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                print(msg&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;error())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        key &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; msg&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;key()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;decode(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; msg&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;value()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;decode(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Display message with an icon&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;New Message Alert!!&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Key: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;key&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; and Value: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;value&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    consumer&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;close()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    display_kafka_data()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1 id=&#34;confluent-kafka&#34;&gt;Confluent Kafka&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Since Handling Kafka requires managing low-level, complex data infrastructure, we have &lt;strong&gt;Confluent Kafka&lt;/strong&gt;. It is built on top of Apache Kafka to offer complete, fully managed, cloud-native data streaming that&amp;rsquo;s available wherever your data and applications reside.&lt;/li&gt;
@@ -1001,61 +1283,6 @@ We define the resources that users or service providers manage as follows:
 
 &lt;/div&gt;&lt;/p&gt;
 - http://allenhsm.github.io/posts/miscellaneous_notes/%E9%9A%8F%E7%AC%94%E4%B8%A4%E5%88%99/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Miscellaneous Notes (1)</title>
-        <link>http://allenhsm.github.io/posts/miscellaneous_notes/miscellaneous_notes_1/</link>
-        <pubDate>Thu, 13 Feb 2025 00:53:51 -0800</pubDate>
-        
-        <guid>http://allenhsm.github.io/posts/miscellaneous_notes/miscellaneous_notes_1/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/posts/miscellaneous_notes/miscellaneous_notes_1/ -&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 16px; 
-            letter-spacing: 2px; 
-            line-height: 1.4;
-            color: rgba(17, 27, 156, 0.8) !important;
-            margin-bottom: 1;&#34;&gt;
-    于南加州而言，雨是很稀有的。又是一年雨季，想起去年此时的碎碎念，挪到这里。&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;
-&lt;/div&gt;
-&lt;hr&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.8;
-            color: dark !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;2024-07-13&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;打扫院子，最茂盛的是一株白玉兰、残花落叶最多的也是她。白玉兰，极高洁极美的名字，老家叫白兰花，印象里极少见到盛开的、如展翅的白蝴蝶的，大抵花骨朵时便被摘了去。夏天时，街边常见卖花老妪，端着一个银色托盘，上面一颗颗并排摆满了穿着曲别针的玉兰花，都是将开而未开的花骨朵儿，极远便能闻到甜丝丝的暗香，贴着鼻子闻，沁甜的香气直冲上来，甜得醉人，稍离远一点，便透出高贵的、独有的幽香，甜而不腻，香而不媚。白玉兰应该很中意加州的天气，尤其中南部沿海，早晨起雾，漫漫夏日，花开一轮又一轮，不知老家的街上还有没有卖花的老妇人？&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;hr&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.8;
-            color: dark !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;2024-02-01&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;雨来得勤，一个月内第二场了。躺在床上，静静听着时紧时徐的雨声，仿佛世上唯有天地与我。“留得枯荷听雨声”“一叶叶，一声声，空阶滴到明。”“一任阶前、点滴到天明。”“一川烟草，满船风絮，梅子黄时雨。”诗都走进梦里，但有一间棚屋庇护，卧听风雨，便生出惬意的共鸣，生出闲情逸致，盼能把握这来去无期的幸福。&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;hr&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.8;
-            color: dark !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;2023-09-18&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;以前我是很爱吃月饼乃至各种甜食的。现在看见各种月饼，除非能做到“不甜”，否则不大提得起兴致，这大概和我的初中有关。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;初中离家算不上很远，直线来看要穿过一座山（很低矮，充其量是个土丘，不过叫惯了某某山），公共交通不便，非坐私家车不可，前后要花去二十分钟。再者，出发前还要吃顿早餐，加上穿衣洗漱，六点四十就要起床。要问什么时候时间最宝贵？那当然是闹钟响后多睡的几分钟甚至几秒钟，一寸光阴十寸金。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;记不清初几了，总是在一个中秋节后，这样的生活有了转机。从起床到学校这段时间，只有早餐时间是有机会缩减的，再一想，家里的月饼消化不动。广东流行双黄白莲蓉，这种月饼个大，高糖高脂肪，两个咸蛋黄滋滋冒油，稍微上点年纪吃两口都齁得慌，只有年轻人“有福消受”。于是乎，我每天早上多睡一刻钟，这一刻钟有如烟民饭后一根烟那样舒坦享受，洗漱完揣着一个月饼一杯牛奶直接出发，到了教室把月饼破成四块，一节课吃一块，多的还能分给同学，就这样各种双黄白莲蓉吃了月余才吃尽，到后面已经尝不出什么滋味，单纯为了多睡那一刻钟。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;如今一看见双黄白莲蓉，不知道是那时候吃伤了，还是身体不似从前，总觉着腻得慌；而且吃完甜食和牛奶还不刷牙，现在想想牙恐怕也坏在那时候。不过，吃了几个月饼我就睡了几个懒觉，若按一寸光阴一寸金算，拿来补牙也是值的。😄&lt;/p&gt;
-
-&lt;/div&gt;
-- http://allenhsm.github.io/posts/miscellaneous_notes/miscellaneous_notes_1/ - This is a customized copyright.</description>
         </item>
     
     
