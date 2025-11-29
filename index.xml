@@ -7,9 +7,132 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Fri, 28 Nov 2025 00:04:22 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 28 Nov 2025 19:28:43 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Concepts in Cloud Infra</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/</link>
+        <pubDate>Fri, 28 Nov 2025 19:28:43 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/ -&lt;h1 id=&#34;cloud-types&#34;&gt;Cloud Types&lt;/h1&gt;
+&lt;h2 id=&#34;public-cloud&#34;&gt;Public Cloud&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Services offered over the public internet and available to anyone who wants to purchase them. Typically owned and operated by third-party cloud service providers (e.g., AWS, Azure, Google Cloud). It exists on the premise of the cloud service provider&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Advantage&lt;/strong&gt;: cost. &lt;strong&gt;Concern&lt;/strong&gt;: Security. However there are some public cloud providers that have demonstrated strong security measures.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;private-cloud&#34;&gt;Private Cloud&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Implemented within the internal IT environment of the company, typically managed by the company or a third party vendor&lt;/li&gt;
+&lt;li&gt;In private clouds, the servers and storage devices may exist on premist or off-premise&lt;/li&gt;
+&lt;li&gt;Private clouds can deliver IaaS internally to employees or business units through an intranet or the Internet via a virtual private network (VPN), as well as software (applications) or storage as services to its branch offices&lt;/li&gt;
+&lt;li&gt;Examples of services delivered through the private cloud include database on demand, email on demand, and storage on demand.&lt;/li&gt;
+&lt;li&gt;A key motivation for opting-in for a private cloud is &lt;em&gt;&lt;strong&gt;security&lt;/strong&gt;&lt;/em&gt;. A private cloud infrastructure offers tighter controls over the geographic location of data storage and other aspects of security. Other benefits include easy resource sharing and rapid deployment to organizational entities.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hybrid-cloud&#34;&gt;Hybrid cloud&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In Hybrid Cloud, constituting private and public clouds are bound together by standardized technology that enables data and application portability (e.g., cloud bursting for load balancing between clouds).&lt;/li&gt;
+&lt;li&gt;With a hybrid cloud solution, sensitive information can be placed in a private area of the cloud, and less sensitive data can take advantage of the benefits of the public cloud. So Using a hybrid cloud requires proper management of data transfers and replication between public and private clouds&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;comparison&#34;&gt;Comparison&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cloud_comparison.png&#34;
+         alt=&#34;cloud types&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&#34;data-centers&#34;&gt;Data Centers&lt;/h1&gt;
+&lt;h2 id=&#34;elements&#34;&gt;Elements:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Facility&lt;/strong&gt;: location and &amp;ldquo;white space&amp;rdquo; (space for IT equipment)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IT Equipment&lt;/strong&gt;: servers, storage hardware, cables, racks, firewalls, etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Support Infra&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Uninterruptible Power Sources (UPS)&lt;/strong&gt;&lt;/em&gt;: battery banks, redundant power sources and generators&lt;/li&gt;
+&lt;li&gt;Environmental controls: cooling systems, fire suppression systems&lt;/li&gt;
+&lt;li&gt;Physical security systems: surveillance cameras, biometric access controls&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Operations Staff&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;clouds-on-data-centers&#34;&gt;Clouds on Data Centers&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Range in size from &lt;em&gt;edge&lt;/em&gt; facilities to &lt;em&gt;mega&lt;/em&gt; scale&lt;/li&gt;
+&lt;li&gt;Economies of scale: approximate costs for a small size center (1000 servers) and a larger, 100K server center
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/data_center_costs.png&#34;
+         alt=&#34;data center costs&#34; width=&#34;90%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;data-center-efficiency&#34;&gt;Data Center Efficiency&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/data_center_efficiency.png&#34;
+         alt=&#34;data center efficiency&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The Green Grid, an association of IT professionals focused on increasing the energy efficiency of data centers, created two major metrics to assess the efficiency of data center efficiency.&lt;/li&gt;
+&lt;li&gt;These metrics will help organizations make better decisions while deploying new data centers or replacing existing parts of current data centers.
+&lt;ul&gt;
+&lt;li&gt;&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/data_center_efficiency_metrics.png&#34;
+         alt=&#34;data center efficiency metrics&#34; width=&#34;70%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;Data Center Infrastructure Efficiency (&lt;em&gt;DCIE&lt;/em&gt;) = &lt;code&gt;1 / PUE&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;To improve DC Deployment: since Building racks of servers &amp;amp; complex cooling systems all separately is not efficient, they package and deploy into &lt;em&gt;bigger units&lt;/em&gt;, like &lt;code&gt;ICE Cube&lt;/code&gt; as a modular data center.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;cloud-computing-limitations&#34;&gt;Cloud Computing Limitations&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Connectivity&lt;/strong&gt;&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;Connectivity is needed.&lt;/li&gt;
+&lt;li&gt;Some devices need to be continuously operable even when not connected.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Bandwidth&lt;/strong&gt;&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;How much data do we create every day? In 2019, The World Economic Forum reports that the entire digital world is expected to reach 44 ettabytes by 2020.&lt;/li&gt;
+&lt;li&gt;Eventually, when all devices are connected to the cloud, bandwidth may become a big issue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Centralization of Analytics
+&lt;ul&gt;
+&lt;li&gt;Data should be stored on the cloud before reports can be available&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Security&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;solutions&#34;&gt;Solutions&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cloud_computing_limitations_solutions.png&#34;
+         alt=&#34;solution to cloud computing limitations&#34; width=&#34;80%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;fog-computing&#34;&gt;&lt;em&gt;Fog Computing&lt;/em&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Fog computing&lt;/strong&gt;&lt;/em&gt; is an extra layer between the edge layer and the cloud layer.&lt;/li&gt;
+&lt;li&gt;The main benefit of Fog computing is &lt;strong&gt;efficiency of data traffic&lt;/strong&gt; and a &lt;strong&gt;reduction in latency&lt;/strong&gt;.
+&lt;ul&gt;
+&lt;li&gt;Data generated from the edge are sent to a fog node close to the data source. These data are analyzed locally, filtered, and then sent to the cloud for long-term storage if necessary.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;According to Mung Chiang, Dean of the Purdue University, “fog provides the missing link for what data needs to be pushed to the cloud, and what can be analyzed locally, at the edge.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;edge-computing&#34;&gt;&lt;em&gt;Edge Computing&lt;/em&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Edge computing is the data computation that happens at the network’s edge where the data are created.&lt;/li&gt;
+&lt;li&gt;Fog computing acts as a &lt;strong&gt;mediator&lt;/strong&gt; between the edge and the cloud for several purposes, such as data filtering.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Fog computing can’t replace edge computing&lt;/strong&gt;&lt;/em&gt; while edge computing can live without fog computing in many applications.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;comparison-1&#34;&gt;Comparison&lt;/h3&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cloud_fog_comparison.png&#34;
+         alt=&#34;fog vs edge computing&#34; width=&#34;80%&#34;/&gt;
+&lt;/figure&gt;
+
+- http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -1217,9 +1340,10 @@ We define the resources that users or service providers manage as follows:
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud&#34;&gt;Brief Intro to Cloud&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/virtualization&#34;&gt;Virtualization&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/containerization&#34;&gt;Containerization&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_4&#34;&gt;Deployment Orchestration&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_5&#34;&gt;Apache Kafka&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_6&#34;&gt;Terraform&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration&#34;&gt;Deployment Orchestration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka&#34;&gt;Apache Kafka&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/terraform&#34;&gt;Terraform&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra&#34;&gt;Concepts in Cloud Infra&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_7&#34;&gt;Hadoop: HDFS, MapReduce, YARN&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_8&#34;&gt;Spark&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;TBD&lt;/li&gt;
@@ -1307,56 +1431,6 @@ We define the resources that users or service providers manage as follows:
 
 &lt;/div&gt;
 - http://allenhsm.github.io/reading/%E5%85%AB%E5%8D%81%E5%B9%B4%E4%BB%A3%E8%AE%BF%E8%B0%88%E5%BD%951/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>随笔两则</title>
-        <link>http://allenhsm.github.io/posts/miscellaneous_notes/%E9%9A%8F%E7%AC%94%E4%B8%A4%E5%88%99/</link>
-        <pubDate>Mon, 24 Mar 2025 23:04:49 -0700</pubDate>
-        
-        <guid>http://allenhsm.github.io/posts/miscellaneous_notes/%E9%9A%8F%E7%AC%94%E4%B8%A4%E5%88%99/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/posts/miscellaneous_notes/%E9%9A%8F%E7%AC%94%E4%B8%A4%E5%88%99/ -&lt;p&gt;&lt;h1 style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; font-size: 28px; letter-spacing: 2px; line-height: 1.3;&#34;&gt;又见“浴乎沂，风乎舞雩”&lt;/h1&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.8;
-            color: inherit !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;     二年级时，班主任让我们每天背一则论语。背了一阵子之后，就像读小说时好奇结局，我开始往后翻，一直翻到最长的那节，《先进》第26：“子路、曾皙、冉有、公西华侍坐。。。”，别的篇目都是三言两语，这篇洋洋洒洒占满了一整页，根本没法读下去。我抱怨：“妈妈你看，这篇怎么这么长，这怎么背啊？”妈妈笑我：“等到那一天你自然就能背出来的。”我还是担心，时不时就会偷瞄一下这头怪兽，再立马合上。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     不曾想到，第二年，离“子路、曾皙、冉有、公西华”还有些日子时，我就转学了，论语一搁下也是好多年。转眼上了初中，有一会儿特别沉迷《射雕英雄传》，我找w同学借的，几天一本几天一本的忘我地看，忘记看完第几本的时候，嘱他明天带下一本来，早上我到了班上就盯着前后门等他出现，结果他一连忘了好几天，急坏了，一想到没得看就无精打采，像抽不到福寿膏的大烟鬼.&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     终于读到第三本，黄蓉受了裘千仞一掌时日无多、郭靖背她上山求救于段皇爷这段，一对鸳鸯游于奇山异水间，不觉紧张，只是羡慕，在如诗如画的童话世界里，携一知己，“夕死可矣”。他二人顺利过了渔、樵、耕三关后，到书生这，考文化底蕴了，黄蓉反问书生孔子有多少学生，果然难倒了他，黄蓉公布答案：“莫春者，春服既成。冠者五六人，童子六七人，浴乎沂，风乎舞雩，咏而归。”那就是五六三十，六七四十二，一共72人。我笑了起来，金庸先生也是煞费苦心，只有黄蓉这古灵精怪绝顶聪明之人才想得到，我又好奇，这么仙风道骨、弃世脱俗的一句话，怎么会在论语里？我没有手机，从没背过的地方一页一页翻过去，终于，“子路、曾皙、冉有、公西华侍坐。。。浴乎沂，风乎舞雩，咏而归。’夫子喟然叹曰：‘吾与点也！’”好似故人重逢，儿时吓倒我的怪兽和我开了个玩笑，这次我一字一句的读完，果然人人都藏着一颗浪漫侠客的心，孔老夫子亦如是。&lt;/p&gt;
-
-&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&lt;h1 style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; font-size: 28px; letter-spacing: 2px; line-height: 1.3;&#34;&gt;偶遇《雅舍情书》&lt;/h1&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.8;
-            color: inherit !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;    逛图书馆看见梁实秋全集，想起《雅舍谈吃》，初中时爱不释手，而今去国怀乡，最强烈的还是味觉记忆，翻找之中瞟到一本竟载有“雅舍情书”，这就有点新奇了。中国人向来讲究内敛矜持，要我说是“闷骚”，七情六欲人人都有，唯独东亚文化得憋着不说。对公开发表的情书不能不好奇，加上窥私欲作祟，非看不可了。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;    不愧是西方文学大家，这段感情竟开始于梁实秋将满72岁时，而恋爱的对象，韩菁清女士，也已经43岁，是不折不扣的黄昏恋了。不过更有意思的是情书的文字，我在读之前只知道韩女士已经四十多岁，心想梁实秋大概也就四五十吧。但梁实秋的文字分明就是20岁年轻人热恋时的狂热，这就是爱情的魔力吗？忍不住摘录几段：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;   你昨晚消夜恐怕是在十二时以后了吧？在什么地方？你坐在什么人的身旁？你吃了些什么东西？我本来说陪你去消夜，你不肯，因为你疼我，可是你知道么，我的心里这么痛苦！今天五时起床，头昏昏然。以后我恐怕每天都要头昏昏然吗，除非……除非……&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;   昨天看你那一堆照片，我一张都没有拿（虽然其中有好多张我特别爱），实在是因为我想那些照片，以及其他，已经全部的属于我了。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;   你说悬崖勒马还来得及，在时间上当然还来得及，可是在情感上是来不及了。不要说是悬崖，就是火山口，我们也只好拥抱着跳下去。你说是吗，亲亲？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;   可是介绍你载曼谷八年的那一段【感情】，图与文，对我来讲刺激性太大了，甜酸苦辣，混不可辨。今早醒来，又看了一边。亲亲，我同情你，我尊敬你。像这样的记述文字，你以后不要故意给我看，也不要故意不给我看。不给我看，我想看；给我看，我受不了。写到这里，我流下了泪。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;   手表夜里可以发光，实在是好，我特别真实它，因为你告我你曾经戴过它，我也特别羡慕它，嫉妒它，因为它曾经亲近过你的肤泽。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;    类似文字不胜枚举，几乎封封如是。我无法想象这些文字出自七旬老人之手，浓烈而真挚的感情四处洋溢，爱情真能让人返老还童，青春焕发。字里行间我看到的是一个冲动、感性、痴狂、沉醉、细腻、多愁善感、占有欲强的男子，遇到了一个同样不可救药的女子。世俗在活生生的不可阻挡的爱情面前连粪土都不如。&lt;/p&gt;
-
-&lt;/div&gt;&lt;/p&gt;
-- http://allenhsm.github.io/posts/miscellaneous_notes/%E9%9A%8F%E7%AC%94%E4%B8%A4%E5%88%99/ - This is a customized copyright.</description>
         </item>
     
     

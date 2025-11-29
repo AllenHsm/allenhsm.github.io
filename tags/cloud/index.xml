@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Fri, 28 Nov 2025 00:04:22 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Nov 2025 19:28:43 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Concepts in Cloud Infra</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/</link>
+      <pubDate>Fri, 28 Nov 2025 19:28:43 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/</guid>
+      <description>Cloud Types Public Cloud Services offered over the public internet and available to anyone who wants to purchase them. Typically owned and operated by third-party cloud service providers (e.g., AWS, Azure, Google Cloud). It exists on the premise of the cloud service provider Advantage: cost. Concern: Security. However there are some public cloud providers that have demonstrated strong security measures. Private Cloud Implemented within the internal IT environment of the company, typically managed by the company or a third party vendor In private clouds, the servers and storage devices may exist on premist or off-premise Private clouds can deliver IaaS internally to employees or business units through an intranet or the Internet via a virtual private network (VPN), as well as software (applications) or storage as services to its branch offices Examples of services delivered through the private cloud include database on demand, email on demand, and storage on demand.</description>
+    </item>
+    
     <item>
       <title>IaC &amp; Terraform</title>
       <link>http://allenhsm.github.io/tech/cloud_infra_basics/terraform/</link>

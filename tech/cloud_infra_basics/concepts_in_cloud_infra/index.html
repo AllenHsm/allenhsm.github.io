@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html><head>
+<title>Concepts in Cloud Infra</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Concepts in Cloud Infra" />
+<meta property="og:description" content="Cloud Types Public Cloud Services offered over the public internet and available to anyone who wants to purchase them. Typically owned and operated by third-party cloud service providers (e.g., AWS, Azure, Google Cloud). It exists on the premise of the cloud service provider Advantage: cost. Concern: Security. However there are some public cloud providers that have demonstrated strong security measures. Private Cloud Implemented within the internal IT environment of the company, typically managed by the company or a third party vendor In private clouds, the servers and storage devices may exist on premist or off-premise Private clouds can deliver IaaS internally to employees or business units through an intranet or the Internet via a virtual private network (VPN), as well as software (applications) or storage as services to its branch offices Examples of services delivered through the private cloud include database on demand, email on demand, and storage on demand." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-28T19:28:43-05:00" />
+<meta property="article:modified_time" content="2025-11-28T19:28:43-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Concepts in Cloud Infra"/>
+<meta name="twitter:description" content="Cloud Types Public Cloud Services offered over the public internet and available to anyone who wants to purchase them. Typically owned and operated by third-party cloud service providers (e.g., AWS, Azure, Google Cloud). It exists on the premise of the cloud service provider Advantage: cost. Concern: Security. However there are some public cloud providers that have demonstrated strong security measures. Private Cloud Implemented within the internal IT environment of the company, typically managed by the company or a third party vendor In private clouds, the servers and storage devices may exist on premist or off-premise Private clouds can deliver IaaS internally to employees or business units through an intranet or the Internet via a virtual private network (VPN), as well as software (applications) or storage as services to its branch offices Examples of services delivered through the private cloud include database on demand, email on demand, and storage on demand."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#cloud-types" class="nav-cloud-types">
+									Cloud Types
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#public-cloud" class="nav-public-cloud">
+									Public Cloud
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#private-cloud" class="nav-private-cloud">
+									Private Cloud
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#hybrid-cloud" class="nav-hybrid-cloud">
+									Hybrid cloud
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#comparison" class="nav-comparison">
+									Comparison
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#data-centers" class="nav-data-centers">
+									Data Centers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#elements" class="nav-elements">
+									Elements:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#clouds-on-data-centers" class="nav-clouds-on-data-centers">
+									Clouds on Data Centers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#data-center-efficiency" class="nav-data-center-efficiency">
+									Data Center Efficiency
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#cloud-computing-limitations" class="nav-cloud-computing-limitations">
+									Cloud Computing Limitations
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#solutions" class="nav-solutions">
+									Solutions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#fog-computing" class="nav-fog-computing">
+									Fog Computing
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#edge-computing" class="nav-edge-computing">
+									Edge Computing
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#comparison-1" class="nav-comparison-1">
+									Comparison
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    Concepts in Cloud Infra
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-28 19:28
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="cloud-types">Cloud Types</h1>
+<h2 id="public-cloud">Public Cloud</h2>
+<ul>
+<li>Services offered over the public internet and available to anyone who wants to purchase them. Typically owned and operated by third-party cloud service providers (e.g., AWS, Azure, Google Cloud). It exists on the premise of the cloud service provider</li>
+<li><strong>Advantage</strong>: cost. <strong>Concern</strong>: Security. However there are some public cloud providers that have demonstrated strong security measures.</li>
+</ul>
+<h2 id="private-cloud">Private Cloud</h2>
+<ul>
+<li>Implemented within the internal IT environment of the company, typically managed by the company or a third party vendor</li>
+<li>In private clouds, the servers and storage devices may exist on premist or off-premise</li>
+<li>Private clouds can deliver IaaS internally to employees or business units through an intranet or the Internet via a virtual private network (VPN), as well as software (applications) or storage as services to its branch offices</li>
+<li>Examples of services delivered through the private cloud include database on demand, email on demand, and storage on demand.</li>
+<li>A key motivation for opting-in for a private cloud is <em><strong>security</strong></em>. A private cloud infrastructure offers tighter controls over the geographic location of data storage and other aspects of security. Other benefits include easy resource sharing and rapid deployment to organizational entities.</li>
+</ul>
+<h2 id="hybrid-cloud">Hybrid cloud</h2>
+<ul>
+<li>In Hybrid Cloud, constituting private and public clouds are bound together by standardized technology that enables data and application portability (e.g., cloud bursting for load balancing between clouds).</li>
+<li>With a hybrid cloud solution, sensitive information can be placed in a private area of the cloud, and less sensitive data can take advantage of the benefits of the public cloud. So Using a hybrid cloud requires proper management of data transfers and replication between public and private clouds</li>
+</ul>
+<h2 id="comparison">Comparison</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/cloud_comparison.png"
+         alt="cloud types" width="60%"/>
+</figure>
+
+<h1 id="data-centers">Data Centers</h1>
+<h2 id="elements">Elements:</h2>
+<ul>
+<li><strong>Facility</strong>: location and &ldquo;white space&rdquo; (space for IT equipment)</li>
+<li><strong>IT Equipment</strong>: servers, storage hardware, cables, racks, firewalls, etc.</li>
+<li><strong>Support Infra</strong>:
+<ul>
+<li><em><strong>Uninterruptible Power Sources (UPS)</strong></em>: battery banks, redundant power sources and generators</li>
+<li>Environmental controls: cooling systems, fire suppression systems</li>
+<li>Physical security systems: surveillance cameras, biometric access controls</li>
+</ul>
+</li>
+<li><strong>Operations Staff</strong></li>
+</ul>
+<h2 id="clouds-on-data-centers">Clouds on Data Centers</h2>
+<ul>
+<li>Range in size from <em>edge</em> facilities to <em>mega</em> scale</li>
+<li>Economies of scale: approximate costs for a small size center (1000 servers) and a larger, 100K server center
+<figure class="img-center"><img src="/images/cloudInfraBasics/data_center_costs.png"
+         alt="data center costs" width="90%"/>
+</figure>
+</li>
+</ul>
+<h2 id="data-center-efficiency">Data Center Efficiency</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/data_center_efficiency.png"
+         alt="data center efficiency" width="60%"/>
+</figure>
+
+<ul>
+<li>The Green Grid, an association of IT professionals focused on increasing the energy efficiency of data centers, created two major metrics to assess the efficiency of data center efficiency.</li>
+<li>These metrics will help organizations make better decisions while deploying new data centers or replacing existing parts of current data centers.
+<ul>
+<li><figure class="img-center"><img src="/images/cloudInfraBasics/data_center_efficiency_metrics.png"
+         alt="data center efficiency metrics" width="70%"/>
+</figure>
+</li>
+<li>Data Center Infrastructure Efficiency (<em>DCIE</em>) = <code>1 / PUE</code></li>
+</ul>
+</li>
+<li>To improve DC Deployment: since Building racks of servers &amp; complex cooling systems all separately is not efficient, they package and deploy into <em>bigger units</em>, like <code>ICE Cube</code> as a modular data center.</li>
+</ul>
+<h1 id="cloud-computing-limitations">Cloud Computing Limitations</h1>
+<ul>
+<li><em><strong>Connectivity</strong></em>
+<ul>
+<li>Connectivity is needed.</li>
+<li>Some devices need to be continuously operable even when not connected.</li>
+</ul>
+</li>
+<li><em><strong>Bandwidth</strong></em>
+<ul>
+<li>How much data do we create every day? In 2019, The World Economic Forum reports that the entire digital world is expected to reach 44 ettabytes by 2020.</li>
+<li>Eventually, when all devices are connected to the cloud, bandwidth may become a big issue</li>
+</ul>
+</li>
+<li>Centralization of Analytics
+<ul>
+<li>Data should be stored on the cloud before reports can be available</li>
+</ul>
+</li>
+<li>Security</li>
+</ul>
+<h2 id="solutions">Solutions</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/cloud_computing_limitations_solutions.png"
+         alt="solution to cloud computing limitations" width="80%"/>
+</figure>
+
+<h3 id="fog-computing"><em>Fog Computing</em></h3>
+<ul>
+<li><em><strong>Fog computing</strong></em> is an extra layer between the edge layer and the cloud layer.</li>
+<li>The main benefit of Fog computing is <strong>efficiency of data traffic</strong> and a <strong>reduction in latency</strong>.
+<ul>
+<li>Data generated from the edge are sent to a fog node close to the data source. These data are analyzed locally, filtered, and then sent to the cloud for long-term storage if necessary.</li>
+</ul>
+</li>
+<li>According to Mung Chiang, Dean of the Purdue University, “fog provides the missing link for what data needs to be pushed to the cloud, and what can be analyzed locally, at the edge.</li>
+</ul>
+<h3 id="edge-computing"><em>Edge Computing</em></h3>
+<ul>
+<li>Edge computing is the data computation that happens at the network’s edge where the data are created.</li>
+<li>Fog computing acts as a <strong>mediator</strong> between the edge and the cloud for several purposes, such as data filtering.</li>
+<li><em><strong>Fog computing can’t replace edge computing</strong></em> while edge computing can live without fog computing in many applications.</li>
+</ul>
+<h3 id="comparison-1">Comparison</h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/cloud_fog_comparison.png"
+         alt="fog vs edge computing" width="80%"/>
+</figure>
+
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-28</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/terraform/">
+			Previous<br>IaC &amp; Terraform
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#cloud-types" class="nav-cloud-types">
+									Cloud Types
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#public-cloud" class="nav-public-cloud">
+									Public Cloud
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#private-cloud" class="nav-private-cloud">
+									Private Cloud
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#hybrid-cloud" class="nav-hybrid-cloud">
+									Hybrid cloud
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#comparison" class="nav-comparison">
+									Comparison
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#data-centers" class="nav-data-centers">
+									Data Centers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#elements" class="nav-elements">
+									Elements:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#clouds-on-data-centers" class="nav-clouds-on-data-centers">
+									Clouds on Data Centers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#data-center-efficiency" class="nav-data-center-efficiency">
+									Data Center Efficiency
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#cloud-computing-limitations" class="nav-cloud-computing-limitations">
+									Cloud Computing Limitations
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#solutions" class="nav-solutions">
+									Solutions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#fog-computing" class="nav-fog-computing">
+									Fog Computing
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#edge-computing" class="nav-edge-computing">
+									Edge Computing
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#comparison-1" class="nav-comparison-1">
+									Comparison
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>
