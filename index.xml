@@ -7,9 +7,297 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Fri, 28 Nov 2025 19:28:43 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 01:27:18 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Hadoop - HDFS</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/</link>
+        <pubDate>Sat, 29 Nov 2025 01:27:18 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/ -&lt;h1 id=&#34;intro&#34;&gt;&lt;strong&gt;Intro&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;motivation-for-hadoop&#34;&gt;Motivation for Hadoop&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Handle &lt;em&gt;&lt;strong&gt;big data!&lt;/strong&gt;&lt;/em&gt; that exceeds single machine&amp;rsquo;s storage and computing capacity&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Storage and Analysis&lt;/strong&gt;&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Storage&lt;/strong&gt; capacity increases faster than then access speeds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Need &lt;em&gt;&lt;strong&gt;parallel data access&lt;/strong&gt;&lt;/em&gt; to get things done quickly
+&lt;ul&gt;
+&lt;li&gt;1 machine accessing 1000 GB is much slower than 100 machines, each is accessing 10 GB.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Shared access&lt;/strong&gt;&lt;/em&gt; for efficiency and scalability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;challenges&#34;&gt;Challenges&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Analysis tasks need to combine data from multiple sources
+&lt;ul&gt;
+&lt;li&gt;Need a paradigm that &lt;strong&gt;transparently splits and merges data&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Challenge of parallel data access to and from multiple disks
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hardware failure&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;why-hadoop&#34;&gt;Why Hadoop&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;We need Open-source software framework for storing data and running applications on clusters of commodity hardware -&amp;gt; Hadoop is &lt;em&gt;&lt;strong&gt;cheap&lt;/strong&gt;&lt;/em&gt; to implement and expand&lt;/li&gt;
+&lt;li&gt;Provides massive storage for any kind of data, enormous processing power and the ability to handle virtually limitless concurrent tasks or jobs -&amp;gt; Hadoop is &lt;em&gt;&lt;strong&gt;scalable&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;hadoop-basics&#34;&gt;Hadoop Basics&lt;/h1&gt;
+&lt;h2 id=&#34;component-architecture&#34;&gt;Component Architecture&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hadoop_architecture.png&#34;
+         alt=&#34;hadoop architecture&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;HDFS: Hadoop Distributed File System
+&lt;ul&gt;
+&lt;li&gt;Designed to provide &lt;em&gt;&lt;strong&gt;highly fault-tolerant&lt;/strong&gt;&lt;/em&gt; and to be deployed on &lt;em&gt;&lt;strong&gt;low-cost&lt;/strong&gt;&lt;/em&gt; hardware&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;MapReduce: A framework for processing data in &lt;em&gt;&lt;strong&gt;batch&lt;/strong&gt;&lt;/em&gt; - &lt;code&gt;BSP&lt;/code&gt; (Bulk Synchronous Parallel)
+&lt;ul&gt;
+&lt;li&gt;Enables &lt;em&gt;&lt;strong&gt;distributed processing&lt;/strong&gt;&lt;/em&gt; of large data sets across clusters of computers using simple programming models&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;history&#34;&gt;History&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hadoop_history.png&#34;
+         alt=&#34;hadoop history&#34; width=&#34;100%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&#34;hdfs&#34;&gt;&lt;strong&gt;HDFS&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;distributed-file-system&#34;&gt;&lt;strong&gt;Distributed File System&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;em&gt;&lt;strong&gt;client/server-based&lt;/strong&gt;&lt;/em&gt; application that allows clients to access and process data stored on the server as if they were on their own computer
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Client/Server&lt;/strong&gt; arch: Clients request services and resources from a centralized server. Client drives the interaction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Master/Worker&lt;/strong&gt; arch: Master node controls and manages the worker nodes. Master coordinates and distributes jobs; workers execute computation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;More complex than regular disk file systems: &lt;em&gt;&lt;strong&gt;network based&lt;/strong&gt;&lt;/em&gt; and high level of &lt;em&gt;&lt;strong&gt;fault tolerance&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Main motivation: &lt;em&gt;&lt;strong&gt;BIG DATA&lt;/strong&gt;&lt;/em&gt;: datasets outgrows the storage capacity of a single physical machine, so data are partitioned across separate machines&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;basics&#34;&gt;Basics&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;HDFS is a file system designed for storing &lt;em&gt;&lt;strong&gt;very large files&lt;/strong&gt;&lt;/em&gt; with &lt;em&gt;&lt;strong&gt;streaming data access&lt;/strong&gt;&lt;/em&gt; patterns, running on clusters that are using &lt;em&gt;&lt;strong&gt;commodity hardware&lt;/strong&gt;&lt;/em&gt;.
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Very large files&lt;/strong&gt;: files are normally hundreds of megabytes, gigabytes, or terabytes in size.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Streaming data access&lt;/strong&gt;: HDFS is designed more for batch processing, a &lt;em&gt;write-once, read many-times&lt;/em&gt; pattern&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Commodity hardware&lt;/strong&gt;: node failure probability is &lt;strong&gt;high&lt;/strong&gt;, so we need a mechanism that tolerates failures without disruption or loss of data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;structure&#34;&gt;&lt;strong&gt;Structure&lt;/strong&gt;&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_design.png&#34;
+         alt=&#34;hdfs design&#34; width=&#34;80%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;namenodemaster&#34;&gt;&lt;em&gt;&lt;strong&gt;Namenode&lt;/strong&gt;&lt;/em&gt;(master)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Maintains the &lt;strong&gt;file system tree&lt;/strong&gt; and the &lt;strong&gt;metadata&lt;/strong&gt; for all the files and directories in the tree. Store persistently on the local disk in the form of two files: the &lt;em&gt;&lt;strong&gt;namespace image&lt;/strong&gt;&lt;/em&gt; and the &lt;em&gt;&lt;strong&gt;edit log&lt;/strong&gt;&lt;/em&gt;()
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Namespace image&lt;/strong&gt; aka &lt;strong&gt;fsimage&lt;/strong&gt;: the entire HDFS directory tree and block locations, representing all metadata at a point in time&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edit log&lt;/strong&gt;: a transaction log that records every change that occurs to the file system metadata &lt;em&gt;&lt;strong&gt;after&lt;/strong&gt;&lt;/em&gt; the fsimage snapshot&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;When a fail happens, we create a new Namenode and try to make it into the same state of previous nodes before failure using the two data above.&lt;/li&gt;
+&lt;li&gt;Services &lt;strong&gt;block location&lt;/strong&gt; requests from clients&lt;/li&gt;
+&lt;li&gt;The entire &lt;code&gt;(block, datanode)&lt;/code&gt; mapping table is stored in memory, for efficient access. &lt;code&gt;Namespace image&lt;/code&gt;(aka &lt;code&gt;fsimage&lt;/code&gt;) loaded into RAM on startup of Namenode.&lt;/li&gt;
+&lt;li&gt;To deal with the great amount of log data writing into the &lt;code&gt;edit log&lt;/code&gt;, the Namenode &lt;em&gt;&lt;strong&gt;periodically merges&lt;/strong&gt;&lt;/em&gt; the &lt;code&gt;edit log&lt;/code&gt; with the &lt;code&gt;namespace image&lt;/code&gt; to create a new &lt;code&gt;namespace image&lt;/code&gt;, and clears the &lt;code&gt;edit log&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Done by &lt;code&gt;secondary namenode&lt;/code&gt; or &lt;code&gt;checkpoint node&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Namenode 内部的i/O操作如写日志、快照是异步的，多个客户端写操作可批量处理，bing发请求通过 &lt;strong&gt;RPC 队列 + 多线程处理&lt;/strong&gt;，提升吞吐。&lt;/li&gt;
+&lt;li&gt;High availability mechanism:  生产集群一般启用 &lt;strong&gt;Active / Standby NameNode&lt;/strong&gt;；共享 EditLog（通常存储在 JournalNodes 上）；当 Active NameNode 压力过大或宕机时，Standby 可自动接管。&lt;/li&gt;
+&lt;li&gt;For scalability issue, we introduce &lt;strong&gt;Namenode Federation&lt;/strong&gt; by adding more namenodes. Each namenode manages a portion of the file system namespace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;datanode&#34;&gt;&lt;em&gt;&lt;strong&gt;Datanode&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Stores HDFS file &lt;code&gt;blocks&lt;/code&gt; as &lt;em&gt;&lt;strong&gt;independent files&lt;/strong&gt;&lt;/em&gt; in the local file system&lt;/li&gt;
+&lt;li&gt;Handles client read and write operations&lt;/li&gt;
+&lt;li&gt;Maintains the block location info by sending &lt;em&gt;&lt;strong&gt;heartbeats&lt;/strong&gt;&lt;/em&gt; and &lt;em&gt;&lt;strong&gt;block reports&lt;/strong&gt;&lt;/em&gt; to the Namenode periodically&lt;/li&gt;
+&lt;li&gt;Re-replicates blocks when instructed by the NameNode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;data-blocks&#34;&gt;&lt;strong&gt;Data Blocks&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Why streaming data?
+&lt;ul&gt;
+&lt;li&gt;Since we want the cost to write is very cheap, the cost of hardware is cheap. Too cheap to do multiple write on the same location&lt;/li&gt;
+&lt;li&gt;Streaming data access allows us to optimize for &lt;em&gt;&lt;strong&gt;high throughput&lt;/strong&gt;&lt;/em&gt; of data access, rather than low latency of data access&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Why large files?
+&lt;ul&gt;
+&lt;li&gt;Unlike mechanical disks, the &lt;code&gt;block&lt;/code&gt; size in HDFS is &lt;em&gt;&lt;strong&gt;128MB&lt;/strong&gt;&lt;/em&gt; by default, such that the head of the disk do not need to switch so often between different block to read the same file. In this way it &lt;em&gt;&lt;strong&gt;minimizes the cost of seek time&lt;/strong&gt;&lt;/em&gt;(the time to move the head assembly to the correct cylinder) &amp;lt;=1% of the disk transfer time&lt;/li&gt;
+&lt;li&gt;Files in HDFS are broken into &lt;strong&gt;block-sized chunks&lt;/strong&gt;, which are stored as independent units. If the size of the file is less than the HDFS block size, the file does not occupy the complete block storage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;architectural-layers&#34;&gt;&lt;strong&gt;Architectural Layers&lt;/strong&gt;&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_layers.png&#34;
+         alt=&#34;hdfs layers&#34; width=&#34;30%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Storage&lt;/strong&gt; Layer (&lt;code&gt;DataNodes&lt;/code&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Stores the actual file blocks.&lt;/li&gt;
+&lt;li&gt;Equivalent to the “hard drive” layer.&lt;/li&gt;
+&lt;li&gt;Distributed across many machines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;&lt;strong&gt;Metadata&lt;/strong&gt; Layer (&lt;code&gt;NameNode&lt;/code&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Stores namespace metadata:
+directories, filenames, permissions, block maps.&lt;/li&gt;
+&lt;li&gt;Equivalent to the “file system brain”.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;&lt;strong&gt;Coordination&lt;/strong&gt; Layer (&lt;code&gt;Secondary/Checkpoint&lt;/code&gt; Nodes)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Merges fsimage + edit logs&lt;/li&gt;
+&lt;li&gt;Keeps NameNode healthy and restartable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;&lt;strong&gt;Client&lt;/strong&gt; Layer&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Users and applications interacting with HDFS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;namespace&#34;&gt;&lt;strong&gt;Namespace&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Consists of directories, files and blocks.&lt;/li&gt;
+&lt;li&gt;Supports all the namespace related file system operations such as create, delete, modify and list files and directories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;block-storage-service&#34;&gt;&lt;strong&gt;Block Storage Service&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Block Management&lt;/strong&gt;&lt;/em&gt; - performed in the &lt;code&gt;Namenode&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Provides &lt;code&gt;Datanode&lt;/code&gt; cluster membership by handling registrations, and &lt;strong&gt;periodic heart beats&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Processes &lt;strong&gt;block reports&lt;/strong&gt; and maintains location of blocks.&lt;/li&gt;
+&lt;li&gt;Supports block related operations such as create, delete, modify and get block location.&lt;/li&gt;
+&lt;li&gt;Manages replica placement and block replication.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Storage&lt;/strong&gt;&lt;/em&gt; - provided by &lt;code&gt;Datanode&lt;/code&gt;, mentioned above: HDFS - structure - Datanode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;namenode-issues&#34;&gt;&lt;strong&gt;Namenode Issues&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Namenode maintains a single namespace and metadata of all the blocks for the entire cluster
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Not scalable&lt;/strong&gt;&lt;/em&gt;: the entire namespace and block metadata are stored in memory&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Poor isolation&lt;/strong&gt;&lt;/em&gt;: there is no way to separate a group of works from one another&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Namenode is the main component to make filesystem &lt;strong&gt;operational&lt;/strong&gt;. If it fails, the whole cluster will not function&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;solutions&#34;&gt;&lt;strong&gt;Solutions&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Namenode Federation - For scalability&lt;/strong&gt;:
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_namenode_federation.png&#34;
+         alt=&#34;hdfs federation&#34; width=&#34;40%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;introduced in the 2.x Hadoop release to address scalability issues by adding more Namenode(s)&lt;/li&gt;
+&lt;li&gt;Each Namenode manages &lt;strong&gt;a portion of filesystem &lt;code&gt;namespace&lt;/code&gt;&lt;/strong&gt; which is independent from other portions handled by other Namenodes.&lt;/li&gt;
+&lt;li&gt;Separate the namespace into many small namespaces and dedicated by the master namespace that holds the &lt;code&gt;viewFS&lt;/code&gt; table (mount table) such that they know a folder is maintained by which namespace. Each namespace belong to a namenode, and each namespace can be communicating with several datanodes.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HDFS Federation&lt;/code&gt; splits the &lt;code&gt;directory tree&lt;/code&gt;:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/user       → namespace A
+/data       → namespace B
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;There is a top-level ‘virtual’ namespace that acts like the master router. It doesn’t store data—it only stores a &lt;em&gt;&lt;strong&gt;mount table&lt;/strong&gt;&lt;/em&gt;:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/user     → maps to namespace A (NameNode A)
+/data     → maps to namespace B (NameNode B)
+&lt;/code&gt;&lt;/pre&gt;This master namespace uses ViewFS to route requests to the correct NameNode. So When you access &lt;code&gt;/data/file1&lt;/code&gt;, the ViewFS mount table recognizes: → &lt;code&gt;/data&lt;/code&gt; belongs to Namespace B → send request to NameNode B.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Each Datanode will register with each Namenode to store blocks for different namespace. Each NameNode is allowed to talk to &lt;strong&gt;any DataNode&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Full structure:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;    +-----------------------+
+    |     ViewFS (mount)    |
+    |  &amp;#34;/user&amp;#34; → NN1        |
+    |  &amp;#34;/data&amp;#34; → NN2        |
+    +-----------------------+
+    /           |            \
+    NN1         NN2           NN3    (many namespaces)
+    / \         / \           / \
+DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Namenode Fault Tolerance - For failures&lt;/strong&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_secondary_namenode.png&#34;
+           alt=&#34;hdfs ha namenode&#34; width=&#34;52%&#34;/&gt;
+  &lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Periodically (hourly) &lt;strong&gt;pulls a copy of the file metadata&lt;/strong&gt; from the active &lt;code&gt;Namenode&lt;/code&gt; to save to its local disk&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Problem&lt;/strong&gt;: Secondary Namenode might take too long to come up online (more than &lt;strong&gt;30 minutes&lt;/strong&gt;):
+&lt;ul&gt;
+&lt;li&gt;Load the namespace image into the memory&lt;/li&gt;
+&lt;li&gt;Replay its edit log&lt;/li&gt;
+&lt;li&gt;Receive enough block reports from the Datanodes to leave safe-mode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Namenode Fault Tolerance - High Availability (HA) Configuration&lt;/strong&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_ha_namenode.png&#34;
+           alt=&#34;hdfs ha namenode 2&#34; width=&#34;60%&#34;/&gt;
+  &lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A pair of NN is configured as &lt;strong&gt;active-standby&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;The standby takes over whenever the active one fails&lt;/li&gt;
+&lt;li&gt;The Namenodes use highly available shared storage to share the edit log&lt;/li&gt;
+&lt;li&gt;The active Namenode writes, and the standby Namenode reads to keep it in sync&lt;/li&gt;
+&lt;li&gt;Datanodes must send block reports to both Namenodes&lt;/li&gt;
+&lt;li&gt;Client must be configured to handleNamenode failover&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;datanode-failure&#34;&gt;&lt;strong&gt;Datanode failure&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Datanode Fault Tolerance - &lt;em&gt;Replication Factors&lt;/em&gt;&lt;/strong&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_datanode_replica.png&#34;
+           alt=&#34;hdfs datanode failure&#34; width=&#34;45%&#34;/&gt;
+  &lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each data blocks are replicated (&lt;strong&gt;thrice&lt;/strong&gt; by default) and are distributed across different DataNodes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;key-takeaways&#34;&gt;Key Takeaways&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;HDFS is for &lt;em&gt;&lt;strong&gt;high thoughput&lt;/strong&gt;&lt;/em&gt;, not low latency.&lt;/li&gt;
+&lt;li&gt;Not for a large number of small files but for &lt;em&gt;&lt;strong&gt;large files&lt;/strong&gt;&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;Large number of small files: Costly metadata&lt;/li&gt;
+&lt;li&gt;In average, each file, directory, and block takes about 150 bytes. For a HDFS that maintains 1 million files with one block each will need memory – 1,000,000&lt;em&gt;150&lt;/em&gt;2 = 300 MB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Is for applications with &lt;em&gt;&lt;strong&gt;single writer&lt;/strong&gt;&lt;/em&gt; and always make &lt;em&gt;&lt;strong&gt;writes at the end of file&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -1344,10 +1632,17 @@ We define the resources that users or service providers manage as follows:
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka&#34;&gt;Apache Kafka&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/terraform&#34;&gt;Terraform&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra&#34;&gt;Concepts in Cloud Infra&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_7&#34;&gt;Hadoop: HDFS, MapReduce, YARN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs&#34;&gt;Hadoop: HDFS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce&#34;&gt;Hadoop: MapReduce&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn&#34;&gt;Hadoop: YARN&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_8&#34;&gt;Spark&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;TBD&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;More details:
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/learning_objectives.png&#34;
+         alt=&#34;cloud infra basics toc&#34; width=&#34;100%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ - This is a customized copyright.</description>
         </item>
     
@@ -1395,42 +1690,6 @@ We define the resources that users or service providers manage as follows:
 
 &lt;/div&gt;
 - http://allenhsm.github.io/posts/miscellaneous_notes/%E5%81%B6%E6%84%9F/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>读《八十年代访谈录》（1）</title>
-        <link>http://allenhsm.github.io/reading/%E5%85%AB%E5%8D%81%E5%B9%B4%E4%BB%A3%E8%AE%BF%E8%B0%88%E5%BD%951/</link>
-        <pubDate>Sun, 02 Nov 2025 01:06:41 -0500</pubDate>
-        
-        <guid>http://allenhsm.github.io/reading/%E5%85%AB%E5%8D%81%E5%B9%B4%E4%BB%A3%E8%AE%BF%E8%B0%88%E5%BD%951/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/reading/%E5%85%AB%E5%8D%81%E5%B9%B4%E4%BB%A3%E8%AE%BF%E8%B0%88%E5%BD%951/ -&lt;h1 style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; font-size: 28px; letter-spacing: 2px; line-height: 1.3;&#34;&gt;《八十年代访谈录》 - 阿城篇&lt;/h1&gt;
-&lt;hr&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 18px; 
-            letter-spacing: 2px; 
-            line-height: 1.4;
-            color: rgba(17, 27, 156, 0.8) !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;原文：&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     读查建英阿城访谈，聊八十年代的青年各异的知识结构、文化构成、文化断层，似乎是很遥远的事情了，这时候从pdf切到Instagram，今天是万圣节，同学的story里，奇装异服的青年们在爆闪的灯光中、在激情的音乐里、高举着红色party杯或向上伸直一只手，狂乱地跃动着，有一种让人神魂颠倒的光怪陆离。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     现在的青年是否声色犬马了？我倒没有这种感觉，至少中国社会百年来一直在癫狂地变化，不同年代的青年间也许有知识结构的差异，但青年的共性是有无限的精力和激情，释放的媒介可以是反叛的文化、可以是性、可以是革命与运动，总之我想留个出口是有好处的。&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;hr&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.8;
-            color: inherit !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;     读查建英访谈阿城，聊八十年代的青年各异的知识结构、文化构成、文化断层，似乎是很遥远的事情了，这时候从pdf切到Instagram，今天是万圣节，同学的story里花枝招展的青年们高举着手臂，有的端着红色的party杯，狂乱地跃动着，灯光爆闪，音乐强劲，长发纷飞，如痴如狂，有一种让人神魂颠倒的光怪陆离。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     现在的青年是否（沉溺于）声色犬马了？我倒没有这种感觉。这就好比把孩子成绩不好的责任归咎于电子游戏——二十多年前中国的孩子可以偷跑去街机厅，三四十年前的可以看连环画、金庸琼瑶，百年前的可以去抓蟋蟀推牌九，电子游戏莫名其妙地成了这个时代家校无能、社会失衡的遮羞布、替罪羊；再者，孩子为什么就一定要成绩好呢？或者说，为何只有成绩不好会引起家长广泛的“同仇敌忾”呢？又扯远了。但其实在中国这样的变化和社会的文化构成是匹配的。看美国大学的宿舍，和大头电脑时代的照片里还是一个样，在没有电脑的七八十年代也是这样，大概五十年前的美国学生也和现在一样，弹着吉他端着酒在宿舍里狂欢，也就是说，20岁的美国人和80岁的美国人知识结构类似不一定是件奇怪的事，而放在中国，整个情形便完全不同了，中国社会至少百年来一直在癫狂地变化，纵然不同年代的青年间有知识结构的差异，但青年的共性是有无限的精力和激情，释放的媒介可以是反叛的文化、可以是性、可以是革命与运动，总之我想留个出口是有好处的。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     如果青年们的天性没有变，进一步的，要考虑的便是文化的土壤了，一个能让青年释放天性、将荷尔蒙转化为创造力的土壤。阿城由此聊到文化断层，书中谈的很深入，no comments here.&lt;/p&gt;
-
-&lt;/div&gt;
-- http://allenhsm.github.io/reading/%E5%85%AB%E5%8D%81%E5%B9%B4%E4%BB%A3%E8%AE%BF%E8%B0%88%E5%BD%951/ - This is a customized copyright.</description>
         </item>
     
     

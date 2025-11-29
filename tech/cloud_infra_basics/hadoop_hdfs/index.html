@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html><head>
+<title>Hadoop - HDFS</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Hadoop - HDFS" />
+<meta property="og:description" content="Intro Motivation for Hadoop Handle big data! that exceeds single machine&rsquo;s storage and computing capacity Storage and Analysis Storage capacity increases faster than then access speeds. Need parallel data access to get things done quickly 1 machine accessing 1000 GB is much slower than 100 machines, each is accessing 10 GB. Shared access for efficiency and scalability Challenges Analysis tasks need to combine data from multiple sources Need a paradigm that transparently splits and merges data Challenge of parallel data access to and from multiple disks Hardware failure Why Hadoop We need Open-source software framework for storing data and running applications on clusters of commodity hardware -&gt; Hadoop is cheap to implement and expand Provides massive storage for any kind of data, enormous processing power and the ability to handle virtually limitless concurrent tasks or jobs -&gt; Hadoop is scalable Hadoop Basics Component Architecture HDFS: Hadoop Distributed File System Designed to provide highly fault-tolerant and to be deployed on low-cost hardware MapReduce: A framework for processing data in batch - BSP (Bulk Synchronous Parallel) Enables distributed processing of large data sets across clusters of computers using simple programming models History HDFS Distributed File System A client/server-based application that allows clients to access and process data stored on the server as if they were on their own computer Client/Server arch: Clients request services and resources from a centralized server." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-29T01:27:18-05:00" />
+<meta property="article:modified_time" content="2025-11-29T01:27:18-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hadoop - HDFS"/>
+<meta name="twitter:description" content="Intro Motivation for Hadoop Handle big data! that exceeds single machine&rsquo;s storage and computing capacity Storage and Analysis Storage capacity increases faster than then access speeds. Need parallel data access to get things done quickly 1 machine accessing 1000 GB is much slower than 100 machines, each is accessing 10 GB. Shared access for efficiency and scalability Challenges Analysis tasks need to combine data from multiple sources Need a paradigm that transparently splits and merges data Challenge of parallel data access to and from multiple disks Hardware failure Why Hadoop We need Open-source software framework for storing data and running applications on clusters of commodity hardware -&gt; Hadoop is cheap to implement and expand Provides massive storage for any kind of data, enormous processing power and the ability to handle virtually limitless concurrent tasks or jobs -&gt; Hadoop is scalable Hadoop Basics Component Architecture HDFS: Hadoop Distributed File System Designed to provide highly fault-tolerant and to be deployed on low-cost hardware MapReduce: A framework for processing data in batch - BSP (Bulk Synchronous Parallel) Enables distributed processing of large data sets across clusters of computers using simple programming models History HDFS Distributed File System A client/server-based application that allows clients to access and process data stored on the server as if they were on their own computer Client/Server arch: Clients request services and resources from a centralized server."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#intro" class="nav-intro">
+									Intro
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#motivation-for-hadoop" class="nav-motivation-for-hadoop">
+									Motivation for Hadoop
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#challenges" class="nav-challenges">
+									Challenges
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#why-hadoop" class="nav-why-hadoop">
+									Why Hadoop
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#hadoop-basics" class="nav-hadoop-basics">
+									Hadoop Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#component-architecture" class="nav-component-architecture">
+									Component Architecture
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#history" class="nav-history">
+									History
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#hdfs" class="nav-hdfs">
+									HDFS
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#distributed-file-system" class="nav-distributed-file-system">
+									Distributed File System
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#basics" class="nav-basics">
+									Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#structure" class="nav-structure">
+									Structure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#namenodemaster" class="nav-namenodemaster">
+									Namenode(master)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#datanode" class="nav-datanode">
+									Datanode
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#data-blocks" class="nav-data-blocks">
+									Data Blocks
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#architectural-layers" class="nav-architectural-layers">
+									Architectural Layers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#namespace" class="nav-namespace">
+									Namespace
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#block-storage-service" class="nav-block-storage-service">
+									Block Storage Service
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#namenode-issues" class="nav-namenode-issues">
+									Namenode Issues
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#solutions" class="nav-solutions">
+									Solutions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#datanode-failure" class="nav-datanode-failure">
+									Datanode failure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#key-takeaways" class="nav-key-takeaways">
+									Key Takeaways
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/hadoop_hdfs_logo.webp')"
+                    
+                
+            >
+                <div class="post-title">
+                    Hadoop - HDFS
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-29 01:27
+                        </time>
+                        
+
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="intro"><strong>Intro</strong></h1>
+<h2 id="motivation-for-hadoop">Motivation for Hadoop</h2>
+<ul>
+<li>Handle <em><strong>big data!</strong></em> that exceeds single machine&rsquo;s storage and computing capacity</li>
+<li><em><strong>Storage and Analysis</strong></em>
+<ul>
+<li><strong>Storage</strong> capacity increases faster than then access speeds.</li>
+</ul>
+</li>
+<li>Need <em><strong>parallel data access</strong></em> to get things done quickly
+<ul>
+<li>1 machine accessing 1000 GB is much slower than 100 machines, each is accessing 10 GB.</li>
+</ul>
+</li>
+<li><em><strong>Shared access</strong></em> for efficiency and scalability</li>
+</ul>
+<h2 id="challenges">Challenges</h2>
+<ul>
+<li>Analysis tasks need to combine data from multiple sources
+<ul>
+<li>Need a paradigm that <strong>transparently splits and merges data</strong></li>
+</ul>
+</li>
+<li>Challenge of parallel data access to and from multiple disks
+<ul>
+<li><strong>Hardware failure</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="why-hadoop">Why Hadoop</h2>
+<ul>
+<li>We need Open-source software framework for storing data and running applications on clusters of commodity hardware -&gt; Hadoop is <em><strong>cheap</strong></em> to implement and expand</li>
+<li>Provides massive storage for any kind of data, enormous processing power and the ability to handle virtually limitless concurrent tasks or jobs -&gt; Hadoop is <em><strong>scalable</strong></em></li>
+</ul>
+<h1 id="hadoop-basics">Hadoop Basics</h1>
+<h2 id="component-architecture">Component Architecture</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/hadoop_architecture.png"
+         alt="hadoop architecture" width="60%"/>
+</figure>
+
+<ul>
+<li>HDFS: Hadoop Distributed File System
+<ul>
+<li>Designed to provide <em><strong>highly fault-tolerant</strong></em> and to be deployed on <em><strong>low-cost</strong></em> hardware</li>
+</ul>
+</li>
+<li>MapReduce: A framework for processing data in <em><strong>batch</strong></em> - <code>BSP</code> (Bulk Synchronous Parallel)
+<ul>
+<li>Enables <em><strong>distributed processing</strong></em> of large data sets across clusters of computers using simple programming models</li>
+</ul>
+</li>
+</ul>
+<h2 id="history">History</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/hadoop_history.png"
+         alt="hadoop history" width="100%"/>
+</figure>
+
+<h1 id="hdfs"><strong>HDFS</strong></h1>
+<h2 id="distributed-file-system"><strong>Distributed File System</strong></h2>
+<ul>
+<li>A <em><strong>client/server-based</strong></em> application that allows clients to access and process data stored on the server as if they were on their own computer
+<ul>
+<li><strong>Client/Server</strong> arch: Clients request services and resources from a centralized server. Client drives the interaction.</li>
+<li><strong>Master/Worker</strong> arch: Master node controls and manages the worker nodes. Master coordinates and distributes jobs; workers execute computation.</li>
+</ul>
+</li>
+<li>More complex than regular disk file systems: <em><strong>network based</strong></em> and high level of <em><strong>fault tolerance</strong></em></li>
+<li>Main motivation: <em><strong>BIG DATA</strong></em>: datasets outgrows the storage capacity of a single physical machine, so data are partitioned across separate machines</li>
+</ul>
+<h2 id="basics">Basics</h2>
+<ul>
+<li>HDFS is a file system designed for storing <em><strong>very large files</strong></em> with <em><strong>streaming data access</strong></em> patterns, running on clusters that are using <em><strong>commodity hardware</strong></em>.
+<ul>
+<li><strong>Very large files</strong>: files are normally hundreds of megabytes, gigabytes, or terabytes in size.</li>
+<li><strong>Streaming data access</strong>: HDFS is designed more for batch processing, a <em>write-once, read many-times</em> pattern</li>
+<li><strong>Commodity hardware</strong>: node failure probability is <strong>high</strong>, so we need a mechanism that tolerates failures without disruption or loss of data.</li>
+</ul>
+</li>
+</ul>
+<h2 id="structure"><strong>Structure</strong></h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/hdfs_design.png"
+         alt="hdfs design" width="80%"/>
+</figure>
+
+<h3 id="namenodemaster"><em><strong>Namenode</strong></em>(master)</h3>
+<ul>
+<li>Maintains the <strong>file system tree</strong> and the <strong>metadata</strong> for all the files and directories in the tree. Store persistently on the local disk in the form of two files: the <em><strong>namespace image</strong></em> and the <em><strong>edit log</strong></em>()
+<ul>
+<li><strong>Namespace image</strong> aka <strong>fsimage</strong>: the entire HDFS directory tree and block locations, representing all metadata at a point in time</li>
+<li><strong>Edit log</strong>: a transaction log that records every change that occurs to the file system metadata <em><strong>after</strong></em> the fsimage snapshot</li>
+</ul>
+</li>
+<li>When a fail happens, we create a new Namenode and try to make it into the same state of previous nodes before failure using the two data above.</li>
+<li>Services <strong>block location</strong> requests from clients</li>
+<li>The entire <code>(block, datanode)</code> mapping table is stored in memory, for efficient access. <code>Namespace image</code>(aka <code>fsimage</code>) loaded into RAM on startup of Namenode.</li>
+<li>To deal with the great amount of log data writing into the <code>edit log</code>, the Namenode <em><strong>periodically merges</strong></em> the <code>edit log</code> with the <code>namespace image</code> to create a new <code>namespace image</code>, and clears the <code>edit log</code>
+<ul>
+<li>Done by <code>secondary namenode</code> or <code>checkpoint node</code></li>
+</ul>
+</li>
+<li>Namenode 内部的i/O操作如写日志、快照是异步的，多个客户端写操作可批量处理，bing发请求通过 <strong>RPC 队列 + 多线程处理</strong>，提升吞吐。</li>
+<li>High availability mechanism:  生产集群一般启用 <strong>Active / Standby NameNode</strong>；共享 EditLog（通常存储在 JournalNodes 上）；当 Active NameNode 压力过大或宕机时，Standby 可自动接管。</li>
+<li>For scalability issue, we introduce <strong>Namenode Federation</strong> by adding more namenodes. Each namenode manages a portion of the file system namespace.</li>
+</ul>
+<h3 id="datanode"><em><strong>Datanode</strong></em></h3>
+<ul>
+<li>Stores HDFS file <code>blocks</code> as <em><strong>independent files</strong></em> in the local file system</li>
+<li>Handles client read and write operations</li>
+<li>Maintains the block location info by sending <em><strong>heartbeats</strong></em> and <em><strong>block reports</strong></em> to the Namenode periodically</li>
+<li>Re-replicates blocks when instructed by the NameNode</li>
+</ul>
+<h2 id="data-blocks"><strong>Data Blocks</strong></h2>
+<ul>
+<li>Why streaming data?
+<ul>
+<li>Since we want the cost to write is very cheap, the cost of hardware is cheap. Too cheap to do multiple write on the same location</li>
+<li>Streaming data access allows us to optimize for <em><strong>high throughput</strong></em> of data access, rather than low latency of data access</li>
+</ul>
+</li>
+<li>Why large files?
+<ul>
+<li>Unlike mechanical disks, the <code>block</code> size in HDFS is <em><strong>128MB</strong></em> by default, such that the head of the disk do not need to switch so often between different block to read the same file. In this way it <em><strong>minimizes the cost of seek time</strong></em>(the time to move the head assembly to the correct cylinder) &lt;=1% of the disk transfer time</li>
+<li>Files in HDFS are broken into <strong>block-sized chunks</strong>, which are stored as independent units. If the size of the file is less than the HDFS block size, the file does not occupy the complete block storage</li>
+</ul>
+</li>
+</ul>
+<h2 id="architectural-layers"><strong>Architectural Layers</strong></h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/hdfs_layers.png"
+         alt="hdfs layers" width="30%"/>
+</figure>
+
+<ol>
+<li><strong>Storage</strong> Layer (<code>DataNodes</code>)</li>
+</ol>
+<ul>
+<li>Stores the actual file blocks.</li>
+<li>Equivalent to the “hard drive” layer.</li>
+<li>Distributed across many machines.</li>
+</ul>
+<ol start="2">
+<li><strong>Metadata</strong> Layer (<code>NameNode</code>)</li>
+</ol>
+<ul>
+<li>Stores namespace metadata:
+directories, filenames, permissions, block maps.</li>
+<li>Equivalent to the “file system brain”.</li>
+</ul>
+<ol start="3">
+<li><strong>Coordination</strong> Layer (<code>Secondary/Checkpoint</code> Nodes)</li>
+</ol>
+<ul>
+<li>Merges fsimage + edit logs</li>
+<li>Keeps NameNode healthy and restartable.</li>
+</ul>
+<ol start="4">
+<li><strong>Client</strong> Layer</li>
+</ol>
+<ul>
+<li>Users and applications interacting with HDFS.</li>
+</ul>
+<h3 id="namespace"><strong>Namespace</strong></h3>
+<ul>
+<li>Consists of directories, files and blocks.</li>
+<li>Supports all the namespace related file system operations such as create, delete, modify and list files and directories.</li>
+</ul>
+<h3 id="block-storage-service"><strong>Block Storage Service</strong></h3>
+<ul>
+<li><em><strong>Block Management</strong></em> - performed in the <code>Namenode</code>
+<ul>
+<li>Provides <code>Datanode</code> cluster membership by handling registrations, and <strong>periodic heart beats</strong>.</li>
+<li>Processes <strong>block reports</strong> and maintains location of blocks.</li>
+<li>Supports block related operations such as create, delete, modify and get block location.</li>
+<li>Manages replica placement and block replication.</li>
+</ul>
+</li>
+<li><em><strong>Storage</strong></em> - provided by <code>Datanode</code>, mentioned above: HDFS - structure - Datanode</li>
+</ul>
+<h3 id="namenode-issues"><strong>Namenode Issues</strong></h3>
+<ul>
+<li>Namenode maintains a single namespace and metadata of all the blocks for the entire cluster
+<ul>
+<li><em><strong>Not scalable</strong></em>: the entire namespace and block metadata are stored in memory</li>
+<li><em><strong>Poor isolation</strong></em>: there is no way to separate a group of works from one another</li>
+</ul>
+</li>
+<li>Namenode is the main component to make filesystem <strong>operational</strong>. If it fails, the whole cluster will not function</li>
+</ul>
+<h3 id="solutions"><strong>Solutions</strong></h3>
+<ul>
+<li><strong>Namenode Federation - For scalability</strong>:
+<figure class="img-center"><img src="/images/cloudInfraBasics/hdfs_namenode_federation.png"
+         alt="hdfs federation" width="40%"/>
+</figure>
+
+<ul>
+<li>introduced in the 2.x Hadoop release to address scalability issues by adding more Namenode(s)</li>
+<li>Each Namenode manages <strong>a portion of filesystem <code>namespace</code></strong> which is independent from other portions handled by other Namenodes.</li>
+<li>Separate the namespace into many small namespaces and dedicated by the master namespace that holds the <code>viewFS</code> table (mount table) such that they know a folder is maintained by which namespace. Each namespace belong to a namenode, and each namespace can be communicating with several datanodes.
+<ul>
+<li><code>HDFS Federation</code> splits the <code>directory tree</code>:
+<pre tabindex="0"><code>/user       → namespace A
+/data       → namespace B
+</code></pre></li>
+<li>There is a top-level ‘virtual’ namespace that acts like the master router. It doesn’t store data—it only stores a <em><strong>mount table</strong></em>:
+<pre tabindex="0"><code>/user     → maps to namespace A (NameNode A)
+/data     → maps to namespace B (NameNode B)
+</code></pre>This master namespace uses ViewFS to route requests to the correct NameNode. So When you access <code>/data/file1</code>, the ViewFS mount table recognizes: → <code>/data</code> belongs to Namespace B → send request to NameNode B.</li>
+</ul>
+</li>
+<li>Each Datanode will register with each Namenode to store blocks for different namespace. Each NameNode is allowed to talk to <strong>any DataNode</strong>.</li>
+<li>Full structure:
+<pre tabindex="0"><code>    +-----------------------+
+    |     ViewFS (mount)    |
+    |  &#34;/user&#34; → NN1        |
+    |  &#34;/data&#34; → NN2        |
+    +-----------------------+
+    /           |            \
+    NN1         NN2           NN3    (many namespaces)
+    / \         / \           / \
+DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
+</code></pre></li>
+</ul>
+</li>
+<li><strong>Namenode Fault Tolerance - For failures</strong>
+<figure class="img-center"><img src="/images/cloudInfraBasics/hdfs_secondary_namenode.png"
+           alt="hdfs ha namenode" width="52%"/>
+  </figure>
+
+<ul>
+<li>Periodically (hourly) <strong>pulls a copy of the file metadata</strong> from the active <code>Namenode</code> to save to its local disk</li>
+<li><strong>Problem</strong>: Secondary Namenode might take too long to come up online (more than <strong>30 minutes</strong>):
+<ul>
+<li>Load the namespace image into the memory</li>
+<li>Replay its edit log</li>
+<li>Receive enough block reports from the Datanodes to leave safe-mode</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Namenode Fault Tolerance - High Availability (HA) Configuration</strong>
+<figure class="img-center"><img src="/images/cloudInfraBasics/hdfs_ha_namenode.png"
+           alt="hdfs ha namenode 2" width="60%"/>
+  </figure>
+
+<ul>
+<li>A pair of NN is configured as <strong>active-standby</strong></li>
+<li>The standby takes over whenever the active one fails</li>
+<li>The Namenodes use highly available shared storage to share the edit log</li>
+<li>The active Namenode writes, and the standby Namenode reads to keep it in sync</li>
+<li>Datanodes must send block reports to both Namenodes</li>
+<li>Client must be configured to handleNamenode failover</li>
+</ul>
+</li>
+</ul>
+<h3 id="datanode-failure"><strong>Datanode failure</strong></h3>
+<ul>
+<li><strong>Datanode Fault Tolerance - <em>Replication Factors</em></strong>
+<figure class="img-center"><img src="/images/cloudInfraBasics/hdfs_datanode_replica.png"
+           alt="hdfs datanode failure" width="45%"/>
+  </figure>
+
+<ul>
+<li>Each data blocks are replicated (<strong>thrice</strong> by default) and are distributed across different DataNodes.</li>
+</ul>
+</li>
+</ul>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>HDFS is for <em><strong>high thoughput</strong></em>, not low latency.</li>
+<li>Not for a large number of small files but for <em><strong>large files</strong></em>
+<ul>
+<li>Large number of small files: Costly metadata</li>
+<li>In average, each file, directory, and block takes about 150 bytes. For a HDFS that maintains 1 million files with one block each will need memory – 1,000,000<em>150</em>2 = 300 MB</li>
+</ul>
+</li>
+<li>Is for applications with <em><strong>single writer</strong></em> and always make <em><strong>writes at the end of file</strong></em></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-29</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/concepts_in_cloud_infra/">
+			Previous<br>Concepts in Cloud Infra
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#intro" class="nav-intro">
+									Intro
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#motivation-for-hadoop" class="nav-motivation-for-hadoop">
+									Motivation for Hadoop
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#challenges" class="nav-challenges">
+									Challenges
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#why-hadoop" class="nav-why-hadoop">
+									Why Hadoop
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#hadoop-basics" class="nav-hadoop-basics">
+									Hadoop Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#component-architecture" class="nav-component-architecture">
+									Component Architecture
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#history" class="nav-history">
+									History
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#hdfs" class="nav-hdfs">
+									HDFS
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#distributed-file-system" class="nav-distributed-file-system">
+									Distributed File System
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#basics" class="nav-basics">
+									Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#structure" class="nav-structure">
+									Structure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#namenodemaster" class="nav-namenodemaster">
+									Namenode(master)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#datanode" class="nav-datanode">
+									Datanode
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#data-blocks" class="nav-data-blocks">
+									Data Blocks
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#architectural-layers" class="nav-architectural-layers">
+									Architectural Layers
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#namespace" class="nav-namespace">
+									Namespace
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#block-storage-service" class="nav-block-storage-service">
+									Block Storage Service
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#namenode-issues" class="nav-namenode-issues">
+									Namenode Issues
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#solutions" class="nav-solutions">
+									Solutions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#datanode-failure" class="nav-datanode-failure">
+									Datanode failure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#key-takeaways" class="nav-key-takeaways">
+									Key Takeaways
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>
