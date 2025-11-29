@@ -574,6 +574,88 @@
 					
 				
 			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#state" class="nav-state">
+									State
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#commands" class="nav-commands">
+									Commands
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#meta-arguments" class="nav-meta-arguments">
+									Meta-arguments
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#resource-reference-this" class="nav-resource-reference-this">
+									Resource Reference “this”
+								</a>
+							</li>
+						
+						
+					
+				
+			
 		</ul>
 	</div>
 
@@ -829,6 +911,79 @@
          alt="Terraform File Structure" width="60%"/>
 </figure>
 
+<h2 id="state">State</h2>
+<ul>
+<li>A Terraform configuration is a declaration of the desired state, and When you run <code>terraform apply</code>, Terraform determines the difference between the actual state and the desired state</li>
+<li>Terraform <strong>state</strong> is the file that tracks the current actual state of your infra, containing all the configurations that have been applied during the Terraform workflow</li>
+<li>By default, it is named as <code>terraform.tfstate</code> and stored in the current/same directory as your configuration files.</li>
+<li>If working in a team, it&rsquo;s encouraged to store the Terraform state file remotely. To enable collaboration, Terraform allows remote storage of the state file using the concept of <em><strong>state backends</strong></em>.</li>
+<li>Conventionally, use <code>backend.tf</code> for the filename with example content below:
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">backend</span> <span style="color:#e6db74">&#34;gcs&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">bucket</span> = <span style="color:#e6db74">&#34;&lt;PROJECT_ID&gt;-tf-state&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">prefix</span> = <span style="color:#e6db74">&#34;backend&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li><code>prefix</code> refers to a folder on the bucket that will host the state file</li>
+</ul>
+<h3 id="commands">Commands</h3>
+<ul>
+<li><code>terraform state list</code>: list all resources in the state file</li>
+<li><code>terraform state show &lt;resource_name&gt;</code>: show detailed information about a specific resource in the state file</li>
+<li><code>terraform state rm &lt;resource_name&gt;</code>: remove a specific resource from the state file without deleting the actual resource in the cloud provider</li>
+</ul>
+<p>If you made some manual changes to the resource after deployment:</p>
+<ul>
+<li><code>terraform plan -refresh-only</code>: to visualize the difference between the Terraform state and the real infra</li>
+<li><code>terraform apply -refresh-only</code>: to update the state file to match the real infra according to the prev plan output without making any changes to the actual resources on the cloud</li>
+<li>Update the TF configuration file to set the same value as the manually modified value. So, if TF commands are reapplied, it won&rsquo;t override the manually entered values.</li>
+</ul>
+<h2 id="meta-arguments">Meta-arguments</h2>
+<p><em><strong>Meta-arguments</strong></em> are special constructs in Terraform to enable you to write efficient Terraform code. Examples of Meta-arguments:</p>
+<ul>
+<li>
+<p><em><strong>provider</strong></em> meta-argument</p>
+<ul>
+<li>You can write as many providers as you want in the <code>provider.tf</code> file. Try to keep only relevant providers in the same provider.tf file
+<figure class="img-center"><img src="/images/cloudInfraBasics/tf_provider_eg.png"
+           alt="Terraform Provider Meta Argument" width="80%"/>
+  </figure>
+</li>
+</ul>
+</li>
+<li>
+<p><em><strong>count</strong></em> meta-argument: provides the capability to create identical resources in a single block.
+<figure class="img-center"><img src="/images/cloudInfraBasics/tf_count_eg.png"
+         alt="Terraform Count Meta Argument" width="45%"/>
+</figure>
+</p>
+</li>
+<li>
+<p><em><strong>for_each</strong></em> meta-argument: If you want to create resources that share some attributes but have different attributes (e.g., worker nodes on different regions/zones), you can use for_each to map list of values as resource parameters.
+<figure class="img-center"><img src="/images/cloudInfraBasics/tf_foreach_eg.png"
+         alt="Terraform for_each Meta Argument" width="90%"/>
+</figure>
+</p>
+</li>
+<li>
+<p><em><strong>depends_on</strong></em> meta-argument: By default, Terraform runs 10 resource operations in parallel. If you have a resource that can’t be created until another resource is created (e.g., instance using a specific subnet), then use depends_on meta-argument.
+<figure class="img-center"><img src="/images/cloudInfraBasics/tf_dependson_eg.png"
+         alt="Terraform depends_on Meta Argument" width="55%"/>
+</figure>
+</p>
+</li>
+</ul>
+<h2 id="resource-reference-this">Resource Reference &ldquo;this&rdquo;</h2>
+<ul>
+<li>In GCP, every resource can be uniquely identified, so it is good practice to refer to resources using <code>**this**</code> reference, which is a <em><strong>Unique IDentifier(UID)</strong></em> containing additional information about the resource.</li>
+<li>You can use <code>this</code> with any resource and refer to it in other resources. It provides a clear and widely understood convention for identifying the primary resource within a module.</li>
+<li>When a module is designed to be generic and reusable, &ldquo;this&rdquo; can provide a consistent naming scheme across different implementations.</li>
+</ul>
 
                     
                     <HR width="100%" id="EOF">
@@ -1394,6 +1549,88 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 							<li>
 								<a href="#configuration-structure" class="nav-configuration-structure">
 									Configuration Structure
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#state" class="nav-state">
+									State
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#commands" class="nav-commands">
+									Commands
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#meta-arguments" class="nav-meta-arguments">
+									Meta-arguments
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#resource-reference-this" class="nav-resource-reference-this">
+									Resource Reference “this”
 								</a>
 							</li>
 						

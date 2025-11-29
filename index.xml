@@ -180,6 +180,79 @@
          alt=&#34;Terraform File Structure&#34; width=&#34;60%&#34;/&gt;
 &lt;/figure&gt;
 
+&lt;h2 id=&#34;state&#34;&gt;State&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;A Terraform configuration is a declaration of the desired state, and When you run &lt;code&gt;terraform apply&lt;/code&gt;, Terraform determines the difference between the actual state and the desired state&lt;/li&gt;
+&lt;li&gt;Terraform &lt;strong&gt;state&lt;/strong&gt; is the file that tracks the current actual state of your infra, containing all the configurations that have been applied during the Terraform workflow&lt;/li&gt;
+&lt;li&gt;By default, it is named as &lt;code&gt;terraform.tfstate&lt;/code&gt; and stored in the current/same directory as your configuration files.&lt;/li&gt;
+&lt;li&gt;If working in a team, it&amp;rsquo;s encouraged to store the Terraform state file remotely. To enable collaboration, Terraform allows remote storage of the state file using the concept of &lt;em&gt;&lt;strong&gt;state backends&lt;/strong&gt;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Conventionally, use &lt;code&gt;backend.tf&lt;/code&gt; for the filename with example content below:
+&lt;ul&gt;
+&lt;li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-terraform&#34; data-lang=&#34;terraform&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;terraform&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;backend&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;gcs&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;bucket&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;lt;PROJECT_ID&amp;gt;-tf-state&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;prefix&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;backend&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;prefix&lt;/code&gt; refers to a folder on the bucket that will host the state file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;commands&#34;&gt;Commands&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;terraform state list&lt;/code&gt;: list all resources in the state file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;terraform state show &amp;lt;resource_name&amp;gt;&lt;/code&gt;: show detailed information about a specific resource in the state file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;terraform state rm &amp;lt;resource_name&amp;gt;&lt;/code&gt;: remove a specific resource from the state file without deleting the actual resource in the cloud provider&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you made some manual changes to the resource after deployment:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;terraform plan -refresh-only&lt;/code&gt;: to visualize the difference between the Terraform state and the real infra&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;terraform apply -refresh-only&lt;/code&gt;: to update the state file to match the real infra according to the prev plan output without making any changes to the actual resources on the cloud&lt;/li&gt;
+&lt;li&gt;Update the TF configuration file to set the same value as the manually modified value. So, if TF commands are reapplied, it won&amp;rsquo;t override the manually entered values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;meta-arguments&#34;&gt;Meta-arguments&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Meta-arguments&lt;/strong&gt;&lt;/em&gt; are special constructs in Terraform to enable you to write efficient Terraform code. Examples of Meta-arguments:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;provider&lt;/strong&gt;&lt;/em&gt; meta-argument&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You can write as many providers as you want in the &lt;code&gt;provider.tf&lt;/code&gt; file. Try to keep only relevant providers in the same provider.tf file
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/tf_provider_eg.png&#34;
+           alt=&#34;Terraform Provider Meta Argument&#34; width=&#34;80%&#34;/&gt;
+  &lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;count&lt;/strong&gt;&lt;/em&gt; meta-argument: provides the capability to create identical resources in a single block.
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/tf_count_eg.png&#34;
+         alt=&#34;Terraform Count Meta Argument&#34; width=&#34;45%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;for_each&lt;/strong&gt;&lt;/em&gt; meta-argument: If you want to create resources that share some attributes but have different attributes (e.g., worker nodes on different regions/zones), you can use for_each to map list of values as resource parameters.
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/tf_foreach_eg.png&#34;
+         alt=&#34;Terraform for_each Meta Argument&#34; width=&#34;90%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;depends_on&lt;/strong&gt;&lt;/em&gt; meta-argument: By default, Terraform runs 10 resource operations in parallel. If you have a resource that can’t be created until another resource is created (e.g., instance using a specific subnet), then use depends_on meta-argument.
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/tf_dependson_eg.png&#34;
+         alt=&#34;Terraform depends_on Meta Argument&#34; width=&#34;55%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;resource-reference-this&#34;&gt;Resource Reference &amp;ldquo;this&amp;rdquo;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In GCP, every resource can be uniquely identified, so it is good practice to refer to resources using &lt;code&gt;**this**&lt;/code&gt; reference, which is a &lt;em&gt;&lt;strong&gt;Unique IDentifier(UID)&lt;/strong&gt;&lt;/em&gt; containing additional information about the resource.&lt;/li&gt;
+&lt;li&gt;You can use &lt;code&gt;this&lt;/code&gt; with any resource and refer to it in other resources. It provides a clear and widely understood convention for identifying the primary resource within a module.&lt;/li&gt;
+&lt;li&gt;When a module is designed to be generic and reusable, &amp;ldquo;this&amp;rdquo; can provide a consistent naming scheme across different implementations.&lt;/li&gt;
+&lt;/ul&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/terraform/ - This is a customized copyright.</description>
         </item>
     
@@ -326,6 +399,7 @@
 &lt;li&gt;Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Stateless&lt;/strong&gt;: each component does not store any state between requests. Each request is independent.&lt;/li&gt;
 &lt;li&gt;In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm&lt;/li&gt;
+&lt;li&gt;Reading: Example of Ecommerce microservice app deployed on GKE: &lt;a href=&#34;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&#34;&gt;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;digression-3-rest&#34;&gt;Digression 3: REST&lt;/h2&gt;
 &lt;ul&gt;
