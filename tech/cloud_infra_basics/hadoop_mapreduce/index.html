@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html><head>
+<title>Hadoop - MapReduce</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Hadoop - MapReduce" />
+<meta property="og:description" content="Intro How traditional distributed system dealing with data: It is too complicated to build a distributed system from scratch Now MapReduce comes in and abbreviates this process by taking care of most parts, except for collecting results, and processing the data before handling failures. MapReduce Definition A programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a Hadoop cluster. It abstracts the problem from disk reads and writes, transforming it into a computation over sets for keys and values It works as a batch query processor that can run an ad hoc query against your whole data set and get result in a reasonable time." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-29T04:55:54-05:00" />
+<meta property="article:modified_time" content="2025-11-29T04:55:54-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hadoop - MapReduce"/>
+<meta name="twitter:description" content="Intro How traditional distributed system dealing with data: It is too complicated to build a distributed system from scratch Now MapReduce comes in and abbreviates this process by taking care of most parts, except for collecting results, and processing the data before handling failures. MapReduce Definition A programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a Hadoop cluster. It abstracts the problem from disk reads and writes, transforming it into a computation over sets for keys and values It works as a batch query processor that can run an ad hoc query against your whole data set and get result in a reasonable time."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#intro" class="nav-intro">
+									Intro
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce" class="nav-mapreduce">
+									MapReduce
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#definition" class="nav-definition">
+									Definition
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#scalability-and-parallelism" class="nav-scalability-and-parallelism">
+									Scalability and Parallelism
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#word-count-example" class="nav-word-count-example">
+									Word Count Example:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#details-in-mapreduce" class="nav-details-in-mapreduce">
+									Details in MapReduce
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#job-components" class="nav-job-components">
+									Job Components
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#data-flow---map" class="nav-data-flow---map">
+									Data Flow - Map
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#from-map-to-reduce" class="nav-from-map-to-reduce">
+									From Map to Reduce
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#decomposing-a-problem" class="nav-decomposing-a-problem">
+									Decomposing a Problem
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#read-output" class="nav-read-output">
+									Read Output
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#improvements" class="nav-improvements">
+									Improvements
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#customization-parameters" class="nav-customization-parameters">
+									Customization Parameters
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/hadoop_logo.webp')"
+                    
+                
+            >
+                <div class="post-title">
+                    Hadoop - MapReduce
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-29 04:55
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/hadoop">hadoop</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="intro">Intro</h1>
+<ul>
+<li>How <em>traditional</em> distributed system dealing with data:
+<figure class="img-center"><img src="/images/cloudInfraBasics/traditional_DS.png"
+         alt="traditional distributed system" width="60%"/>
+</figure>
+
+It is too complicated to build a distributed system from scratch</li>
+<li>Now <em><strong>MapReduce</strong></em> comes in and abbreviates this process by taking care of most parts, except for collecting results, and processing the data before handling failures.</li>
+</ul>
+<h1 id="mapreduce">MapReduce</h1>
+<h2 id="definition">Definition</h2>
+<ul>
+<li>A <strong>programming model</strong> and an <strong>associated implementation</strong> for <em><strong>processing and generating large data sets</strong></em> with a <em><strong>parallel, distributed algorithm</strong></em> on a Hadoop cluster.</li>
+<li>It abstracts the problem from disk reads and writes, transforming it into a <strong>computation over sets for keys and values</strong></li>
+<li>It works as a <em><strong>batch query processor</strong></em> that can run an ad hoc query against your whole data set and get result in a reasonable time. Not real time processing.
+<figure class="img-center"><img src="/images/cloudInfraBasics/mapreduce_intro.png"
+           alt="mapreduce overview" width="65%"/>
+  </figure>
+</li>
+</ul>
+<h2 id="scalability-and-parallelism">Scalability and Parallelism</h2>
+<h3 id="word-count-example">Word Count Example:</h3>
+<ul>
+<li>Input: a large collection of documents</li>
+<li>Output: a list of (word, count) pairs</li>
+</ul>
+<p>First phase:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  Define WordCount <span style="color:#66d9ef">as</span> Multiset;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  For Each Document <span style="color:#f92672">in</span> DocumentSubset {
+</span></span><span style="display:flex;"><span>      T <span style="color:#f92672">=</span> tokenize(document);
+</span></span><span style="display:flex;"><span>      For Each Token <span style="color:#f92672">in</span> T {
+</span></span><span style="display:flex;"><span>          WordCount[token]<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>      } 
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  SendToSecondPhase(wordCount);
+</span></span></code></pre></div><p>Second phase:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Define WordCount <span style="color:#66d9ef">as</span> Multiset;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For Each Document <span style="color:#f92672">in</span> DocumentSubset {
+</span></span><span style="display:flex;"><span>    T <span style="color:#f92672">=</span> tokenize(document);
+</span></span><span style="display:flex;"><span>    For Each Token <span style="color:#f92672">in</span> T {
+</span></span><span style="display:flex;"><span>        WordCount[token]<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    } }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SendToSecondPhase(wordCount);
+</span></span></code></pre></div><ul>
+<li>We want to execute both phases in a <em><strong>distributed manner</strong></em> on a cluster of machines that can run independently.</li>
+<li>So we do Divide and Conquer:
+<figure class="img-center"><img src="/images/cloudInfraBasics/mapreduce_d&amp;c.png"
+         alt="mapreduce divide and conquer" width="45%"/>
+</figure>
+
+<ul>
+<li><strong>Challenges</strong>:
+<ul>
+<li>How do we assign work units to workers?</li>
+<li>What if we have more work units than workers?</li>
+<li>What if workers need to share partial results?</li>
+<li>How do we aggregate partial results?</li>
+<li>How do we know all the workers have finished?</li>
+<li>What if workers fail?</li>
+</ul>
+</li>
+<li>Distributed system developer mindset:
+<ul>
+<li>The order in which workers run may be unknown</li>
+<li>The order in which workers interrupt each other may be unknown</li>
+<li>The order in which workers access shared data may be unknown</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="details-in-mapreduce">Details in MapReduce</h3>
+<ul>
+<li>A <strong>data intensive</strong> programming model as a framework for <em><strong>key-based operations</strong></em></li>
+<li>Underlying runtime system (<strong>YARN + HDFS</strong>)
+<ul>
+<li><em>Automatically parallelizes</em> the computation across large-scale clusters of machines</li>
+<li>Handles machine failures, communications and performance issues.</li>
+</ul>
+</li>
+<li>What are <em><strong>Map</strong></em> and <em><strong>Reduce</strong></em> functions:
+<ul>
+<li><strong>Map</strong>:
+<ul>
+<li>Iterate over a large number of records</li>
+<li>Extract something of interest from each record</li>
+</ul>
+</li>
+<li><strong>Shuffle</strong>: Shuffle and sort intermediate results - Taken care by <code>Hadoop</code>!</li>
+<li><strong>Reduce</strong>:
+<ul>
+<li>Aggregate all intermediate results for a given key</li>
+<li>Produce final output records</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>So Word Count in <strong><code>Hadoop MapReduce</code></strong> (similar to Kafka broker):
+<figure class="img-center"><img src="/images/cloudInfraBasics/mapreduce_wordcount.png"
+           alt="mapreduce word count" width="70%"/>
+  </figure>
+
+<ul>
+<li>In <em>input split</em>, the key value is the byte offset.</li>
+<li>In <em>mapping</em>, we control the hash function such that we make sure same words get the same hash values and words of the same hash value will be sent to the same machine.</li>
+</ul>
+</li>
+</ul>
+<h2 id="job-components">Job Components</h2>
+<ul>
+<li><strong>Definition</strong>: A MapReduce <strong>Job</strong> is a unit of work that the user wants to be performed. The <em>job</em> consists of:
+<ul>
+<li>MapReduce program</li>
+<li>Input data set</li>
+<li>Configuration information
+Example command:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hadoop jar /usr/lib/hadoop/hadoop-streaming.jar <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -file mapper.py <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -mapper <span style="color:#e6db74">&#39;python mapper.py&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -file reducer.py <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -reducer <span style="color:#e6db74">&#39;python reducer.py&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -input /data/*/ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -output /OutputFolder
+</span></span></code></pre></div></li>
+<li>The <code>Hadoop</code> <strong>keeps the source code in the local cluster</strong>, but data in HDFS. Because when we are dealing with Big data, we keep the data where they are and we move the source codes, processes to the place where the data are stored. This is called <em><strong>Data localization</strong></em>.</li>
+</ul>
+<h2 id="data-flow---map">Data Flow - Map</h2>
+<ul>
+<li>The Input data are divided into fixed-size pieces called splits
+<ul>
+<li>One map task is created for each split</li>
+<li>The map function is run on each split</li>
+<li>Configuration information indicates where the input and the output are stored.</li>
+<li>The maximum number of Mappers you can have in an application is equal to the number of your input data splits, because each input split is processed by exactly one Mapper.</li>
+</ul>
+</li>
+</ul>
+<h3 id="from-map-to-reduce">From Map to Reduce</h3>
+<ol>
+<li>Select a number R of reduce tasks.</li>
+<li>Divide the intermediate keys into R groups,</li>
+<li>Map tasks use efficient hashing function to group keys that should be sent to the same reducer.</li>
+<li>Each map task transfers each group of keys to one of the R reducer’s container</li>
+<li>Once all mapper task results are transferred to the reducer, the reducer merges the results and computes the final output</li>
+<li>All values with the same key are reduced together. The reducer then writes the output to HDFS</li>
+</ol>
+<h2 id="decomposing-a-problem">Decomposing a Problem</h2>
+<ul>
+<li><strong>Map</strong> task focuses on:
+<ul>
+<li><strong>Extracting</strong> the key and temperature from each line in each file</li>
+<li><strong>Emitting</strong> intermediate key-value pairs</li>
+</ul>
+</li>
+<li>Hadoop will accumulate all the values for a given key and pass them to a specific <strong>Reducer</strong></li>
+<li><strong>Reducer</strong> task focuses on:
+<ul>
+<li><strong>Aggregating</strong> all the values for a given key
+<ul>
+<li>Find the maximum temperature for a given year in the NCDC Example</li>
+</ul>
+</li>
+<li><strong>Emitting</strong> final key-value pairs. Writing the output to HDFS</li>
+</ul>
+</li>
+</ul>
+<h2 id="read-output">Read Output</h2>
+<ul>
+<li>Each reducer writes the output in a separate file on HDFS.</li>
+<li>Merge the output files and copy them to your local cluster:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hadoop fs -getmerge /OutputFolder/ local_output
+</span></span><span style="display:flex;"><span>cat local_output
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<ul>
+<li>
+<p><strong>Combiner</strong> function:</p>
+<ul>
+<li>A mini-reducer that performs in-memory local aggregation of the intermediate outputs after the map phase (inside the memory of the <em>Map</em> tasks) and before the shuffle phase.</li>
+<li><strong>Reduces the amount of intermediate data</strong> (key/value pair -&gt; network traffic) transferred from the Mapper to the Reducer</li>
+<li>But if there are <strong>too many hetero elements</strong>, it’s no longer efficient which means it is almost like doing another reduce task on the map node.</li>
+<li>Example code:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hadoop jar /usr/lib/hadoop/hadoop-streaming.jar <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -files temperature_mapper.py,temperature_reducer.py <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -input /data/*/ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -output /NewTempOutFolder <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -mapper <span style="color:#e6db74">&#39;python temperature_mapper.py&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -combiner <span style="color:#e6db74">&#39;python temperature_reducer.py&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -reducer <span style="color:#e6db74">&#39;python temperature_reducer.py&#39;</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p><strong>Partitioner</strong>(k&rsquo;(key), num_of_partitions=num_of_reducer) -&gt; partition for k'</p>
+<ul>
+<li>Controls the partitioning of the intermediate map output keys. Splits the map output records <strong>with the same key</strong>.</li>
+<li><strong>Divides up key space</strong> for parallel reduce operations</li>
+<li>Executes on each machine that performs a map task as a local partitioning.</li>
+<li>Default partitioner: hash function that computes the hash value of the key and assigns it to a reducer based on the number of reducers.
+<ul>
+<li>e.g., <code>partition = hash(key) mod num_of_reducers</code></li>
+</ul>
+</li>
+<li>Custom partitioner: user-defined function that controls how the keys are distributed to the reducers.</li>
+</ul>
+</li>
+</ul>
+<h2 id="customization-parameters">Customization Parameters</h2>
+<ul>
+<li>Control number of reducers in your app: <code>-numReduceTasks N</code></li>
+<li>Partitioners can help you create compound keys: <code>-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner</code></li>
+<li>Comparator specifies a custom method to sorting keys at the shuffle and sort stage. Example:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yarn jar /opt/hadoop/hadoop-streaming.jar <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -D mapreduce.job.output.key.comparator.class<span style="color:#f92672">=</span> <span style="color:#ae81ff">\ </span>&lt;!-- Specify a custom key comparator class --&gt;
+</span></span><span style="display:flex;"><span>  org.apache.hadoop.mapred.lib.partition.KeyFieldBasedComparator <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  &lt;!-- treat <span style="color:#e6db74">&#34;.&#34;</span> as the delimiter between key fields. --&gt;
+</span></span><span style="display:flex;"><span>  -D mapreduce.map.output.key.field.separator<span style="color:#f92672">=</span>. <span style="color:#ae81ff">\ </span>
+</span></span><span style="display:flex;"><span>  &lt;!-- -k2,2: sort by field <span style="color:#ae81ff">2</span> only; n: numeric sort; r: reverse order<span style="color:#f92672">(</span>descending<span style="color:#f92672">)</span> --&gt;
+</span></span><span style="display:flex;"><span>  &lt;!-- Sort keys by their second field numerically in descending order. --&gt;
+</span></span><span style="display:flex;"><span>  -D mapreduce.partition.keycomparator.options<span style="color:#f92672">=</span>-k2,2nr <span style="color:#ae81ff">\
+</span></span></span></code></pre></div></li>
+<li>Reading: more on Partitioners and Comparators: <a href="https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized">https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized</a></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-29</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/hadoop_hdfs/">
+			Previous<br>Hadoop - HDFS
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#intro" class="nav-intro">
+									Intro
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce" class="nav-mapreduce">
+									MapReduce
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#definition" class="nav-definition">
+									Definition
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#scalability-and-parallelism" class="nav-scalability-and-parallelism">
+									Scalability and Parallelism
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#word-count-example" class="nav-word-count-example">
+									Word Count Example:
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#details-in-mapreduce" class="nav-details-in-mapreduce">
+									Details in MapReduce
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#job-components" class="nav-job-components">
+									Job Components
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#data-flow---map" class="nav-data-flow---map">
+									Data Flow - Map
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#from-map-to-reduce" class="nav-from-map-to-reduce">
+									From Map to Reduce
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#decomposing-a-problem" class="nav-decomposing-a-problem">
+									Decomposing a Problem
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#read-output" class="nav-read-output">
+									Read Output
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#improvements" class="nav-improvements">
+									Improvements
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#customization-parameters" class="nav-customization-parameters">
+									Customization Parameters
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>

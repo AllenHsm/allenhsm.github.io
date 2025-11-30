@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 01:27:18 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 29 Nov 2025 04:55:54 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hadoop - MapReduce</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/</link>
+      <pubDate>Sat, 29 Nov 2025 04:55:54 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/</guid>
+      <description>Intro How traditional distributed system dealing with data: It is too complicated to build a distributed system from scratch Now MapReduce comes in and abbreviates this process by taking care of most parts, except for collecting results, and processing the data before handling failures. MapReduce Definition A programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a Hadoop cluster. It abstracts the problem from disk reads and writes, transforming it into a computation over sets for keys and values It works as a batch query processor that can run an ad hoc query against your whole data set and get result in a reasonable time.</description>
+    </item>
+    
     <item>
       <title>Hadoop - HDFS</title>
       <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/</link>

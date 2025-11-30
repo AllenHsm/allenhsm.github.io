@@ -7,9 +7,250 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 01:27:18 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 04:55:54 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Hadoop - MapReduce</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/</link>
+        <pubDate>Sat, 29 Nov 2025 04:55:54 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/ -&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;How &lt;em&gt;traditional&lt;/em&gt; distributed system dealing with data:
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/traditional_DS.png&#34;
+         alt=&#34;traditional distributed system&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+It is too complicated to build a distributed system from scratch&lt;/li&gt;
+&lt;li&gt;Now &lt;em&gt;&lt;strong&gt;MapReduce&lt;/strong&gt;&lt;/em&gt; comes in and abbreviates this process by taking care of most parts, except for collecting results, and processing the data before handling failures.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;mapreduce&#34;&gt;MapReduce&lt;/h1&gt;
+&lt;h2 id=&#34;definition&#34;&gt;Definition&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;programming model&lt;/strong&gt; and an &lt;strong&gt;associated implementation&lt;/strong&gt; for &lt;em&gt;&lt;strong&gt;processing and generating large data sets&lt;/strong&gt;&lt;/em&gt; with a &lt;em&gt;&lt;strong&gt;parallel, distributed algorithm&lt;/strong&gt;&lt;/em&gt; on a Hadoop cluster.&lt;/li&gt;
+&lt;li&gt;It abstracts the problem from disk reads and writes, transforming it into a &lt;strong&gt;computation over sets for keys and values&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;It works as a &lt;em&gt;&lt;strong&gt;batch query processor&lt;/strong&gt;&lt;/em&gt; that can run an ad hoc query against your whole data set and get result in a reasonable time. Not real time processing.
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/mapreduce_intro.png&#34;
+           alt=&#34;mapreduce overview&#34; width=&#34;65%&#34;/&gt;
+  &lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;scalability-and-parallelism&#34;&gt;Scalability and Parallelism&lt;/h2&gt;
+&lt;h3 id=&#34;word-count-example&#34;&gt;Word Count Example:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Input: a large collection of documents&lt;/li&gt;
+&lt;li&gt;Output: a list of (word, count) pairs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;First phase:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Define WordCount &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; Multiset;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  For Each Document &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; DocumentSubset {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      T &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tokenize(document);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      For Each Token &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; T {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          WordCount[token]&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      } 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  SendToSecondPhase(wordCount);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Second phase:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Define WordCount &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; Multiset;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;For Each Document &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; DocumentSubset {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    T &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tokenize(document);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    For Each Token &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; T {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        WordCount[token]&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    } }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SendToSecondPhase(wordCount);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;We want to execute both phases in a &lt;em&gt;&lt;strong&gt;distributed manner&lt;/strong&gt;&lt;/em&gt; on a cluster of machines that can run independently.&lt;/li&gt;
+&lt;li&gt;So we do Divide and Conquer:
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/mapreduce_d&amp;amp;c.png&#34;
+         alt=&#34;mapreduce divide and conquer&#34; width=&#34;45%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Challenges&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;How do we assign work units to workers?&lt;/li&gt;
+&lt;li&gt;What if we have more work units than workers?&lt;/li&gt;
+&lt;li&gt;What if workers need to share partial results?&lt;/li&gt;
+&lt;li&gt;How do we aggregate partial results?&lt;/li&gt;
+&lt;li&gt;How do we know all the workers have finished?&lt;/li&gt;
+&lt;li&gt;What if workers fail?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Distributed system developer mindset:
+&lt;ul&gt;
+&lt;li&gt;The order in which workers run may be unknown&lt;/li&gt;
+&lt;li&gt;The order in which workers interrupt each other may be unknown&lt;/li&gt;
+&lt;li&gt;The order in which workers access shared data may be unknown&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;details-in-mapreduce&#34;&gt;Details in MapReduce&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;data intensive&lt;/strong&gt; programming model as a framework for &lt;em&gt;&lt;strong&gt;key-based operations&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Underlying runtime system (&lt;strong&gt;YARN + HDFS&lt;/strong&gt;)
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Automatically parallelizes&lt;/em&gt; the computation across large-scale clusters of machines&lt;/li&gt;
+&lt;li&gt;Handles machine failures, communications and performance issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;What are &lt;em&gt;&lt;strong&gt;Map&lt;/strong&gt;&lt;/em&gt; and &lt;em&gt;&lt;strong&gt;Reduce&lt;/strong&gt;&lt;/em&gt; functions:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Map&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Iterate over a large number of records&lt;/li&gt;
+&lt;li&gt;Extract something of interest from each record&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Shuffle&lt;/strong&gt;: Shuffle and sort intermediate results - Taken care by &lt;code&gt;Hadoop&lt;/code&gt;!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reduce&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Aggregate all intermediate results for a given key&lt;/li&gt;
+&lt;li&gt;Produce final output records&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;So Word Count in &lt;strong&gt;&lt;code&gt;Hadoop MapReduce&lt;/code&gt;&lt;/strong&gt; (similar to Kafka broker):
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/mapreduce_wordcount.png&#34;
+           alt=&#34;mapreduce word count&#34; width=&#34;70%&#34;/&gt;
+  &lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In &lt;em&gt;input split&lt;/em&gt;, the key value is the byte offset.&lt;/li&gt;
+&lt;li&gt;In &lt;em&gt;mapping&lt;/em&gt;, we control the hash function such that we make sure same words get the same hash values and words of the same hash value will be sent to the same machine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;job-components&#34;&gt;Job Components&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Definition&lt;/strong&gt;: A MapReduce &lt;strong&gt;Job&lt;/strong&gt; is a unit of work that the user wants to be performed. The &lt;em&gt;job&lt;/em&gt; consists of:
+&lt;ul&gt;
+&lt;li&gt;MapReduce program&lt;/li&gt;
+&lt;li&gt;Input data set&lt;/li&gt;
+&lt;li&gt;Configuration information
+Example command:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hadoop jar /usr/lib/hadoop/hadoop-streaming.jar &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -file mapper.py &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -mapper &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;python mapper.py&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -file reducer.py &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -reducer &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;python reducer.py&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -input /data/*/ &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -output /OutputFolder
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;Hadoop&lt;/code&gt; &lt;strong&gt;keeps the source code in the local cluster&lt;/strong&gt;, but data in HDFS. Because when we are dealing with Big data, we keep the data where they are and we move the source codes, processes to the place where the data are stored. This is called &lt;em&gt;&lt;strong&gt;Data localization&lt;/strong&gt;&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;data-flow---map&#34;&gt;Data Flow - Map&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The Input data are divided into fixed-size pieces called splits
+&lt;ul&gt;
+&lt;li&gt;One map task is created for each split&lt;/li&gt;
+&lt;li&gt;The map function is run on each split&lt;/li&gt;
+&lt;li&gt;Configuration information indicates where the input and the output are stored.&lt;/li&gt;
+&lt;li&gt;The maximum number of Mappers you can have in an application is equal to the number of your input data splits, because each input split is processed by exactly one Mapper.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;from-map-to-reduce&#34;&gt;From Map to Reduce&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Select a number R of reduce tasks.&lt;/li&gt;
+&lt;li&gt;Divide the intermediate keys into R groups,&lt;/li&gt;
+&lt;li&gt;Map tasks use efficient hashing function to group keys that should be sent to the same reducer.&lt;/li&gt;
+&lt;li&gt;Each map task transfers each group of keys to one of the R reducer’s container&lt;/li&gt;
+&lt;li&gt;Once all mapper task results are transferred to the reducer, the reducer merges the results and computes the final output&lt;/li&gt;
+&lt;li&gt;All values with the same key are reduced together. The reducer then writes the output to HDFS&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;decomposing-a-problem&#34;&gt;Decomposing a Problem&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Map&lt;/strong&gt; task focuses on:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Extracting&lt;/strong&gt; the key and temperature from each line in each file&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Emitting&lt;/strong&gt; intermediate key-value pairs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Hadoop will accumulate all the values for a given key and pass them to a specific &lt;strong&gt;Reducer&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reducer&lt;/strong&gt; task focuses on:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Aggregating&lt;/strong&gt; all the values for a given key
+&lt;ul&gt;
+&lt;li&gt;Find the maximum temperature for a given year in the NCDC Example&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Emitting&lt;/strong&gt; final key-value pairs. Writing the output to HDFS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;read-output&#34;&gt;Read Output&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Each reducer writes the output in a separate file on HDFS.&lt;/li&gt;
+&lt;li&gt;Merge the output files and copy them to your local cluster:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hadoop fs -getmerge /OutputFolder/ local_output
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat local_output
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;improvements&#34;&gt;Improvements&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Combiner&lt;/strong&gt; function:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A mini-reducer that performs in-memory local aggregation of the intermediate outputs after the map phase (inside the memory of the &lt;em&gt;Map&lt;/em&gt; tasks) and before the shuffle phase.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reduces the amount of intermediate data&lt;/strong&gt; (key/value pair -&amp;gt; network traffic) transferred from the Mapper to the Reducer&lt;/li&gt;
+&lt;li&gt;But if there are &lt;strong&gt;too many hetero elements&lt;/strong&gt;, it’s no longer efficient which means it is almost like doing another reduce task on the map node.&lt;/li&gt;
+&lt;li&gt;Example code:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hadoop jar /usr/lib/hadoop/hadoop-streaming.jar &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -files temperature_mapper.py,temperature_reducer.py &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -input /data/*/ &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -output /NewTempOutFolder &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -mapper &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;python temperature_mapper.py&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -combiner &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;python temperature_reducer.py&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -reducer &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;python temperature_reducer.py&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Partitioner&lt;/strong&gt;(k&amp;rsquo;(key), num_of_partitions=num_of_reducer) -&amp;gt; partition for k&#39;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Controls the partitioning of the intermediate map output keys. Splits the map output records &lt;strong&gt;with the same key&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Divides up key space&lt;/strong&gt; for parallel reduce operations&lt;/li&gt;
+&lt;li&gt;Executes on each machine that performs a map task as a local partitioning.&lt;/li&gt;
+&lt;li&gt;Default partitioner: hash function that computes the hash value of the key and assigns it to a reducer based on the number of reducers.
+&lt;ul&gt;
+&lt;li&gt;e.g., &lt;code&gt;partition = hash(key) mod num_of_reducers&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Custom partitioner: user-defined function that controls how the keys are distributed to the reducers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;customization-parameters&#34;&gt;Customization Parameters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Control number of reducers in your app: &lt;code&gt;-numReduceTasks N&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Partitioners can help you create compound keys: &lt;code&gt;-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Comparator specifies a custom method to sorting keys at the shuffle and sort stage. Example:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yarn jar /opt/hadoop/hadoop-streaming.jar &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -D mapreduce.job.output.key.comparator.class&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;&amp;lt;!-- Specify a custom key comparator class --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  org.apache.hadoop.mapred.lib.partition.KeyFieldBasedComparator &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  &amp;lt;!-- treat &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt; as the delimiter between key fields. --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -D mapreduce.map.output.key.field.separator&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;. &lt;span style=&#34;color:#ae81ff&#34;&gt;\ &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;!-- -k2,2: sort by field &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; only; n: numeric sort; r: reverse order&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;descending&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;!-- Sort keys by their second field numerically in descending order. --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -D mapreduce.partition.keycomparator.options&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;-k2,2nr &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Reading: more on Partitioners and Comparators: &lt;a href=&#34;https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized&#34;&gt;https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -208,7 +449,7 @@ directories, filenames, permissions, block maps.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;solutions&#34;&gt;&lt;strong&gt;Solutions&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Namenode Federation - For scalability&lt;/strong&gt;:
+&lt;li&gt;&lt;strong&gt;Namenode Federation - For scalability&lt;/strong&gt; - Hadoop 3.x:
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_namenode_federation.png&#34;
          alt=&#34;hdfs federation&#34; width=&#34;40%&#34;/&gt;
 &lt;/figure&gt;
@@ -258,7 +499,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Namenode Fault Tolerance - High Availability (HA) Configuration&lt;/strong&gt;
+&lt;li&gt;&lt;strong&gt;Namenode Fault Tolerance - High Availability (HA) Configuration&lt;/strong&gt; - Hadoop 3.x
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hdfs_ha_namenode.png&#34;
            alt=&#34;hdfs ha namenode 2&#34; width=&#34;60%&#34;/&gt;
   &lt;/figure&gt;
@@ -1644,52 +1885,6 @@ We define the resources that users or service providers manage as follows:
 &lt;/figure&gt;
 &lt;/p&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>深夜偶感</title>
-        <link>http://allenhsm.github.io/posts/miscellaneous_notes/%E5%81%B6%E6%84%9F/</link>
-        <pubDate>Thu, 20 Nov 2025 22:24:29 -0500</pubDate>
-        
-        <guid>http://allenhsm.github.io/posts/miscellaneous_notes/%E5%81%B6%E6%84%9F/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/posts/miscellaneous_notes/%E5%81%B6%E6%84%9F/ -&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.4;
-            color: rgba(17, 27, 156, 0.8) !important;
-            margin-bottom: 1.5rem;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;     每次离家我都是乘船走的。去港口的路很远很远，爸爸开车载着我们，到了之后还要办些手续、托运行李，等一切准备就绪，已经过去两个小时，一路跟着我们的爷爷也有些疲惫了。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     爷爷是个老烟枪，二十多岁下放时染上烟瘾，抽到现在有六十多年了。我小时候有鼻炎哮喘，最讨厌烟味，于是我在家时他会把自己关在阳台上抽，抽完也不作等待，就裹着满身的烟味回来了。为这事大家说了不止一次，他稍改几天又回到原样。于他而言，此物最是提神解乏。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     这时候爷爷叫上我：“该办的那些都办好了吧？”&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     “都办好了。”&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     “好。我们到外头抽口烟去。”&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     检票处在港口的三楼，那里有一条扶梯直通向一楼正门。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     我们走出大厅，在门口立住。海风吹得愈发凶了，夕阳刚沉入洋面，港口外围散落着星星点点的灯光。爷爷背着风，远处是黯淡的海水。他眯着眼睛点起烟来，明灭之间，一口白烟吐出，旋即被吹散了，原本熨贴的白发也逐渐蓬乱。他转向我，仍是被海风迷了眼睛，我一时说不出话来，只是笑着注视他吞云吐雾。我已看他抽过成千上万支烟，往往是从容的，一根是要分成三次来抽的，但我还是希望他抽得再少一点，慢一点。离检票至少还有十分钟，爷爷一口接一口地吸着，一根烟很快燃尽。他是个不愿踩点的人。&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;     大概我们又谈了几句无关的话，爷爷看看手表，“差不多了，我走得慢，上去吧。”握着他刚捏了烟的手，我们又登上那条通向三楼的长长的扶梯。我站在他的后方，向左看去，熟悉的大厅里并没有多少行人，中间支着三根巨大的立柱，撑起十余米高的弧形穹顶，笼罩一切，巨大的空间被灯光照得亮堂堂的。我又忍不住想起三年多前第一次离家时，同样是托运完行李后陪爷爷出门抽一支烟，同样是坐着这条扶梯返回登船口，那次我也在左边，和爷爷并排站着，根本不敢看他，下意识的扭头望向这空旷的大厅，尽可能不出声音，深吸一大口气，可几滴泪还是不听话地流到脸上，我赶忙用左手去抹，总算没有真的哭出来。想到这里我转头看向爷爷，爷爷还是像以前每次接我时那样挑着眉，笑着看向我，我也笑了起来，有一点酸楚，更多是无奈。这次分别没有人在我面前流下泪来，我自己也没有，大概这些年我们都进步了——或者是，妥协了。每个人或早或晚都会明白，有些路恐怕只能一个人走，中间若偶有人同途，实是万幸。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-
-&lt;/div&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.4;
-            color: rgba(17, 27, 156, 0.8) !important;
-            margin-bottom: 1.5rem;&#34;&gt;
-    &amp;mdash; 深夜里想起相距万里的爷爷
-&lt;/div&gt;
-&lt;div style=&#34;font-family: &#39;FZSongKeBenXiuKaiJian&#39;; 
-            font-size: 20px; 
-            letter-spacing: 2px; 
-            line-height: 1.4;
-            color: rgba(17, 27, 156, 0.8) !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;乙巳年丁亥月廿日清晨&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;于匹兹堡&lt;/p&gt;
-
-&lt;/div&gt;
-- http://allenhsm.github.io/posts/miscellaneous_notes/%E5%81%B6%E6%84%9F/ - This is a customized copyright.</description>
         </item>
     
     
