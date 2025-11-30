@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html><head>
+<title>Hadoop - YARN</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Hadoop - YARN" />
+<meta property="og:description" content="Yarn Brief History Hadoop 1.x Core components: MapReduce and HDFS Structure: HDFS: NameNode &#43; DataNodes MapReduce (MRv1): JobTracker &#43; TaskTrackers JobTracker did everything: resource management, job scheduling, tracking tasks, failure handling Also a single point of failure and a scaling bottleneck MapReduce = computation engine &#43; resource manager in one Only MapReduce jobs were supported Hadoop 2.x Now Hadoop has three logical layers: HDFS: storage layer NameNode &#43; DataNodes YARN: resource management layer ResourceManager &#43; NodeManagers &#43; ApplicationMasters MapReduce (MRv2): computation layer Runs on top of YARN as one of many application frameworks Key improvements Separated resource management from computation MapReduce no longer monopolizes the cluster Allowed more engines: Spark, Tez, Flink, Storm, etc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-11-29T04:56:00-05:00" />
+<meta property="article:modified_time" content="2025-11-29T04:56:00-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hadoop - YARN"/>
+<meta name="twitter:description" content="Yarn Brief History Hadoop 1.x Core components: MapReduce and HDFS Structure: HDFS: NameNode &#43; DataNodes MapReduce (MRv1): JobTracker &#43; TaskTrackers JobTracker did everything: resource management, job scheduling, tracking tasks, failure handling Also a single point of failure and a scaling bottleneck MapReduce = computation engine &#43; resource manager in one Only MapReduce jobs were supported Hadoop 2.x Now Hadoop has three logical layers: HDFS: storage layer NameNode &#43; DataNodes YARN: resource management layer ResourceManager &#43; NodeManagers &#43; ApplicationMasters MapReduce (MRv2): computation layer Runs on top of YARN as one of many application frameworks Key improvements Separated resource management from computation MapReduce no longer monopolizes the cluster Allowed more engines: Spark, Tez, Flink, Storm, etc."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#yarn" class="nav-yarn">
+									Yarn
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#brief-history" class="nav-brief-history">
+									Brief History
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#hadoop-1x" class="nav-hadoop-1x">
+									Hadoop 1.x
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#hadoop-2x" class="nav-hadoop-2x">
+									Hadoop 2.x
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#hadoop-3x" class="nav-hadoop-3x">
+									Hadoop 3.x
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#definition" class="nav-definition">
+									Definition
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#daemons" class="nav-daemons">
+									Daemons
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#two-long-running" class="nav-two-long-running">
+									Two Long Running
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#dynamic-components" class="nav-dynamic-components">
+									Dynamic Components
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#anatomy-of-mapreduce-job" class="nav-anatomy-of-mapreduce-job">
+									Anatomy of MapReduce job
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#job-submission" class="nav-job-submission">
+									Job submission
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mrappmaster-initialization" class="nav-mrappmaster-initialization">
+									MRAppMaster Initialization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce-job-initialization" class="nav-mapreduce-job-initialization">
+									MapReduce Job Initialization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce-task-execution" class="nav-mapreduce-task-execution">
+									MapReduce task execution
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce-job-completion" class="nav-mapreduce-job-completion">
+									MapReduce Job Completion
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#edit-yarn-daemon-config" class="nav-edit-yarn-daemon-config">
+									Edit YARN Daemon Config
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#spark-on-yarn-client-mode" class="nav-spark-on-yarn-client-mode">
+									Spark on Yarn: Client mode
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#reading" class="nav-reading">
+									Reading
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/hadoop_logo.webp')"
+                    
+                
+            >
+                <div class="post-title">
+                    Hadoop - YARN
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-11-29 04:56
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/tech">Tech</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/hadoop">hadoop</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="yarn">Yarn</h1>
+<h2 id="brief-history">Brief History</h2>
+<h3 id="hadoop-1x">Hadoop 1.x</h3>
+<ul>
+<li>Core components: <strong>MapReduce</strong> and <strong>HDFS</strong></li>
+<li>Structure:
+<pre tabindex="0"><code>HDFS:
+  NameNode + DataNodes
+
+MapReduce (MRv1):
+  JobTracker + TaskTrackers
+</code></pre><ul>
+<li><em><strong>JobTracker</strong></em> did everything: resource management, job scheduling, tracking tasks, failure handling
+<ul>
+<li>Also a <strong>single point of failure</strong> and a scaling bottleneck</li>
+</ul>
+</li>
+<li><em><strong>MapReduce</strong></em> = computation engine + resource manager in one</li>
+<li>Only <code>MapReduce</code> jobs were supported</li>
+</ul>
+</li>
+</ul>
+<h3 id="hadoop-2x">Hadoop 2.x</h3>
+<ul>
+<li>Now <code>Hadoop</code> has three logical layers:
+<pre tabindex="0"><code>HDFS: storage layer
+  NameNode + DataNodes
+
+YARN: resource management layer
+  ResourceManager + NodeManagers + ApplicationMasters
+
+MapReduce (MRv2): computation layer
+  Runs on top of YARN as one of many application frameworks
+</code></pre></li>
+<li>Key <strong>improvements</strong>
+<ul>
+<li><em><strong>Separated resource management from computation</strong></em></li>
+<li>MapReduce no longer monopolizes the cluster</li>
+<li>Allowed more engines: Spark, Tez, Flink, Storm, etc.</li>
+<li>Better scalability and cluster utilization</li>
+</ul>
+</li>
+</ul>
+<h4 id="hadoop-3x">Hadoop 3.x</h4>
+<ul>
+<li>Structure:
+<pre tabindex="0"><code>Namespace Federation:
+    Multiple NameNodes managing independent namespaces
+    Shared pool of DataNodes
+
+YARN:
+    Handles multi-framework distributed scheduling
+</code></pre></li>
+<li>Improvements:
+<ul>
+<li><em><strong>Federation &amp; NameNode high availability</strong></em> improvements</li>
+<li>Erasure coding (reduces replication overhead)</li>
+<li>More NameNodes with shared DataNodes (HDFS federation)</li>
+</ul>
+</li>
+</ul>
+<h2 id="definition">Definition</h2>
+<ul>
+<li><em>Yet Another Resource Negotiator</em></li>
+<li>It is the <strong>orchestrator</strong> of the Hadoop MapReduce jobs starting from Hadoop 2.x.</li>
+<li>As the amount of data increases and 4k nodes are not enough, starting from 2.x. the two main components of Hadoop changed from MapReduce and HDFS to Yarn and HDFS.</li>
+</ul>
+<h2 id="daemons">Daemons</h2>
+<p>: provides resource management</p>
+<h3 id="two-long-running">Two Long Running</h3>
+<ul>
+<li><em><strong>Resource manager</strong></em> - 1 / cluster
+<ul>
+<li>Manages resource and schedules across the cluster, especially large clusters</li>
+<li>runs on Master node</li>
+</ul>
+</li>
+<li><em><strong>Node managers</strong></em> - 1 / node, similar to <code>kubectl</code>
+<ul>
+<li>launches and monitors job containers</li>
+<li>runs on worker nodes</li>
+</ul>
+</li>
+</ul>
+<h2 id="dynamic-components">Dynamic Components</h2>
+<p>(They are only created when a job have to run)</p>
+<ul>
+<li>
+<p>Daemons create two main types of Yarn components:</p>
+<ul>
+<li><em><strong>Containers</strong></em> (to host tasks)
+<ul>
+<li>Created by the RM upon request</li>
+<li>Runs with a certain amount of resources (memory, CPU) on a worker
+node</li>
+<li>An application can run as one or more tasks in one or more containers.</li>
+</ul>
+</li>
+<li><em><strong>MapReduce Application Master</strong></em> (MRAppMaster)
+<ul>
+<li>One per application</li>
+<li>Framework/application specific</li>
+<li>Requests more containers to run application tasks</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="anatomy-of-mapreduce-job">Anatomy of MapReduce job</h2>
+<p>5 Phases:</p>
+<ol>
+<li>Job Submission</li>
+<li>MRAppMaster Initialization</li>
+<li>MapReduce Job Initialization</li>
+<li>MapReduce Task Execution</li>
+<li>Job Completion</li>
+</ol>
+<figure class="img-center"><img src="/images/cloudInfraBasics/mapreduce_anatomy.png"
+         alt="yarn mapreduce anatomy" width="80%"/>
+</figure>
+
+<h3 id="job-submission"><strong>Job submission</strong></h3>
+<ul>
+<li>
+<p>step 1-4</p>
+</li>
+<li>
+<p>When you run MapReduce Job, it creates an internal JobSubmitter instance and calls <code>submitJobInternal()</code>. This function does the following:</p>
+<ol>
+<li>submit python code, a library convert it to a java file</li>
+<li>Asks the RM for a new <code>**App ID**</code>, used as MapReduce Job ID (<strong>step 2</strong>)</li>
+<li>Checks the job configurations, i.e., output, input paths, etc before it copies anything (like if there existing the same output folder) as a part of job submission</li>
+<li>Compute <strong>input splits</strong> from block information returned from RM</li>
+<li>Copies the resources needed to run the job to the <strong>shared file system</strong> (<strong>step 3)</strong>
+<ol>
+<li>Job jar file (or source files), configuration file, <strong>input splits</strong>(when the input is small)</li>
+</ol>
+</li>
+<li>Submits the job by calling <code>submitApplication()</code> on the RM (<strong>step 4</strong>)</li>
+</ol>
+</li>
+</ul>
+<h3 id="mrappmaster-initialization"><strong>MRAppMaster Initialization</strong></h3>
+<ul>
+<li>Step 5a, 5b</li>
+<li>RM receives a call to <code>submitApplication()</code> and hands off the request to the <strong>YARN scheduler</strong></li>
+<li>The scheduler allocates a <strong>container</strong>
+<ul>
+<li>scheduler is very parallel and close to the resource manager and people sometimes consider them as the same thing</li>
+</ul>
+</li>
+<li>The RM launches the <strong>MRAppMaster</strong> Process through the Node Manager (<em><strong>step 5a, b</strong></em>)</li>
+</ul>
+<h3 id="mapreduce-job-initialization"><strong>MapReduce Job Initialization</strong></h3>
+<ul>
+<li>by AppMaster: Step 6, 7, 8</li>
+<li>MRAppMaster initializes the MapReduce job by creating bookkeeping objects to keep track of the job’s progress (<em><strong>step 6</strong></em>)</li>
+<li>Retrieves the <strong>input splits</strong> (not copying, but retrieving their locations) computed in the client from the shared file system (<em><strong>step 7</strong></em>)</li>
+<li>Decides how to run the tasks</li>
+<li>Example of resource request:
+<ul>
+<li>Resource name (hostname, rack)</li>
+<li>Priority (within this application, usually map task is higher)</li>
+<li>Resource requirements: memory, CPU, etc</li>
+<li>Number of containers</li>
+</ul>
+</li>
+<li>Subtopics:
+<ul>
+<li>IF the tasks are small?
+<ul>
+<li>MRAppMaster will run the task in the same memory as itself - <strong>Uberization:</strong> uber the data from HDFS to the memory as the file size is small.</li>
+<li>Because Overhead of allocating and running tasks in the new containers outweighs the parallel computation benefit</li>
+<li><strong>Small job</strong>:  less than 10 mappers, one reducer, and input size &lt; the size of HDFS block</li>
+</ul>
+</li>
+<li>If the tasks are big?
+<ul>
+<li>If the job is not <strong>uberized,</strong> MRAppMAster requests containers for all the map and reduce tasks from the RM.</li>
+<li>Request specifies:
+<ul>
+<li>Priority (map &gt; reduce)</li>
+<li>Memory (default 1GB)</li>
+<li>CPU (default 1 virtual core)</li>
+</ul>
+</li>
+<li>Map tasks are assigned based on <strong>data locality</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="mapreduce-task-execution"><strong>MapReduce task execution</strong></h3>
+<ul>
+<li>Implemented for Each Task in the job(step 9ab - 10)</li>
+<li>Example of Launch context:
+<ul>
+<li>Container ID</li>
+<li>Commands (to start the app)</li>
+<li>Environment( configuration)</li>
+<li>Local Resources (app binary, HDFS files)</li>
+</ul>
+</li>
+<li>Once a request is fulfilled – a container on a particular node is assigned to a specific task. (<em><strong>Step 9a</strong></em>)</li>
+<li>MRAppMaster starts a MapReduce application whose main class is YarnChild in that task via the Node Manager (<em><strong>Step 9b</strong></em>)</li>
+<li>Localizes the resources needed by the tasks including the job configuration and the source file(s) (<em><strong>Step 10</strong></em>)</li>
+<li>Requests for reduce tasks are not made by RM <strong>until 5% completion</strong> of map tasks</li>
+</ul>
+<h3 id="mapreduce-job-completion"><strong>MapReduce Job Completion</strong></h3>
+<ul>
+<li>Once the MRAppMaster receives a completion notification from the last task, it changes the job status to “successful”  (the _Success file in the output folder on GCP)</li>
+<li>Job polls for status and learns that the job has completed successfully</li>
+<li>MRAppMaster prints a message, some statistics, and counters to the console</li>
+<li>MRAppMaster and its tasks clean up their working state</li>
+</ul>
+<h2 id="edit-yarn-daemon-config">Edit YARN Daemon Config</h2>
+<ul>
+<li>Check the <code>hadoop.env</code> file and look for YARN configurations starting from line number 11.</li>
+<li>Can change things like:
+<ul>
+<li>Your scheduling algorithm that defines the priority of execution for your job tasks. By default, it uses Capacity Scheduler.</li>
+<li>Whether your data should be compressed</li>
+<li>Memory allocated for your resource manager, your node manager, etc</li>
+<li>The minimum and maximum size of your input split by adding
+<code>-D mapred.min.split.size</code>
+<code>-D mapred.max.split.size</code>
+(to control the number of mappers that will be created)</li>
+</ul>
+</li>
+</ul>
+<h2 id="spark-on-yarn-client-mode">Spark on Yarn: Client mode</h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/yarn_with_spark.png"
+         alt="spark on yarn client mode" width="60%"/>
+</figure>
+
+<ul>
+<li>Because the driver runs on a client, so it requires:
+<ul>
+<li>interactive components like spark shell or pyspark</li>
+<li>good for debugging and testing</li>
+</ul>
+</li>
+<li>The driver runs on the cluster in the YARN application master
+<ul>
+<li>The entire of program runs in the cluster</li>
+<li>production jobs</li>
+</ul>
+</li>
+</ul>
+<h2 id="reading">Reading</h2>
+<ul>
+<li>Hadoop YARN Architecture: <a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html">https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html</a></li>
+<li>Hadoop YARN Commands: <a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html">https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html</a></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-11-29</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/hadoop_mapreduce/">
+			Previous<br>Hadoop - MapReduce
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#yarn" class="nav-yarn">
+									Yarn
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#brief-history" class="nav-brief-history">
+									Brief History
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#hadoop-1x" class="nav-hadoop-1x">
+									Hadoop 1.x
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#hadoop-2x" class="nav-hadoop-2x">
+									Hadoop 2.x
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#hadoop-3x" class="nav-hadoop-3x">
+									Hadoop 3.x
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#definition" class="nav-definition">
+									Definition
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#daemons" class="nav-daemons">
+									Daemons
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#two-long-running" class="nav-two-long-running">
+									Two Long Running
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#dynamic-components" class="nav-dynamic-components">
+									Dynamic Components
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#anatomy-of-mapreduce-job" class="nav-anatomy-of-mapreduce-job">
+									Anatomy of MapReduce job
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#job-submission" class="nav-job-submission">
+									Job submission
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mrappmaster-initialization" class="nav-mrappmaster-initialization">
+									MRAppMaster Initialization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce-job-initialization" class="nav-mapreduce-job-initialization">
+									MapReduce Job Initialization
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce-task-execution" class="nav-mapreduce-task-execution">
+									MapReduce task execution
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mapreduce-job-completion" class="nav-mapreduce-job-completion">
+									MapReduce Job Completion
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#edit-yarn-daemon-config" class="nav-edit-yarn-daemon-config">
+									Edit YARN Daemon Config
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#spark-on-yarn-client-mode" class="nav-spark-on-yarn-client-mode">
+									Spark on Yarn: Client mode
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#reading" class="nav-reading">
+									Reading
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>

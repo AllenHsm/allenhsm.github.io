@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 04:55:54 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 29 Nov 2025 04:56:00 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hadoop - YARN</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/</link>
+      <pubDate>Sat, 29 Nov 2025 04:56:00 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/</guid>
+      <description>Yarn Brief History Hadoop 1.x Core components: MapReduce and HDFS Structure: HDFS: NameNode + DataNodes MapReduce (MRv1): JobTracker + TaskTrackers JobTracker did everything: resource management, job scheduling, tracking tasks, failure handling Also a single point of failure and a scaling bottleneck MapReduce = computation engine + resource manager in one Only MapReduce jobs were supported Hadoop 2.x Now Hadoop has three logical layers: HDFS: storage layer NameNode + DataNodes YARN: resource management layer ResourceManager + NodeManagers + ApplicationMasters MapReduce (MRv2): computation layer Runs on top of YARN as one of many application frameworks Key improvements Separated resource management from computation MapReduce no longer monopolizes the cluster Allowed more engines: Spark, Tez, Flink, Storm, etc.</description>
+    </item>
+    
     <item>
       <title>Hadoop - MapReduce</title>
       <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/</link>

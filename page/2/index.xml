@@ -7,9 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 04:55:54 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 04:56:00 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Cloud Infra Basics - 14848</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/</link>
+        <pubDate>Fri, 21 Nov 2025 02:03:20 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ -&lt;h1 id=&#34;credit&#34;&gt;Credit:&lt;/h1&gt;
+&lt;p&gt;This is a review and summary of the concepts and techniques I have learned so far in CMU course &lt;code&gt;14848&lt;/code&gt;. This course is designed and delivered by &lt;strong&gt;Professor Mohamed Farag&lt;/strong&gt;, a helpful and passionate lecturer, a knowledgeable and chill guy. So most of the materials in this series of posts are from his lectures and slides.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+&lt;p&gt;This course consists of two parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cloud infrastructure components&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;coding in these components&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This series of posts will follow the same structure and review each specific topics separately.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;table-of-contents&#34;&gt;Table of Contents&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud&#34;&gt;Brief Intro to Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/virtualization&#34;&gt;Virtualization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/containerization&#34;&gt;Containerization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration&#34;&gt;Deployment Orchestration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka&#34;&gt;Apache Kafka&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/terraform&#34;&gt;Terraform&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra&#34;&gt;Concepts in Cloud Infra&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs&#34;&gt;Hadoop: HDFS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce&#34;&gt;Hadoop: MapReduce&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn&#34;&gt;Hadoop: YARN&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_8&#34;&gt;Spark&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;TBD&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;More details:
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/learning_objectives.png&#34;
+         alt=&#34;cloud infra basics toc&#34; width=&#34;100%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+- http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ - This is a customized copyright.</description>
+        </item>
     
     
     

@@ -7,9 +7,274 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 04:55:54 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 04:56:00 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Hadoop - YARN</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/</link>
+        <pubDate>Sat, 29 Nov 2025 04:56:00 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/ -&lt;h1 id=&#34;yarn&#34;&gt;Yarn&lt;/h1&gt;
+&lt;h2 id=&#34;brief-history&#34;&gt;Brief History&lt;/h2&gt;
+&lt;h3 id=&#34;hadoop-1x&#34;&gt;Hadoop 1.x&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Core components: &lt;strong&gt;MapReduce&lt;/strong&gt; and &lt;strong&gt;HDFS&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Structure:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HDFS:
+  NameNode + DataNodes
+
+MapReduce (MRv1):
+  JobTracker + TaskTrackers
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;JobTracker&lt;/strong&gt;&lt;/em&gt; did everything: resource management, job scheduling, tracking tasks, failure handling
+&lt;ul&gt;
+&lt;li&gt;Also a &lt;strong&gt;single point of failure&lt;/strong&gt; and a scaling bottleneck&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;MapReduce&lt;/strong&gt;&lt;/em&gt; = computation engine + resource manager in one&lt;/li&gt;
+&lt;li&gt;Only &lt;code&gt;MapReduce&lt;/code&gt; jobs were supported&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;hadoop-2x&#34;&gt;Hadoop 2.x&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Now &lt;code&gt;Hadoop&lt;/code&gt; has three logical layers:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HDFS: storage layer
+  NameNode + DataNodes
+
+YARN: resource management layer
+  ResourceManager + NodeManagers + ApplicationMasters
+
+MapReduce (MRv2): computation layer
+  Runs on top of YARN as one of many application frameworks
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Key &lt;strong&gt;improvements&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Separated resource management from computation&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;MapReduce no longer monopolizes the cluster&lt;/li&gt;
+&lt;li&gt;Allowed more engines: Spark, Tez, Flink, Storm, etc.&lt;/li&gt;
+&lt;li&gt;Better scalability and cluster utilization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;hadoop-3x&#34;&gt;Hadoop 3.x&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Structure:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Namespace Federation:
+    Multiple NameNodes managing independent namespaces
+    Shared pool of DataNodes
+
+YARN:
+    Handles multi-framework distributed scheduling
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Improvements:
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Federation &amp;amp; NameNode high availability&lt;/strong&gt;&lt;/em&gt; improvements&lt;/li&gt;
+&lt;li&gt;Erasure coding (reduces replication overhead)&lt;/li&gt;
+&lt;li&gt;More NameNodes with shared DataNodes (HDFS federation)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;definition&#34;&gt;Definition&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Yet Another Resource Negotiator&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;It is the &lt;strong&gt;orchestrator&lt;/strong&gt; of the Hadoop MapReduce jobs starting from Hadoop 2.x.&lt;/li&gt;
+&lt;li&gt;As the amount of data increases and 4k nodes are not enough, starting from 2.x. the two main components of Hadoop changed from MapReduce and HDFS to Yarn and HDFS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;daemons&#34;&gt;Daemons&lt;/h2&gt;
+&lt;p&gt;: provides resource management&lt;/p&gt;
+&lt;h3 id=&#34;two-long-running&#34;&gt;Two Long Running&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Resource manager&lt;/strong&gt;&lt;/em&gt; - 1 / cluster
+&lt;ul&gt;
+&lt;li&gt;Manages resource and schedules across the cluster, especially large clusters&lt;/li&gt;
+&lt;li&gt;runs on Master node&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Node managers&lt;/strong&gt;&lt;/em&gt; - 1 / node, similar to &lt;code&gt;kubectl&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;launches and monitors job containers&lt;/li&gt;
+&lt;li&gt;runs on worker nodes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;dynamic-components&#34;&gt;Dynamic Components&lt;/h2&gt;
+&lt;p&gt;(They are only created when a job have to run)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Daemons create two main types of Yarn components:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Containers&lt;/strong&gt;&lt;/em&gt; (to host tasks)
+&lt;ul&gt;
+&lt;li&gt;Created by the RM upon request&lt;/li&gt;
+&lt;li&gt;Runs with a certain amount of resources (memory, CPU) on a worker
+node&lt;/li&gt;
+&lt;li&gt;An application can run as one or more tasks in one or more containers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;MapReduce Application Master&lt;/strong&gt;&lt;/em&gt; (MRAppMaster)
+&lt;ul&gt;
+&lt;li&gt;One per application&lt;/li&gt;
+&lt;li&gt;Framework/application specific&lt;/li&gt;
+&lt;li&gt;Requests more containers to run application tasks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;anatomy-of-mapreduce-job&#34;&gt;Anatomy of MapReduce job&lt;/h2&gt;
+&lt;p&gt;5 Phases:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Job Submission&lt;/li&gt;
+&lt;li&gt;MRAppMaster Initialization&lt;/li&gt;
+&lt;li&gt;MapReduce Job Initialization&lt;/li&gt;
+&lt;li&gt;MapReduce Task Execution&lt;/li&gt;
+&lt;li&gt;Job Completion&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/mapreduce_anatomy.png&#34;
+         alt=&#34;yarn mapreduce anatomy&#34; width=&#34;80%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;job-submission&#34;&gt;&lt;strong&gt;Job submission&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;step 1-4&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;When you run MapReduce Job, it creates an internal JobSubmitter instance and calls &lt;code&gt;submitJobInternal()&lt;/code&gt;. This function does the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;submit python code, a library convert it to a java file&lt;/li&gt;
+&lt;li&gt;Asks the RM for a new &lt;code&gt;**App ID**&lt;/code&gt;, used as MapReduce Job ID (&lt;strong&gt;step 2&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;Checks the job configurations, i.e., output, input paths, etc before it copies anything (like if there existing the same output folder) as a part of job submission&lt;/li&gt;
+&lt;li&gt;Compute &lt;strong&gt;input splits&lt;/strong&gt; from block information returned from RM&lt;/li&gt;
+&lt;li&gt;Copies the resources needed to run the job to the &lt;strong&gt;shared file system&lt;/strong&gt; (&lt;strong&gt;step 3)&lt;/strong&gt;
+&lt;ol&gt;
+&lt;li&gt;Job jar file (or source files), configuration file, &lt;strong&gt;input splits&lt;/strong&gt;(when the input is small)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Submits the job by calling &lt;code&gt;submitApplication()&lt;/code&gt; on the RM (&lt;strong&gt;step 4&lt;/strong&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;mrappmaster-initialization&#34;&gt;&lt;strong&gt;MRAppMaster Initialization&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Step 5a, 5b&lt;/li&gt;
+&lt;li&gt;RM receives a call to &lt;code&gt;submitApplication()&lt;/code&gt; and hands off the request to the &lt;strong&gt;YARN scheduler&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;The scheduler allocates a &lt;strong&gt;container&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;scheduler is very parallel and close to the resource manager and people sometimes consider them as the same thing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The RM launches the &lt;strong&gt;MRAppMaster&lt;/strong&gt; Process through the Node Manager (&lt;em&gt;&lt;strong&gt;step 5a, b&lt;/strong&gt;&lt;/em&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;mapreduce-job-initialization&#34;&gt;&lt;strong&gt;MapReduce Job Initialization&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;by AppMaster: Step 6, 7, 8&lt;/li&gt;
+&lt;li&gt;MRAppMaster initializes the MapReduce job by creating bookkeeping objects to keep track of the job’s progress (&lt;em&gt;&lt;strong&gt;step 6&lt;/strong&gt;&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;Retrieves the &lt;strong&gt;input splits&lt;/strong&gt; (not copying, but retrieving their locations) computed in the client from the shared file system (&lt;em&gt;&lt;strong&gt;step 7&lt;/strong&gt;&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;Decides how to run the tasks&lt;/li&gt;
+&lt;li&gt;Example of resource request:
+&lt;ul&gt;
+&lt;li&gt;Resource name (hostname, rack)&lt;/li&gt;
+&lt;li&gt;Priority (within this application, usually map task is higher)&lt;/li&gt;
+&lt;li&gt;Resource requirements: memory, CPU, etc&lt;/li&gt;
+&lt;li&gt;Number of containers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Subtopics:
+&lt;ul&gt;
+&lt;li&gt;IF the tasks are small?
+&lt;ul&gt;
+&lt;li&gt;MRAppMaster will run the task in the same memory as itself - &lt;strong&gt;Uberization:&lt;/strong&gt; uber the data from HDFS to the memory as the file size is small.&lt;/li&gt;
+&lt;li&gt;Because Overhead of allocating and running tasks in the new containers outweighs the parallel computation benefit&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Small job&lt;/strong&gt;:  less than 10 mappers, one reducer, and input size &amp;lt; the size of HDFS block&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;If the tasks are big?
+&lt;ul&gt;
+&lt;li&gt;If the job is not &lt;strong&gt;uberized,&lt;/strong&gt; MRAppMAster requests containers for all the map and reduce tasks from the RM.&lt;/li&gt;
+&lt;li&gt;Request specifies:
+&lt;ul&gt;
+&lt;li&gt;Priority (map &amp;gt; reduce)&lt;/li&gt;
+&lt;li&gt;Memory (default 1GB)&lt;/li&gt;
+&lt;li&gt;CPU (default 1 virtual core)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Map tasks are assigned based on &lt;strong&gt;data locality&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;mapreduce-task-execution&#34;&gt;&lt;strong&gt;MapReduce task execution&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Implemented for Each Task in the job(step 9ab - 10)&lt;/li&gt;
+&lt;li&gt;Example of Launch context:
+&lt;ul&gt;
+&lt;li&gt;Container ID&lt;/li&gt;
+&lt;li&gt;Commands (to start the app)&lt;/li&gt;
+&lt;li&gt;Environment( configuration)&lt;/li&gt;
+&lt;li&gt;Local Resources (app binary, HDFS files)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Once a request is fulfilled – a container on a particular node is assigned to a specific task. (&lt;em&gt;&lt;strong&gt;Step 9a&lt;/strong&gt;&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;MRAppMaster starts a MapReduce application whose main class is YarnChild in that task via the Node Manager (&lt;em&gt;&lt;strong&gt;Step 9b&lt;/strong&gt;&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;Localizes the resources needed by the tasks including the job configuration and the source file(s) (&lt;em&gt;&lt;strong&gt;Step 10&lt;/strong&gt;&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;Requests for reduce tasks are not made by RM &lt;strong&gt;until 5% completion&lt;/strong&gt; of map tasks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;mapreduce-job-completion&#34;&gt;&lt;strong&gt;MapReduce Job Completion&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Once the MRAppMaster receives a completion notification from the last task, it changes the job status to “successful”  (the _Success file in the output folder on GCP)&lt;/li&gt;
+&lt;li&gt;Job polls for status and learns that the job has completed successfully&lt;/li&gt;
+&lt;li&gt;MRAppMaster prints a message, some statistics, and counters to the console&lt;/li&gt;
+&lt;li&gt;MRAppMaster and its tasks clean up their working state&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;edit-yarn-daemon-config&#34;&gt;Edit YARN Daemon Config&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Check the &lt;code&gt;hadoop.env&lt;/code&gt; file and look for YARN configurations starting from line number 11.&lt;/li&gt;
+&lt;li&gt;Can change things like:
+&lt;ul&gt;
+&lt;li&gt;Your scheduling algorithm that defines the priority of execution for your job tasks. By default, it uses Capacity Scheduler.&lt;/li&gt;
+&lt;li&gt;Whether your data should be compressed&lt;/li&gt;
+&lt;li&gt;Memory allocated for your resource manager, your node manager, etc&lt;/li&gt;
+&lt;li&gt;The minimum and maximum size of your input split by adding
+&lt;code&gt;-D mapred.min.split.size&lt;/code&gt;
+&lt;code&gt;-D mapred.max.split.size&lt;/code&gt;
+(to control the number of mappers that will be created)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;spark-on-yarn-client-mode&#34;&gt;Spark on Yarn: Client mode&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/yarn_with_spark.png&#34;
+         alt=&#34;spark on yarn client mode&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Because the driver runs on a client, so it requires:
+&lt;ul&gt;
+&lt;li&gt;interactive components like spark shell or pyspark&lt;/li&gt;
+&lt;li&gt;good for debugging and testing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The driver runs on the cluster in the YARN application master
+&lt;ul&gt;
+&lt;li&gt;The entire of program runs in the cluster&lt;/li&gt;
+&lt;li&gt;production jobs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;reading&#34;&gt;Reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Hadoop YARN Architecture: &lt;a href=&#34;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html&#34;&gt;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Hadoop YARN Commands: &lt;a href=&#34;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html&#34;&gt;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -1843,48 +2108,6 @@ We define the resources that users or service providers manage as follows:
 &lt;h1 id=&#34;cloud-computing-enablers&#34;&gt;Cloud Computing enablers:&lt;/h1&gt;
 &lt;p&gt;= Data Center (hardware) + Virtualization (software, the layer allows you to create SCN, aka the resource pool)&lt;/p&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Cloud Infra Basics - 14848</title>
-        <link>http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/</link>
-        <pubDate>Fri, 21 Nov 2025 02:03:20 -0500</pubDate>
-        
-        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ -&lt;h1 id=&#34;credit&#34;&gt;Credit:&lt;/h1&gt;
-&lt;p&gt;This is a review and summary of the concepts and techniques I have learned so far in CMU course &lt;code&gt;14848&lt;/code&gt;. This course is designed and delivered by &lt;strong&gt;Professor Mohamed Farag&lt;/strong&gt;, a helpful and passionate lecturer, a knowledgeable and chill guy. So most of the materials in this series of posts are from his lectures and slides.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
-&lt;p&gt;This course consists of two parts:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;cloud infrastructure components&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;coding in these components&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This series of posts will follow the same structure and review each specific topics separately.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h1 id=&#34;table-of-contents&#34;&gt;Table of Contents&lt;/h1&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud&#34;&gt;Brief Intro to Cloud&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/virtualization&#34;&gt;Virtualization&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/containerization&#34;&gt;Containerization&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration&#34;&gt;Deployment Orchestration&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka&#34;&gt;Apache Kafka&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/terraform&#34;&gt;Terraform&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra&#34;&gt;Concepts in Cloud Infra&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs&#34;&gt;Hadoop: HDFS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce&#34;&gt;Hadoop: MapReduce&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn&#34;&gt;Hadoop: YARN&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_8&#34;&gt;Spark&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;TBD&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;More details:
-&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/learning_objectives.png&#34;
-         alt=&#34;cloud infra basics toc&#34; width=&#34;100%&#34;/&gt;
-&lt;/figure&gt;
-&lt;/p&gt;
-- http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ - This is a customized copyright.</description>
         </item>
     
     
