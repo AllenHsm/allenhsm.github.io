@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 04:56:00 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Dec 2025 01:42:36 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spark</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/spark/</link>
+      <pubDate>Mon, 01 Dec 2025 01:42:36 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/spark/</guid>
+      <description>Why Spark Hadoop is not that efficient as it is designed for Commodity Hardware while apache spark is designed for more expensive infra with better performance. Performance: MapReduce only supports Full dump of intermediate data to disk between jobs No data sharing between jobs While Spark supports In-memory processing, benefits: MpReduce only supports batch mode Spark Basics Apache Spark is a fast and general-purpose cluster computing system for large scale data processing.</description>
+    </item>
+    
     <item>
       <title>Hadoop - YARN</title>
       <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/</link>

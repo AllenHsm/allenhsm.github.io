@@ -7,9 +7,112 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 04:56:00 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 01:42:36 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Brief Intro to Cloud</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/</link>
+        <pubDate>Fri, 21 Nov 2025 03:10:21 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/ -&lt;h1 id=&#34;what-is-cloud&#34;&gt;What is Cloud&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;In simple words, Cloud = SCN (Lots of &lt;strong&gt;S&lt;/strong&gt;torage + Computer &lt;strong&gt;C&lt;/strong&gt;(omputation)ycles nearby + &lt;strong&gt;N&lt;/strong&gt;etwork bandwidth)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In the industry, “Cloud” refers to large Internet services running on 10,000s of machines (Amazon, Google, Microsoft, etc.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To be specific, Cloud is a model that offers following characteristics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;On-demand self-service: no human intervention needed to get resources&lt;/li&gt;
+&lt;li&gt;Broad network access: access from anywhere&lt;/li&gt;
+&lt;li&gt;Resource pooling: provider shares resources to serve multiple consumers&lt;/li&gt;
+&lt;li&gt;Rapid elasticity&lt;/li&gt;
+&lt;li&gt;Measured service&lt;/li&gt;
+&lt;li&gt;Multi-tenancy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;why-cloud&#34;&gt;Why Cloud&lt;/h1&gt;
+&lt;p&gt;Three main reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Accessibility&lt;/li&gt;
+&lt;li&gt;Big data&lt;/li&gt;
+&lt;li&gt;Cost efficiency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;cost-saving&#34;&gt;Cost saving&lt;/h2&gt;
+&lt;p&gt;Cloud cost savings in different scenario based on the scale of business:
+&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cost_saving.png&#34; alt=&#34;alt text&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;strong&gt;smaller&lt;/strong&gt; the scale is, relatively &lt;strong&gt;cheaper&lt;/strong&gt; the cloud is. So it is most attractive to tiny deployment&lt;/li&gt;
+&lt;li&gt;A tricky point: When you are a B or A in the image, service provider give you many free tools to use and make you rely on these tools more and more as you grows up. When the scale rises to C and D, it becomes too hard to migrate to on-premises since, not only data, but structures, designs all need to be changed.&lt;/li&gt;
+&lt;li&gt;Cloud actually cost an &lt;strong&gt;extra Risk Management expense&lt;/strong&gt; within the operational expenses, and in the long run it can outweigh Capital expenses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;cloud-computing-service-model&#34;&gt;Cloud Computing Service Model&lt;/h1&gt;
+&lt;p&gt;We focus on the &lt;strong&gt;third-party-provided service&lt;/strong&gt; only:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Software as a Service (SaaS)&lt;/li&gt;
+&lt;li&gt;Platform as a Service (PaaS)&lt;/li&gt;
+&lt;li&gt;Infrastructure as a Service (IaaS)&lt;/li&gt;
+&lt;li&gt;Metal as a Service (MaaS)
+We define the resources that users or service providers manage as follows:
+&lt;code&gt;Application&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;, &lt;code&gt;Runtime&lt;/code&gt;, &lt;code&gt;Middleware&lt;/code&gt;, &lt;code&gt;OS&lt;/code&gt;, &lt;code&gt;Virtualization&lt;/code&gt;, &lt;code&gt;Servers&lt;/code&gt;, &lt;code&gt;Storage&lt;/code&gt;, &lt;code&gt;Networking&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;software-as-a-service-saas&#34;&gt;Software as a Service (SaaS)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In this case, you as a user do not care about how it is deployed, how data structured, or who’s the cloud provider. Here on-demand software is the provided service, and user has the least control over it.  They have no control of the hardware and system.&lt;/li&gt;
+&lt;li&gt;Most applications can be run directly from web browser.&lt;/li&gt;
+&lt;li&gt;This is the &lt;strong&gt;largest cloud market&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Resource users manage: NA&lt;/li&gt;
+&lt;li&gt;Examples: Google Apps, Oracle’s Netsuite, SAP’s Concur, Cisco WebEx, GoToMeeting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;platform-as-a-service-paas&#34;&gt;Platform as a Service (PaaS)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Provides computing platforms which typically includes operating system, programming language, execution environment, database, web server, etc. to build cloud applications.&lt;/li&gt;
+&lt;li&gt;Applications using PaaS inherit cloud characteristic such as scalability, high-availability, multi-tenancy, SaaS enablement, and more.&lt;/li&gt;
+&lt;li&gt;Salesforce for example, the user can actually build application on the platform, so it is not just consumer but also service provider. So somehow the user gets access to the cloud service provider.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Compared to IaaS&lt;/strong&gt;: Provide a lot of development tools such that you can build up a system fast and easily, and as a trade-off, you developed apps using their specific APIs, making it or impossible to migrate (”be &lt;strong&gt;lock-in&lt;/strong&gt;”)&lt;/li&gt;
+&lt;li&gt;Resource users manage: &lt;code&gt;Application&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Examples: Google App Engine, AWS Elastic Beanstalk, Salesforce.com, Amazon EMR, MS Azure HDInsight, GCP Dataproc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;infrastructure-as-a-service-iaas&#34;&gt;Infrastructure as a Service (IaaS)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Offers storage and computing resources that developers and IT organization use to deliver custom business solutions&lt;/li&gt;
+&lt;li&gt;User directly works on cloud service like GCP, without third party in between, and creates virtual machine (own service) upon it. And the user still does not know how exactly the physical layer is formed, how the SCN are composed.&lt;/li&gt;
+&lt;li&gt;Resource users manage: &lt;code&gt;Application&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;, &lt;code&gt;Runtime&lt;/code&gt;, &lt;code&gt;Middleware&lt;/code&gt;, &lt;code&gt;OS&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Examples: Amazon EC2, Google Compute Engine (GCE), VMWare vCloud&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;metal-as-a-service-maas&#34;&gt;Metal as a Service (MaaS)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Combines the flexibility and scalability of the cloud with the ability to harness the power of physical servers.&lt;/li&gt;
+&lt;li&gt;It still uses SCN, but the user knows underlying physical hardware structure, like port number, get control of physical devices. Pretty much the same as how private cloud works (the main function is the same) but not exactly. You do not own the land &amp;amp; physical space used to store the machine, the cooling system, the surveillance system (security) etc, surrounding the machines. (Don’t need to care about peripheral services)&lt;/li&gt;
+&lt;li&gt;Resource users manage: Everything&lt;/li&gt;
+&lt;li&gt;Example: Juju&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;paas-or-iaas&#34;&gt;PaaS or IaaS?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Vendor Lock-in&lt;/strong&gt;: the ability to use &amp;ldquo;what you manage&amp;rdquo; in cloud env with different cloud providers.
+&lt;ul&gt;
+&lt;li&gt;PaaS: Low portability, high lock-in risk by requiring users to develop apps based on their specific APIs. Hard to switch to other vendor.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Development tools&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;PaaS: Provide a set of development tools to build app fast and easily.&lt;/li&gt;
+&lt;li&gt;Still, it is another trick for vendor lock-in.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;cloud-computing-enablers&#34;&gt;Cloud Computing enablers:&lt;/h1&gt;
+&lt;p&gt;= Data Center (hardware) + Virtualization (software, the layer allows you to create SCN, aka the resource pool)&lt;/p&gt;
+- http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -42,7 +145,7 @@
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs&#34;&gt;Hadoop: HDFS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce&#34;&gt;Hadoop: MapReduce&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn&#34;&gt;Hadoop: YARN&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics_8&#34;&gt;Spark&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/spark&#34;&gt;Spark&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;TBD&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;More details:
@@ -572,87 +675,6 @@ The  following picture is the collapse of a building that housed several clothin
 &lt;h2 id=&#34;后记&#34;&gt;后记&lt;/h2&gt;
 &lt;p&gt;写下这些时，我已经回到了地球的另一侧——中国，坐在熟悉的小床上。虽然半年多前才去，很多记忆已经模糊，见闻有限，每个人的体验都是独一无二的，记录下来以供消遣。&lt;/p&gt;
 - http://allenhsm.github.io/posts/journals/mexico/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Me</title>
-        <link>http://allenhsm.github.io/about/about_me/</link>
-        <pubDate>Fri, 25 Aug 2023 19:17:56 +0800</pubDate>
-        
-        <guid>http://allenhsm.github.io/about/about_me/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/about/about_me/ -&lt;p&gt;&lt;h1 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 44px; letter-spacing: 3px; line-height: 1.1;&#34;&gt;Who Am I&lt;/h1&gt;
-Hello world! Here is &lt;code&gt;Allen Hu&lt;/code&gt;, a computer science student at UCSB -&amp;gt; CMU.&lt;/p&gt;
-&lt;p&gt;You are more than welcome to read my &lt;strong&gt;&lt;a href=&#34;https://drive.google.com/file/d/1RPrIkijU1IWs9XZQbopxHlDzVLveiqpG/view?usp=sharing&#34;&gt;resume&lt;/a&gt;&lt;/strong&gt; here!&lt;/p&gt;
-&lt;p&gt;我在江西长大，后迁至深圳，在圣塔芭芭拉读书——一座僻静、祥和、如画的海滨小镇。&lt;/p&gt;
-&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Reading&lt;/h2&gt;
-Reading is my biggest hobby. I believe that the god&amp;rsquo;s most precious gift to us is the
-ability to read and write.
-To be more specific, I like both ancient and modern Chinese literature. I enjoy reading
-classical Chinese. For genres, I like all novels, prose, travel notes, sketch, poems, etc.&lt;/p&gt;
-&lt;p&gt;阅读是最让我享受的事情之一，不过前提是静下心，安顿下来。
-我是英文文盲，阅读一直局限在中文，无论古典文学还是当代文学，无论题材，
-儒家经典、史书、唐传奇、明清小说、散文、当代小说、台湾小说、现代诗、剧本，都浅尝过，
-就像游客逛小吃街。
-现在看，最喜欢的大约有几类:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;红楼梦、台北人、陶庵梦忆、李煜词、百年孤独这类俯仰今昔、悲悯世人、探讨生命无常本质的&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;汪曾祺、梁实秋这些写散文、小品文极漂亮的，让食物与记忆交融的&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;短篇小说，有明清的三言二拍、老残游记，有民国的沉沦、封锁、鲁迅短篇、改开后的山上的小屋，汪曾祺的当然也包含在内。西方的读过一点。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;台湾、马来文学，很多包括在短篇小说中，包括白先勇的、铁浆、杀夫、
-黎紫书的国北边陲，各具特色&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我读不懂现代诗，但似乎不妨碍我喜欢他们。喜欢北岛、海子、和公共平台的诗作&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Writing&lt;/h2&gt;
-This topic includes coding here. Writing, anyways, is a procedure of creating.
-I must admit that I am a poor writer, so I never expect to publish my words. Rather, I
-choose to build up a blog and ramble a part of my life on it.&lt;/p&gt;
-&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Traveling!  ⛰️&lt;/h2&gt;
-&lt;p&gt;Sometimes, I feel like I am a &amp;ldquo;footless&amp;rdquo; bird. Traveling and living in different places is
-another way to rediscover myself.&lt;/p&gt;
-&lt;p&gt;有的是游记，有的是流水账，只因对记忆力的信任日渐降低。&lt;/p&gt;
-&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Cooking 🍳&lt;/h2&gt;
-I am a foodie. I like cooking and eating.&lt;/p&gt;
-&lt;p&gt;去年这时候我写道：“下厨的乐趣超过口味本身。厨房是科学、人文、心理、社会、艺术三教九流汇聚之地。”
-本来是没有这一part的，但现在想想，就当碎碎念了，有机会把24、25年做的一些传上来。
-去年总是执着于做点中餐，但这里地方偏，只能网购食材，我不喜欢调料太重，就需要食材新鲜，
-这难以调和的矛盾让我屡次放弃，今年转念一想，是我太一根筋了，中餐不好做就做西餐嘛，
-&lt;code&gt;西餐不好做就做甜点嘛，甜点不好做就做面包嘛，面包不好做就做饼干嘛&lt;/code&gt;，这一段全是copilot生成的，
-但好像也是我想说的😆，that&amp;rsquo;s my point.&lt;/p&gt;
-&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;What to expect here&lt;/h2&gt;
-Record my life and self-recognized progress I make, including:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Reading notes 读书笔记（&lt;del&gt;没有&lt;/del&gt;也许会有）&lt;/li&gt;
-&lt;li&gt;Travelogue 游记&lt;/li&gt;
-&lt;li&gt;Coding reflection 开发随想&lt;/li&gt;
-&lt;li&gt;Miscellaneous notes 琐记、碎碎念&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;h1 style=&#34;font-family: &#39;Huiwenmincho&#39;; font-size: 26px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;质胜文则野 文胜质则史&lt;/h1&gt;
-首先诚恳、真实，再希望多一点跳脱、浪漫。即便自己是唯一读者（人欺骗自己也是常态），
-做到绝对坦诚也非易事，故而这里大概不会有不愉快的记忆。&lt;/p&gt;
-&lt;h3 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 24px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;License&lt;/h3&gt;
-&lt;div style=&#34;font-family: &#39;Times New Roman&#39;; 
-            font-size: 12px; 
-            letter-spacing: 0px; 
-            line-height: 1.5;
-            color: inherit !important;
-            margin-bottom: 1;&#34;&gt;
-    &lt;p style=&#39;margin: 0;&#39;&gt;This site follows the &lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&#39;margin: 0;&#39;&gt;本站遵循协议：&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
-
-&lt;/div&gt;
-- http://allenhsm.github.io/about/about_me/ - This is a customized copyright.</description>
         </item>
     
     

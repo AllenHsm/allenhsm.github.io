@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 04:56:00 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Dec 2025 01:42:36 -0500</lastBuildDate><atom:link href="http://allenhsm.github.io/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spark</title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/spark/</link>
+      <pubDate>Mon, 01 Dec 2025 01:42:36 -0500</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/spark/</guid>
+      <description>Why Spark Hadoop is not that efficient as it is designed for Commodity Hardware while apache spark is designed for more expensive infra with better performance. Performance: MapReduce only supports Full dump of intermediate data to disk between jobs No data sharing between jobs While Spark supports In-memory processing, benefits: MpReduce only supports batch mode Spark Basics Apache Spark is a fast and general-purpose cluster computing system for large scale data processing.</description>
+    </item>
+    
     <item>
       <title>Hadoop - YARN</title>
       <link>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/</link>
@@ -113,6 +122,15 @@ On-demand self-service: no human intervention needed to get resources Broad netw
       <description>Credit: This is a review and summary of the concepts and techniques I have learned so far in CMU course 14848. This course is designed and delivered by Professor Mohamed Farag, a helpful and passionate lecturer, a knowledgeable and chill guy. So most of the materials in this series of posts are from his lectures and slides.
 Intro This course consists of two parts:
 cloud infrastructure components coding in these components This series of posts will follow the same structure and review each specific topics separately.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://allenhsm.github.io/tech/cloud_infra_basics/music_bitrate_workflow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://allenhsm.github.io/tech/cloud_infra_basics/music_bitrate_workflow/</guid>
+      <description>ffmpeg -i Overture\ (Live).flac -lavfi &amp;ldquo;showspectrumpic=s=1920x1080:color=rainbow&amp;rdquo; output2.png</description>
     </item>
     
   </channel>

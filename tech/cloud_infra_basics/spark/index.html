@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html><head>
+<title>Spark</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Spark" />
+<meta property="og:description" content="Why Spark Hadoop is not that efficient as it is designed for Commodity Hardware while apache spark is designed for more expensive infra with better performance. Performance: MapReduce only supports Full dump of intermediate data to disk between jobs No data sharing between jobs While Spark supports In-memory processing, benefits: MpReduce only supports batch mode Spark Basics Apache Spark is a fast and general-purpose cluster computing system for large scale data processing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://allenhsm.github.io/tech/cloud_infra_basics/spark/" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2025-12-01T01:42:36-05:00" />
+<meta property="article:modified_time" content="2025-12-01T01:42:36-05:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spark"/>
+<meta name="twitter:description" content="Why Spark Hadoop is not that efficient as it is designed for Commodity Hardware while apache spark is designed for more expensive infra with better performance. Performance: MapReduce only supports Full dump of intermediate data to disk between jobs No data sharing between jobs While Spark supports In-memory processing, benefits: MpReduce only supports batch mode Spark Basics Apache Spark is a fast and general-purpose cluster computing system for large scale data processing."/>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "imlbq734pa");
+</script>
+
+
+
+  
+
+
+
+
+
+
+      <script src="/js/toc.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/scss/dark-mode.min.7b0f5194901cbbe764b7f98b9e95f3168d721166a30785920f943aa8dbb28473.css" integrity="sha256-ew9RlJAcu&#43;dkt/mLnpXzFo1yEWajB4WSD5Q6qNuyhHM=" media="screen">
+
+
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Material+Icons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <body>
+    	<div id="app"><div class="single-column-drawer-container" id="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/posts">
+                    Archive
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/reading">
+                    Reading
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags/travelogue">
+                    Travelogue
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    Categories
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about/about_me">
+                    About Me
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    Tags
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#why-spark" class="nav-why-spark">
+									Why Spark
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#spark" class="nav-spark">
+									Spark
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#basics" class="nav-basics">
+									Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#ecosystem" class="nav-ecosystem">
+									Ecosystem
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#engine" class="nav-engine">
+									Engine
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#why-fast" class="nav-why-fast">
+									Why Fast?
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#components" class="nav-components">
+									Components
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#resilient-distributed-datasets-rdds" class="nav-resilient-distributed-datasets-rdds">
+									Resilient Distributed Datasets (RDDs)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#definition" class="nav-definition">
+									Definition
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#properties" class="nav-properties">
+									Properties
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#programming" class="nav-programming">
+									Programming
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#flexible-deployment" class="nav-flexible-deployment">
+									Flexible Deployment
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#spark-context" class="nav-spark-context">
+									Spark Context
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#architecture" class="nav-architecture">
+									Architecture
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#rdd-transformations-vs-actions" class="nav-rdd-transformations-vs-actions">
+									RDD Transformations vs Actions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div id="drawer-mask" v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav id="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div id="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a id="navTitle" class="navbar-brand" href="http://allenhsm.github.io/">
+            Allen&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" id="darkModeToggleButton2">
+            <i class="material-icons" id="darkModeToggleIcon2">
+                dark_mode
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" id="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://allenhsm.github.io/">
+        <div class="single-column-header-title">Allen&#39;s Blog</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+                <div id="streamContainer" class="stream-container">
+
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('http://allenhsm.github.io/images/cloudInfraBasics/spark_logo.png')"
+                    
+                
+            >
+                <div class="post-title">
+                    Spark
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2025-12-01 01:42
+                        </time>
+                        
+
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/tech">tech</a>
+                                &nbsp;
+                            
+                                <a href="/tags/cloud">cloud</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="why-spark"><strong>Why Spark</strong></h1>
+<ul>
+<li>Hadoop is not that efficient as it is designed for <strong>Commodity Hardware</strong> while apache spark is designed for more expensive infra with better performance.</li>
+<li>Performance: MapReduce only supports
+<ul>
+<li>Full <strong>dump of intermediate data to disk</strong> between jobs</li>
+<li><strong>No data sharing</strong> between jobs
+While Spark supports <strong>In-memory processing</strong>,
+benefits: <figure><img src="/images/cloudInfraBasics/spark_inmemory.png"
+         alt="mapreduce vs spark" width="65%"/>
+</figure>
+</li>
+</ul>
+</li>
+<li>MpReduce only supports <strong>batch</strong> mode <figure class="img-center"><img src="/images/cloudInfraBasics/batch_vs_realtime.png"
+         alt="mapreduce vs spark" width="65%"/>
+</figure>
+</li>
+</ul>
+<h1 id="spark"><strong>Spark</strong></h1>
+<h2 id="basics"><strong>Basics</strong></h2>
+<ul>
+<li>Apache Spark is a <strong>fast</strong> and <strong>general-purpose cluster computing system</strong> for <strong>large scale data processing</strong>.</li>
+<li>Spark was originally written in Scala, which allows <strong>concise function syntax</strong> and interactive use.</li>
+<li>Scala is a <strong>type-safe Java Virtual Machine</strong> language that incorporates both object oriented and functional programming into an extremely concise, logical, and extraordinarily powerful language.</li>
+<li>Apache Spark provides High-level APIs in Java, Scala, Python (PySpark) and R.</li>
+<li>Apache Spark combines two different modes of processing:
+<ul>
+<li>Batch-based Processing which could be provided via Apache Hadoop MapReduce</li>
+<li>Real-time Processing which could be provided via <em><strong>Apache Storm</strong></em>.</li>
+</ul>
+</li>
+<li>Spark is run on CPU, and it <strong>can be used on GPU</strong> using <code>Nvidia dgx spark</code> with <code>RAPIDS</code> accelerator.</li>
+</ul>
+<h2 id="ecosystem"><strong>Ecosystem</strong></h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/spark_ecosystem.png"
+         alt="spark ecosystem" width="50%"/>
+</figure>
+
+<h2 id="engine"><strong>Engine</strong></h2>
+<p><em><strong>Lightning fast cluster computing</strong></em></p>
+<p><em><strong>Spark Core</strong></em> is the general execution engine for the Spark platform that other functionalities are built on top of it. Spark has several advantages:</p>
+<ul>
+<li><strong>Speed</strong>: Run programs up to <strong>100x faster than Hadoop</strong> MapReduce in memory, or 10x faster on disk</li>
+<li><strong>Ease of Use</strong>: Write applications quickly in Java, Scala, Python, R</li>
+<li><strong>Generality</strong>: Combine SQL, streaming, and complex analytics</li>
+<li><strong>Runs Everywhere</strong>:
+<ul>
+<li>Spark runs on Hadoop, Mesos, standalone, or in the cloud</li>
+<li>It can access diverse data sources including HDFS, Cassandra, HBase, and S3</li>
+</ul>
+</li>
+</ul>
+<h3 id="why-fast"><strong>Why Fast?</strong></h3>
+<p><strong>Advanced DAG (Directed Acyclic Graph) execution engine</strong></p>
+<ul>
+<li>It aims to rearrange and combine operators where possible to get the optimum performance</li>
+<li>i.e., Map-then-Filter will be rearranged to Filter-then-Map</li>
+</ul>
+<p><strong>In-memory distributed computing</strong></p>
+<ul>
+<li><strong>It avoids disk writes and reads</strong></li>
+<li><strong>It is achieved by the Resilient Distributed Datasets (RDDs)</strong></li>
+</ul>
+<h2 id="components"><strong>Components</strong></h2>
+<figure><img src="/images/cloudInfraBasics/spark_components.png"
+         alt="spark components" width="55%"/>
+</figure>
+
+<h2 id="resilient-distributed-datasets-rdds"><strong>Resilient Distributed Datasets</strong> (RDDs)</h2>
+<h3 id="definition"><strong>Definition</strong></h3>
+<ul>
+<li><em><strong>A distributed collection of objects across a cluster with user- controlled partitioning &amp; storage</strong></em></li>
+<li>The Spark’s <strong>core abstraction</strong> for working with data</li>
+<li><em><strong>Resiliency</strong></em>: capable of automatically rebuilding on failure
+<ul>
+<li>Each RDD contains lineage information (how it is built)</li>
+</ul>
+</li>
+</ul>
+<h3 id="properties"><strong>Properties</strong></h3>
+<ul>
+<li>RDDs shard the data over a cluster, like a virtualized, distributed collection (analogous to HDFS)</li>
+<li>RDDs support <em><strong>intelligent caching</strong></em>, which means no naive flushes of massive datasets to disk.
+<ul>
+<li>This feature alone allows Spark jobs to run 10-100x faster than comparable MapReduce jobs!</li>
+</ul>
+</li>
+<li>The <strong>“resilient”</strong> part means they will reconstitute shards lost due to process/server crashes.</li>
+<li>RDD is <strong>partitioned across multiple nodes</strong>. So, while the use of Spark will abstract away a lot of this partitioning from us, we need to know that RDDs will, in fact, <strong>be stored across the nodes</strong> in the Spark cluster.</li>
+<li>Spark RDDs are <em><strong>immutable</strong></em>.</li>
+<li>Spark RDDs are resilient, that is, even if one of the nodes on which the RDD resides crashes, then it can be reconstructed using its metadata.</li>
+<li>Any operation which we specify on a Spark RDD will <strong>generate a new RDD</strong> with those modifications applied. So RDDs cannot be modified or updated without the operations resulting in the creation of new RDDs with updated data.</li>
+</ul>
+<h2 id="programming"><strong>Programming</strong></h2>
+<p>Lambda function: anonymous + lambda x avoids null or illegal input</p>
+<ul>
+<li>Example 1: Spark WordCount:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> pyspark <span style="color:#f92672">import</span> SparkContext, SparkConf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    conf <span style="color:#f92672">=</span> SparkConf()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># create Spark context with necessary configuration</span>
+</span></span><span style="display:flex;"><span>    sc <span style="color:#f92672">=</span> SparkContext<span style="color:#f92672">.</span>getOrCreate(conf<span style="color:#f92672">=</span>conf)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Conduct MapReduce and write the output to folder</span>
+</span></span><span style="display:flex;"><span>    wordCounts <span style="color:#f92672">=</span> sc<span style="color:#f92672">.</span>textFile(<span style="color:#e6db74">&#34;/testData&#34;</span>)<span style="color:#f92672">.</span>flatMap(<span style="color:#66d9ef">lambda</span> line: line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34; &#34;</span>))\
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> word: (word, <span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>reduceByKey(<span style="color:#66d9ef">lambda</span> a,b: a <span style="color:#f92672">+</span> b)<span style="color:#f92672">.</span>saveAsTextFile(<span style="color:#e6db74">&#34;/output&#34;</span>)
+</span></span></code></pre></div><ul>
+<li>Example 2: count the most frequent words:
+<ul>
+<li>first turn the word list into key-value with each value assigned to 1</li>
+<li>reduce the key-value pairs such that count the appearances: reduceByKey</li>
+<li>flip the relationship to value-key pair → sortByKey</li>
+<li>overall:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>results_rdd <span style="color:#f92672">=</span> lines_rdd<span style="color:#f92672">.</span>flatMap(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>split())<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: (x,<span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">.</span>reduceByKey(<span style="color:#66d9ef">lambda</span> x,y: x<span style="color:#f92672">+</span>y)
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: (x[<span style="color:#ae81ff">1</span>],x[<span style="color:#ae81ff">0</span>]))<span style="color:#f92672">.</span>sortByKey(<span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h2 id="flexible-deployment"><strong>Flexible Deployment</strong></h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/spark_deployment.png"
+         alt="spark context" width="35%"/>
+</figure>
+
+<h2 id="spark-context"><strong>Spark Context</strong></h2>
+<p><strong>SparkContext</strong> represents a Spark cluster’s connection that is useful in building <strong>RDDs</strong> and broadcast variables on the cluster.</p>
+<ul>
+<li>It enables your Spark Application to connect to the Spark Cluster using Resource Manager.</li>
+<li>Before the creation of SparkContext, SparkConf must be created</li>
+</ul>
+<p>In earlier versions of Apache Spark 1.x, Spark RDDs were the major APIs. However, Spark RDDs require a lot of low-level coding and you need much manual coding.</p>
+<ul>
+<li>As a result, later versions were released to encapsulate Spark
+RDDs into higher-level APIs, called Spark <strong>Dataframes</strong>.</li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<p>The overall architecture for Spark is a typical master/worker configuration, where you have a master which coordinates the work across several workers.</p>
+<ul>
+<li>First, there is a driver, which is an application that uses the SparkContext.</li>
+<li>In Spark 2.x, SparkSession was created to encapsulate SparkContext functionalities</li>
+<li>The SparkContext then refers to a Cluster Manager to interact with the various Workers.</li>
+<li>Each Worker consists of one Executor and one or more Tasks.</li>
+<li>It is the responsibility of the driver program to communicate</li>
+</ul>
+<h2 id="rdd-transformations-vs-actions">RDD Transformations vs Actions</h2>
+<p><strong>Transformations</strong> are where the Spark machinery can do its magic with lazy evaluation and clever algorithms to minimize communication and parallelize the processing.</p>
+<ul>
+<li>Generate a new RDD from existing one</li>
+<li>Lazy/delay evaluation (not until an action performs): e.g. several transformations will be sent to catalyst optimizer, and it will not execute until an <strong>action</strong>. <strong>Actions</strong> are eagerly evaluated</li>
+<li>If a job is to create another RDD from the input data, it is a transformation</li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2025-12-01</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			Next<br>No newer posts.
+                </a>
+                
+                
+                
+                <a class="older-posts" href="/tech/cloud_infra_basics/hadoop_yarn/">
+			Previous<br>Hadoop - YARN
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo=""
+        data-repo-id=""
+        data-category=""
+        data-category-id=""
+        data-mapping=""
+        data-strict=""
+        data-reactions-enabled=""
+        data-emit-metadata=""
+        data-input-position=""
+        data-theme=""
+        data-lang=""
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+        </div>
+    </div>
+
+
+                    </div>
+            </div><div id="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://allenhsm.github.io/">
+    
+        <div class="nav-title">
+            Allen&#39;s Blog
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/posts">
+                Archive
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/reading">
+                Reading
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags/travelogue">
+                Travelogue
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                Categories
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about/about_me">
+                About Me
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                Tags
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+
+    </div>
+    
+</div><div id="extraContainer" class="extra-container">
+    <div class="toc-wrapper">
+        
+
+        
+        <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#why-spark" class="nav-why-spark">
+									Why Spark
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#spark" class="nav-spark">
+									Spark
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#basics" class="nav-basics">
+									Basics
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#ecosystem" class="nav-ecosystem">
+									Ecosystem
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#engine" class="nav-engine">
+									Engine
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#why-fast" class="nav-why-fast">
+									Why Fast?
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#components" class="nav-components">
+									Components
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#resilient-distributed-datasets-rdds" class="nav-resilient-distributed-datasets-rdds">
+									Resilient Distributed Datasets (RDDs)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#definition" class="nav-definition">
+									Definition
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#properties" class="nav-properties">
+									Properties
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#programming" class="nav-programming">
+									Programming
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#flexible-deployment" class="nav-flexible-deployment">
+									Flexible Deployment
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#spark-context" class="nav-spark-context">
+									Spark Context
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#architecture" class="nav-architecture">
+									Architecture
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#rdd-transformations-vs-actions" class="nav-rdd-transformations-vs-actions">
+									RDD Transformations vs Actions
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+        
+    </div>
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top"
+            :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a type="button" class="pagination-action" id="darkModeToggleButton">
+            <span class="material-icons pagination-action-icon" id="darkModeToggleIcon">
+                dark_mode
+            </span>
+        </a>
+        
+        
+    </div>
+</div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://risehere.net/">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	This is a customized copyright.
+	
+</div>
+            </div>
+    
+    <script src="/js/journal.js"></script></body>
+</html>

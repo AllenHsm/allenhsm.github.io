@@ -7,9 +7,174 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This is a customized copyright.</copyright>
-    <lastBuildDate>Sat, 29 Nov 2025 04:56:00 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 01:42:36 -0500</lastBuildDate>
     
         <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Spark</title>
+        <link>http://allenhsm.github.io/tech/cloud_infra_basics/spark/</link>
+        <pubDate>Mon, 01 Dec 2025 01:42:36 -0500</pubDate>
+        
+        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/spark/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/spark/ -&lt;h1 id=&#34;why-spark&#34;&gt;&lt;strong&gt;Why Spark&lt;/strong&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Hadoop is not that efficient as it is designed for &lt;strong&gt;Commodity Hardware&lt;/strong&gt; while apache spark is designed for more expensive infra with better performance.&lt;/li&gt;
+&lt;li&gt;Performance: MapReduce only supports
+&lt;ul&gt;
+&lt;li&gt;Full &lt;strong&gt;dump of intermediate data to disk&lt;/strong&gt; between jobs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No data sharing&lt;/strong&gt; between jobs
+While Spark supports &lt;strong&gt;In-memory processing&lt;/strong&gt;,
+benefits: &lt;figure&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_inmemory.png&#34;
+         alt=&#34;mapreduce vs spark&#34; width=&#34;65%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;MpReduce only supports &lt;strong&gt;batch&lt;/strong&gt; mode &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/batch_vs_realtime.png&#34;
+         alt=&#34;mapreduce vs spark&#34; width=&#34;65%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;spark&#34;&gt;&lt;strong&gt;Spark&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;basics&#34;&gt;&lt;strong&gt;Basics&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Apache Spark is a &lt;strong&gt;fast&lt;/strong&gt; and &lt;strong&gt;general-purpose cluster computing system&lt;/strong&gt; for &lt;strong&gt;large scale data processing&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Spark was originally written in Scala, which allows &lt;strong&gt;concise function syntax&lt;/strong&gt; and interactive use.&lt;/li&gt;
+&lt;li&gt;Scala is a &lt;strong&gt;type-safe Java Virtual Machine&lt;/strong&gt; language that incorporates both object oriented and functional programming into an extremely concise, logical, and extraordinarily powerful language.&lt;/li&gt;
+&lt;li&gt;Apache Spark provides High-level APIs in Java, Scala, Python (PySpark) and R.&lt;/li&gt;
+&lt;li&gt;Apache Spark combines two different modes of processing:
+&lt;ul&gt;
+&lt;li&gt;Batch-based Processing which could be provided via Apache Hadoop MapReduce&lt;/li&gt;
+&lt;li&gt;Real-time Processing which could be provided via &lt;em&gt;&lt;strong&gt;Apache Storm&lt;/strong&gt;&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Spark is run on CPU, and it &lt;strong&gt;can be used on GPU&lt;/strong&gt; using &lt;code&gt;Nvidia dgx spark&lt;/code&gt; with &lt;code&gt;RAPIDS&lt;/code&gt; accelerator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;ecosystem&#34;&gt;&lt;strong&gt;Ecosystem&lt;/strong&gt;&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_ecosystem.png&#34;
+         alt=&#34;spark ecosystem&#34; width=&#34;50%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;engine&#34;&gt;&lt;strong&gt;Engine&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Lightning fast cluster computing&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Spark Core&lt;/strong&gt;&lt;/em&gt; is the general execution engine for the Spark platform that other functionalities are built on top of it. Spark has several advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Speed&lt;/strong&gt;: Run programs up to &lt;strong&gt;100x faster than Hadoop&lt;/strong&gt; MapReduce in memory, or 10x faster on disk&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ease of Use&lt;/strong&gt;: Write applications quickly in Java, Scala, Python, R&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Generality&lt;/strong&gt;: Combine SQL, streaming, and complex analytics&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Runs Everywhere&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Spark runs on Hadoop, Mesos, standalone, or in the cloud&lt;/li&gt;
+&lt;li&gt;It can access diverse data sources including HDFS, Cassandra, HBase, and S3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-fast&#34;&gt;&lt;strong&gt;Why Fast?&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Advanced DAG (Directed Acyclic Graph) execution engine&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It aims to rearrange and combine operators where possible to get the optimum performance&lt;/li&gt;
+&lt;li&gt;i.e., Map-then-Filter will be rearranged to Filter-then-Map&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;In-memory distributed computing&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;It avoids disk writes and reads&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;It is achieved by the Resilient Distributed Datasets (RDDs)&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;components&#34;&gt;&lt;strong&gt;Components&lt;/strong&gt;&lt;/h2&gt;
+&lt;figure&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_components.png&#34;
+         alt=&#34;spark components&#34; width=&#34;55%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;resilient-distributed-datasets-rdds&#34;&gt;&lt;strong&gt;Resilient Distributed Datasets&lt;/strong&gt; (RDDs)&lt;/h2&gt;
+&lt;h3 id=&#34;definition&#34;&gt;&lt;strong&gt;Definition&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;A distributed collection of objects across a cluster with user- controlled partitioning &amp;amp; storage&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Spark’s &lt;strong&gt;core abstraction&lt;/strong&gt; for working with data&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;Resiliency&lt;/strong&gt;&lt;/em&gt;: capable of automatically rebuilding on failure
+&lt;ul&gt;
+&lt;li&gt;Each RDD contains lineage information (how it is built)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;properties&#34;&gt;&lt;strong&gt;Properties&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;RDDs shard the data over a cluster, like a virtualized, distributed collection (analogous to HDFS)&lt;/li&gt;
+&lt;li&gt;RDDs support &lt;em&gt;&lt;strong&gt;intelligent caching&lt;/strong&gt;&lt;/em&gt;, which means no naive flushes of massive datasets to disk.
+&lt;ul&gt;
+&lt;li&gt;This feature alone allows Spark jobs to run 10-100x faster than comparable MapReduce jobs!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;“resilient”&lt;/strong&gt; part means they will reconstitute shards lost due to process/server crashes.&lt;/li&gt;
+&lt;li&gt;RDD is &lt;strong&gt;partitioned across multiple nodes&lt;/strong&gt;. So, while the use of Spark will abstract away a lot of this partitioning from us, we need to know that RDDs will, in fact, &lt;strong&gt;be stored across the nodes&lt;/strong&gt; in the Spark cluster.&lt;/li&gt;
+&lt;li&gt;Spark RDDs are &lt;em&gt;&lt;strong&gt;immutable&lt;/strong&gt;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Spark RDDs are resilient, that is, even if one of the nodes on which the RDD resides crashes, then it can be reconstructed using its metadata.&lt;/li&gt;
+&lt;li&gt;Any operation which we specify on a Spark RDD will &lt;strong&gt;generate a new RDD&lt;/strong&gt; with those modifications applied. So RDDs cannot be modified or updated without the operations resulting in the creation of new RDDs with updated data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;programming&#34;&gt;&lt;strong&gt;Programming&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Lambda function: anonymous + lambda x avoids null or illegal input&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Example 1: Spark WordCount:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pyspark &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; SparkContext, SparkConf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    conf &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; SparkConf()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# create Spark context with necessary configuration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    sc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; SparkContext&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;getOrCreate(conf&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;conf)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Conduct MapReduce and write the output to folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    wordCounts &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sc&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;textFile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/testData&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flatMap(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; line: line&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;))\
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; word: (word, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reduceByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; a,b: a &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; b)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;saveAsTextFile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/output&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Example 2: count the most frequent words:
+&lt;ul&gt;
+&lt;li&gt;first turn the word list into key-value with each value assigned to 1&lt;/li&gt;
+&lt;li&gt;reduce the key-value pairs such that count the appearances: reduceByKey&lt;/li&gt;
+&lt;li&gt;flip the relationship to value-key pair → sortByKey&lt;/li&gt;
+&lt;li&gt;overall:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;results_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; lines_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flatMap(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: x&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split())&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: (x,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reduceByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x,y: x&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;y)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: (x[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;],x[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]))&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sortByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;flexible-deployment&#34;&gt;&lt;strong&gt;Flexible Deployment&lt;/strong&gt;&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_deployment.png&#34;
+         alt=&#34;spark context&#34; width=&#34;35%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;spark-context&#34;&gt;&lt;strong&gt;Spark Context&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;SparkContext&lt;/strong&gt; represents a Spark cluster’s connection that is useful in building &lt;strong&gt;RDDs&lt;/strong&gt; and broadcast variables on the cluster.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It enables your Spark Application to connect to the Spark Cluster using Resource Manager.&lt;/li&gt;
+&lt;li&gt;Before the creation of SparkContext, SparkConf must be created&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In earlier versions of Apache Spark 1.x, Spark RDDs were the major APIs. However, Spark RDDs require a lot of low-level coding and you need much manual coding.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;As a result, later versions were released to encapsulate Spark
+RDDs into higher-level APIs, called Spark &lt;strong&gt;Dataframes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;architecture&#34;&gt;Architecture&lt;/h2&gt;
+&lt;p&gt;The overall architecture for Spark is a typical master/worker configuration, where you have a master which coordinates the work across several workers.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First, there is a driver, which is an application that uses the SparkContext.&lt;/li&gt;
+&lt;li&gt;In Spark 2.x, SparkSession was created to encapsulate SparkContext functionalities&lt;/li&gt;
+&lt;li&gt;The SparkContext then refers to a Cluster Manager to interact with the various Workers.&lt;/li&gt;
+&lt;li&gt;Each Worker consists of one Executor and one or more Tasks.&lt;/li&gt;
+&lt;li&gt;It is the responsibility of the driver program to communicate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;rdd-transformations-vs-actions&#34;&gt;RDD Transformations vs Actions&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Transformations&lt;/strong&gt; are where the Spark machinery can do its magic with lazy evaluation and clever algorithms to minimize communication and parallelize the processing.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generate a new RDD from existing one&lt;/li&gt;
+&lt;li&gt;Lazy/delay evaluation (not until an action performs): e.g. several transformations will be sent to catalyst optimizer, and it will not execute until an &lt;strong&gt;action&lt;/strong&gt;. &lt;strong&gt;Actions&lt;/strong&gt; are eagerly evaluated&lt;/li&gt;
+&lt;li&gt;If a job is to create another RDD from the input data, it is a transformation&lt;/li&gt;
+&lt;/ul&gt;
+- http://allenhsm.github.io/tech/cloud_infra_basics/spark/ - This is a customized copyright.</description>
+        </item>
     
     
     
@@ -62,7 +227,7 @@ MapReduce (MRv2): computation layer
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;hadoop-3x&#34;&gt;Hadoop 3.x&lt;/h4&gt;
+&lt;h3 id=&#34;hadoop-3x&#34;&gt;Hadoop 3.x&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Structure:
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Namespace Federation:
@@ -2005,109 +2170,6 @@ The difference with traditional server infrastructure is that here the server is
 &lt;li&gt;Type 2 hosted hypervisor: runs as an application on a conventional operating system and supports virtual machines running as individual processes. Examples: VMware Workstation, Oracle VirtualBox, QEMU, JVM, UTM&lt;/li&gt;
 &lt;/ul&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/virtualization/ - This is a customized copyright.</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Brief Intro to Cloud</title>
-        <link>http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/</link>
-        <pubDate>Fri, 21 Nov 2025 03:10:21 -0500</pubDate>
-        
-        <guid>http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/ -&lt;h1 id=&#34;what-is-cloud&#34;&gt;What is Cloud&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;In simple words, Cloud = SCN (Lots of &lt;strong&gt;S&lt;/strong&gt;torage + Computer &lt;strong&gt;C&lt;/strong&gt;(omputation)ycles nearby + &lt;strong&gt;N&lt;/strong&gt;etwork bandwidth)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;In the industry, “Cloud” refers to large Internet services running on 10,000s of machines (Amazon, Google, Microsoft, etc.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;To be specific, Cloud is a model that offers following characteristics:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;On-demand self-service: no human intervention needed to get resources&lt;/li&gt;
-&lt;li&gt;Broad network access: access from anywhere&lt;/li&gt;
-&lt;li&gt;Resource pooling: provider shares resources to serve multiple consumers&lt;/li&gt;
-&lt;li&gt;Rapid elasticity&lt;/li&gt;
-&lt;li&gt;Measured service&lt;/li&gt;
-&lt;li&gt;Multi-tenancy&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;why-cloud&#34;&gt;Why Cloud&lt;/h1&gt;
-&lt;p&gt;Three main reasons:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Accessibility&lt;/li&gt;
-&lt;li&gt;Big data&lt;/li&gt;
-&lt;li&gt;Cost efficiency&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;cost-saving&#34;&gt;Cost saving&lt;/h2&gt;
-&lt;p&gt;Cloud cost savings in different scenario based on the scale of business:
-&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cost_saving.png&#34; alt=&#34;alt text&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The &lt;strong&gt;smaller&lt;/strong&gt; the scale is, relatively &lt;strong&gt;cheaper&lt;/strong&gt; the cloud is. So it is most attractive to tiny deployment&lt;/li&gt;
-&lt;li&gt;A tricky point: When you are a B or A in the image, service provider give you many free tools to use and make you rely on these tools more and more as you grows up. When the scale rises to C and D, it becomes too hard to migrate to on-premises since, not only data, but structures, designs all need to be changed.&lt;/li&gt;
-&lt;li&gt;Cloud actually cost an &lt;strong&gt;extra Risk Management expense&lt;/strong&gt; within the operational expenses, and in the long run it can outweigh Capital expenses.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;cloud-computing-service-model&#34;&gt;Cloud Computing Service Model&lt;/h1&gt;
-&lt;p&gt;We focus on the &lt;strong&gt;third-party-provided service&lt;/strong&gt; only:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Software as a Service (SaaS)&lt;/li&gt;
-&lt;li&gt;Platform as a Service (PaaS)&lt;/li&gt;
-&lt;li&gt;Infrastructure as a Service (IaaS)&lt;/li&gt;
-&lt;li&gt;Metal as a Service (MaaS)
-We define the resources that users or service providers manage as follows:
-&lt;code&gt;Application&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;, &lt;code&gt;Runtime&lt;/code&gt;, &lt;code&gt;Middleware&lt;/code&gt;, &lt;code&gt;OS&lt;/code&gt;, &lt;code&gt;Virtualization&lt;/code&gt;, &lt;code&gt;Servers&lt;/code&gt;, &lt;code&gt;Storage&lt;/code&gt;, &lt;code&gt;Networking&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;software-as-a-service-saas&#34;&gt;Software as a Service (SaaS)&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;In this case, you as a user do not care about how it is deployed, how data structured, or who’s the cloud provider. Here on-demand software is the provided service, and user has the least control over it.  They have no control of the hardware and system.&lt;/li&gt;
-&lt;li&gt;Most applications can be run directly from web browser.&lt;/li&gt;
-&lt;li&gt;This is the &lt;strong&gt;largest cloud market&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Resource users manage: NA&lt;/li&gt;
-&lt;li&gt;Examples: Google Apps, Oracle’s Netsuite, SAP’s Concur, Cisco WebEx, GoToMeeting&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;platform-as-a-service-paas&#34;&gt;Platform as a Service (PaaS)&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Provides computing platforms which typically includes operating system, programming language, execution environment, database, web server, etc. to build cloud applications.&lt;/li&gt;
-&lt;li&gt;Applications using PaaS inherit cloud characteristic such as scalability, high-availability, multi-tenancy, SaaS enablement, and more.&lt;/li&gt;
-&lt;li&gt;Salesforce for example, the user can actually build application on the platform, so it is not just consumer but also service provider. So somehow the user gets access to the cloud service provider.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Compared to IaaS&lt;/strong&gt;: Provide a lot of development tools such that you can build up a system fast and easily, and as a trade-off, you developed apps using their specific APIs, making it or impossible to migrate (”be &lt;strong&gt;lock-in&lt;/strong&gt;”)&lt;/li&gt;
-&lt;li&gt;Resource users manage: &lt;code&gt;Application&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Examples: Google App Engine, AWS Elastic Beanstalk, Salesforce.com, Amazon EMR, MS Azure HDInsight, GCP Dataproc&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;infrastructure-as-a-service-iaas&#34;&gt;Infrastructure as a Service (IaaS)&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Offers storage and computing resources that developers and IT organization use to deliver custom business solutions&lt;/li&gt;
-&lt;li&gt;User directly works on cloud service like GCP, without third party in between, and creates virtual machine (own service) upon it. And the user still does not know how exactly the physical layer is formed, how the SCN are composed.&lt;/li&gt;
-&lt;li&gt;Resource users manage: &lt;code&gt;Application&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;, &lt;code&gt;Runtime&lt;/code&gt;, &lt;code&gt;Middleware&lt;/code&gt;, &lt;code&gt;OS&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Examples: Amazon EC2, Google Compute Engine (GCE), VMWare vCloud&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;metal-as-a-service-maas&#34;&gt;Metal as a Service (MaaS)&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Combines the flexibility and scalability of the cloud with the ability to harness the power of physical servers.&lt;/li&gt;
-&lt;li&gt;It still uses SCN, but the user knows underlying physical hardware structure, like port number, get control of physical devices. Pretty much the same as how private cloud works (the main function is the same) but not exactly. You do not own the land &amp;amp; physical space used to store the machine, the cooling system, the surveillance system (security) etc, surrounding the machines. (Don’t need to care about peripheral services)&lt;/li&gt;
-&lt;li&gt;Resource users manage: Everything&lt;/li&gt;
-&lt;li&gt;Example: Juju&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;paas-or-iaas&#34;&gt;PaaS or IaaS?&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Vendor Lock-in&lt;/strong&gt;: the ability to use &amp;ldquo;what you manage&amp;rdquo; in cloud env with different cloud providers.
-&lt;ul&gt;
-&lt;li&gt;PaaS: Low portability, high lock-in risk by requiring users to develop apps based on their specific APIs. Hard to switch to other vendor.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Development tools&lt;/strong&gt;:
-&lt;ul&gt;
-&lt;li&gt;PaaS: Provide a set of development tools to build app fast and easily.&lt;/li&gt;
-&lt;li&gt;Still, it is another trick for vendor lock-in.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;cloud-computing-enablers&#34;&gt;Cloud Computing enablers:&lt;/h1&gt;
-&lt;p&gt;= Data Center (hardware) + Virtualization (software, the layer allows you to create SCN, aka the resource pool)&lt;/p&gt;
-- http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud/ - This is a customized copyright.</description>
         </item>
     
     

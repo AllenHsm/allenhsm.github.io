@@ -1,0 +1,99 @@
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Allen&#39;s Blog</title>
+    <link>http://allenhsm.github.io/</link>
+    <description>Recent content on Allen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This is a customized copyright.</copyright>
+    <lastBuildDate>Mon, 01 Dec 2025 01:42:36 -0500</lastBuildDate>
+    
+        <atom:link href="http://allenhsm.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Me</title>
+        <link>http://allenhsm.github.io/about/about_me/</link>
+        <pubDate>Fri, 25 Aug 2023 19:17:56 +0800</pubDate>
+        
+        <guid>http://allenhsm.github.io/about/about_me/</guid>
+        <description>Allen&#39;s Blog http://allenhsm.github.io/about/about_me/ -&lt;p&gt;&lt;h1 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 44px; letter-spacing: 3px; line-height: 1.1;&#34;&gt;Who Am I&lt;/h1&gt;
+Hello world! Here is &lt;code&gt;Allen Hu&lt;/code&gt;, a computer science student at UCSB -&amp;gt; CMU.&lt;/p&gt;
+&lt;p&gt;You are more than welcome to read my &lt;strong&gt;&lt;a href=&#34;https://drive.google.com/file/d/1RPrIkijU1IWs9XZQbopxHlDzVLveiqpG/view?usp=sharing&#34;&gt;resume&lt;/a&gt;&lt;/strong&gt; here!&lt;/p&gt;
+&lt;p&gt;我在江西长大，后迁至深圳，在圣塔芭芭拉读书——一座僻静、祥和、如画的海滨小镇。&lt;/p&gt;
+&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Reading&lt;/h2&gt;
+Reading is my biggest hobby. I believe that the god&amp;rsquo;s most precious gift to us is the
+ability to read and write.
+To be more specific, I like both ancient and modern Chinese literature. I enjoy reading
+classical Chinese. For genres, I like all novels, prose, travel notes, sketch, poems, etc.&lt;/p&gt;
+&lt;p&gt;阅读是最让我享受的事情之一，不过前提是静下心，安顿下来。
+我是英文文盲，阅读一直局限在中文，无论古典文学还是当代文学，无论题材，
+儒家经典、史书、唐传奇、明清小说、散文、当代小说、台湾小说、现代诗、剧本，都浅尝过，
+就像游客逛小吃街。
+现在看，最喜欢的大约有几类:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;红楼梦、台北人、陶庵梦忆、李煜词、百年孤独这类俯仰今昔、悲悯世人、探讨生命无常本质的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;汪曾祺、梁实秋这些写散文、小品文极漂亮的，让食物与记忆交融的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;短篇小说，有明清的三言二拍、老残游记，有民国的沉沦、封锁、鲁迅短篇、改开后的山上的小屋，汪曾祺的当然也包含在内。西方的读过一点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;台湾、马来文学，很多包括在短篇小说中，包括白先勇的、铁浆、杀夫、
+黎紫书的国北边陲，各具特色&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我读不懂现代诗，但似乎不妨碍我喜欢他们。喜欢北岛、海子、和公共平台的诗作&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Writing&lt;/h2&gt;
+This topic includes coding here. Writing, anyways, is a procedure of creating.
+I must admit that I am a poor writer, so I never expect to publish my words. Rather, I
+choose to build up a blog and ramble a part of my life on it.&lt;/p&gt;
+&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Traveling!  ⛰️&lt;/h2&gt;
+&lt;p&gt;Sometimes, I feel like I am a &amp;ldquo;footless&amp;rdquo; bird. Traveling and living in different places is
+another way to rediscover myself.&lt;/p&gt;
+&lt;p&gt;有的是游记，有的是流水账，只因对记忆力的信任日渐降低。&lt;/p&gt;
+&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;Cooking 🍳&lt;/h2&gt;
+I am a foodie. I like cooking and eating.&lt;/p&gt;
+&lt;p&gt;去年这时候我写道：“下厨的乐趣超过口味本身。厨房是科学、人文、心理、社会、艺术三教九流汇聚之地。”
+本来是没有这一part的，但现在想想，就当碎碎念了，有机会把24、25年做的一些传上来。
+去年总是执着于做点中餐，但这里地方偏，只能网购食材，我不喜欢调料太重，就需要食材新鲜，
+这难以调和的矛盾让我屡次放弃，今年转念一想，是我太一根筋了，中餐不好做就做西餐嘛，
+&lt;code&gt;西餐不好做就做甜点嘛，甜点不好做就做面包嘛，面包不好做就做饼干嘛&lt;/code&gt;，这一段全是copilot生成的，
+但好像也是我想说的😆，that&amp;rsquo;s my point.&lt;/p&gt;
+&lt;p&gt;&lt;h2 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 32px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;What to expect here&lt;/h2&gt;
+Record my life and self-recognized progress I make, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reading notes 读书笔记（&lt;del&gt;没有&lt;/del&gt;也许会有）&lt;/li&gt;
+&lt;li&gt;Travelogue 游记&lt;/li&gt;
+&lt;li&gt;Coding reflection 开发随想&lt;/li&gt;
+&lt;li&gt;Miscellaneous notes 琐记、碎碎念&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;h1 style=&#34;font-family: &#39;Huiwenmincho&#39;; font-size: 26px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;质胜文则野 文胜质则史&lt;/h1&gt;
+首先诚恳、真实，再希望多一点跳脱、浪漫。即便自己是唯一读者（人欺骗自己也是常态），
+做到绝对坦诚也非易事，故而这里大概不会有不愉快的记忆。&lt;/p&gt;
+&lt;h3 style=&#34;font-family: &#39;Amatic Bold&#39;; font-size: 24px; letter-spacing: 2px; line-height: 1.1;&#34;&gt;License&lt;/h3&gt;
+&lt;div style=&#34;font-family: &#39;Times New Roman&#39;; 
+            font-size: 12px; 
+            letter-spacing: 0px; 
+            line-height: 1.5;
+            color: inherit !important;
+            margin-bottom: 1;&#34;&gt;
+    &lt;p style=&#39;margin: 0;&#39;&gt;This site follows the &lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&#39;margin: 0;&#39;&gt;本站遵循协议：&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+- http://allenhsm.github.io/about/about_me/ - This is a customized copyright.</description>
+        </item>
+    
+    
+    
+    
+  </channel>
+</rss> 
