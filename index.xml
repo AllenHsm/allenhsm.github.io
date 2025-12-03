@@ -649,7 +649,7 @@ YARN:
 &lt;p&gt;: provides resource management&lt;/p&gt;
 &lt;h3 id=&#34;two-long-running&#34;&gt;&lt;strong&gt;Two Long Running&lt;/strong&gt;&lt;/h3&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/yarn_daemons.png&#34;
-         alt=&#34;yarn architecture&#34; width=&#34;80%&#34;/&gt;
+         alt=&#34;yarn architecture&#34; width=&#34;65%&#34;/&gt;
 &lt;/figure&gt;
 
 &lt;ul&gt;
