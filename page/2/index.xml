@@ -48,7 +48,10 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;cost-saving&#34;&gt;Cost saving&lt;/h2&gt;
 &lt;p&gt;Cloud cost savings in different scenario based on the scale of business:
-&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cost_saving.png&#34; alt=&#34;alt text&#34;&gt;&lt;/p&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cost_saving.png&#34;
+         alt=&#34;cost_saving&#34; width=&#34;50%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The &lt;strong&gt;smaller&lt;/strong&gt; the scale is, relatively &lt;strong&gt;cheaper&lt;/strong&gt; the cloud is. So it is most attractive to tiny deployment&lt;/li&gt;
 &lt;li&gt;A tricky point: When you are a B or A in the image, service provider give you many free tools to use and make you rely on these tools more and more as you grows up. When the scale rises to C and D, it becomes too hard to migrate to on-premises since, not only data, but structures, designs all need to be changed.&lt;/li&gt;
