@@ -702,9 +702,14 @@ YARN:
 <h2 id="daemons"><strong>Daemons</strong></h2>
 <p>: provides resource management</p>
 <h3 id="two-long-running"><strong>Two Long Running</strong></h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/yarn_daemons.png"
+         alt="yarn architecture" width="80%"/>
+</figure>
+
 <ul>
 <li><em><strong>Resource manager</strong></em> - 1 / cluster
 <ul>
+<li><strong>Scheduler + ApplicationsManager</strong></li>
 <li>Manages resource and schedules across the cluster, especially large clusters</li>
 <li>runs on Master node</li>
 </ul>

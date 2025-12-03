@@ -781,10 +781,29 @@
 </ul>
 <h2 id="digression-2-microservices"><strong>Digression 2: Microservices</strong></h2>
 <ul>
-<li>Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.</li>
-<li><strong>Stateless</strong>: each component does not store any state between requests. Each request is independent.</li>
-<li>In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm</li>
-<li>Reading: Example of Ecommerce microservice app deployed on GKE: <a href="https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke">https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke</a></li>
+<li>
+<p>Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.</p>
+</li>
+<li>
+<p><strong>Stateless</strong>: each component does not store any state between requests. Each request is independent.</p>
+</li>
+<li>
+<p>In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm</p>
+</li>
+<li>
+<p>Reading: Example of Ecommerce microservice app deployed on GKE: <a href="https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke">https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke</a>
+<figure class="img-center"><img src="/images/cloudInfraBasics/kafka_example.png"
+           alt="microservices example" width="80%"/>
+  </figure>
+
+The following is a description of what&rsquo;s deployed by this solution:</p>
+<ol>
+<li>Cymbal Shops: This solution deploys a demo application called Cymbal Shops (also known as Online Boutique). Cymbal Shops consists of about 10 microservices. The source code of each microservice is available in a separate, open source GitHub repository.</li>
+<li>3 Google Kubernetes Engine (GKE) clusters: This solution provisions a total of 3 GKE cluster — 2 clusters in the US, and 1 cluster in Europe. One of the US clusters will be used for configuring multi-cluster ingress, while the other 2 clusters will host the microservices of the Cymbal Shops application (including the frontend microservice).</li>
+<li>Static external IP address: The Cymbal Shops application will be pubicly acessible via an IP address, reserved and output (into your command line interface) by the Terraform. The IP address may take about 5 minutes to actually serve the frontend since multi-cluster ingress takes a few minutes to warm up.</li>
+<li>Single Redis cart database: The items in users&rsquo; carts are managed in a single Redis databases, only deployed to a US cluster — for data consistency.</li>
+</ol>
+</li>
 </ul>
 <h2 id="digression-3-rest"><strong>Digression 3: REST</strong></h2>
 <ul>

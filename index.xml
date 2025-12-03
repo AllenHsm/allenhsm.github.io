@@ -565,7 +565,7 @@ returning them to the user (driver) or saving them to external storage&lt;/li&gt
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reduceByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x,y: x&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;y)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: (x[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;],x[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]))&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sortByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;extra-reading&#34;&gt;&lt;strong&gt;Extra Reading&lt;/strong&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://spark.apache.org/docs/2.3.0/sql-programming-guide.html&#34;&gt;Spark SQL, Dataframe and Dataset Guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://spark.apache.org/docs/4.0.0/sql-programming-guide.html&#34;&gt;Spark SQL, Dataframe and Dataset Guide&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://spark.apache.org/docs/latest/sql-performance-tuning.html&#34;&gt;Spark Optimizations&lt;/a&gt;&lt;/p&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/spark/ - This is a customized copyright.</description>
         </item>
@@ -648,9 +648,14 @@ YARN:
 &lt;h2 id=&#34;daemons&#34;&gt;&lt;strong&gt;Daemons&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;: provides resource management&lt;/p&gt;
 &lt;h3 id=&#34;two-long-running&#34;&gt;&lt;strong&gt;Two Long Running&lt;/strong&gt;&lt;/h3&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/yarn_daemons.png&#34;
+         alt=&#34;yarn architecture&#34; width=&#34;80%&#34;/&gt;
+&lt;/figure&gt;
+
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Resource manager&lt;/strong&gt;&lt;/em&gt; - 1 / cluster
 &lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Scheduler + ApplicationsManager&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;Manages resource and schedules across the cluster, especially large clusters&lt;/li&gt;
 &lt;li&gt;runs on Master node&lt;/li&gt;
 &lt;/ul&gt;
@@ -1870,10 +1875,29 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;h2 id=&#34;digression-2-microservices&#34;&gt;&lt;strong&gt;Digression 2: Microservices&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Stateless&lt;/strong&gt;: each component does not store any state between requests. Each request is independent.&lt;/li&gt;
-&lt;li&gt;In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm&lt;/li&gt;
-&lt;li&gt;Reading: Example of Ecommerce microservice app deployed on GKE: &lt;a href=&#34;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&#34;&gt;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Stateless&lt;/strong&gt;: each component does not store any state between requests. Each request is independent.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Reading: Example of Ecommerce microservice app deployed on GKE: &lt;a href=&#34;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&#34;&gt;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&lt;/a&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/kafka_example.png&#34;
+           alt=&#34;microservices example&#34; width=&#34;80%&#34;/&gt;
+  &lt;/figure&gt;
+
+The following is a description of what&amp;rsquo;s deployed by this solution:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Cymbal Shops: This solution deploys a demo application called Cymbal Shops (also known as Online Boutique). Cymbal Shops consists of about 10 microservices. The source code of each microservice is available in a separate, open source GitHub repository.&lt;/li&gt;
+&lt;li&gt;3 Google Kubernetes Engine (GKE) clusters: This solution provisions a total of 3 GKE cluster — 2 clusters in the US, and 1 cluster in Europe. One of the US clusters will be used for configuring multi-cluster ingress, while the other 2 clusters will host the microservices of the Cymbal Shops application (including the frontend microservice).&lt;/li&gt;
+&lt;li&gt;Static external IP address: The Cymbal Shops application will be pubicly acessible via an IP address, reserved and output (into your command line interface) by the Terraform. The IP address may take about 5 minutes to actually serve the frontend since multi-cluster ingress takes a few minutes to warm up.&lt;/li&gt;
+&lt;li&gt;Single Redis cart database: The items in users&amp;rsquo; carts are managed in a single Redis databases, only deployed to a US cluster — for data consistency.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;digression-3-rest&#34;&gt;&lt;strong&gt;Digression 3: REST&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
