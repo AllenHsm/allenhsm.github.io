@@ -155,24 +155,418 @@ benefits: &lt;figure&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudI
 &lt;p&gt;In earlier versions of Apache Spark 1.x, Spark RDDs were the major APIs. However, Spark RDDs require a lot of low-level coding and you need much manual coding.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;As a result, later versions were released to encapsulate Spark
-RDDs into higher-level APIs, called Spark &lt;strong&gt;Dataframes&lt;/strong&gt;.&lt;/li&gt;
+RDDs into higher-level APIs, called &lt;strong&gt;Spark Dataframes&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;architecture&#34;&gt;Architecture&lt;/h2&gt;
-&lt;p&gt;The overall architecture for Spark is a typical master/worker configuration, where you have a master which coordinates the work across several workers.&lt;/p&gt;
+&lt;h2 id=&#34;spark-dataframes&#34;&gt;&lt;strong&gt;Spark Dataframes&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;A history:
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_history.png&#34;
+         alt=&#34;spark dataframe history&#34; width=&#34;50%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Advantages of Spark Dataframes over RDDs:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;First, there is a driver, which is an application that uses the SparkContext.&lt;/li&gt;
-&lt;li&gt;In Spark 2.x, SparkSession was created to encapsulate SparkContext functionalities&lt;/li&gt;
-&lt;li&gt;The SparkContext then refers to a Cluster Manager to interact with the various Workers.&lt;/li&gt;
-&lt;li&gt;Each Worker consists of one Executor and one or more Tasks.&lt;/li&gt;
+&lt;li&gt;At the minimum level, Spark still uses RDDs, but Dataframe API allows a &lt;strong&gt;much simpler interface&lt;/strong&gt; to interact with the data, as well as providing a more natural look and feel, especially with people familiar with relational databases.&lt;/li&gt;
+&lt;li&gt;Spark Dataframes are like distributed in-memory tables with named columns and schemas, where each column has a specific data type: integer, string, array, map, real, date, timestamp, etc. To a human’s eye, a Spark DataFrame is &lt;em&gt;&lt;strong&gt;like a table&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Dataframes can be &lt;strong&gt;constructed from a wide array of sources&lt;/strong&gt;, such as structured data files, tables in Hive, external databases or existing RDDs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;spark-2x-entry-point&#34;&gt;Spark 2.x Entry Point&lt;/h3&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_session.png&#34;
+         alt=&#34;spark session&#34; width=&#34;40%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;architecture&#34;&gt;&lt;strong&gt;Architecture&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_architecture.png&#34;
+         alt=&#34;spark architecture&#34; width=&#34;43%&#34;/&gt;
+&lt;/figure&gt;
+
+The overall architecture for Spark is a typical &lt;em&gt;&lt;strong&gt;master/worker&lt;/strong&gt;&lt;/em&gt; configuration, where you have a master which coordinates the work across several workers.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First, there is a &lt;em&gt;&lt;strong&gt;driver&lt;/strong&gt;&lt;/em&gt;, which is an application that uses the &lt;em&gt;&lt;strong&gt;SparkContext&lt;/strong&gt;&lt;/em&gt;.
+&lt;ul&gt;
+&lt;li&gt;In Spark 2.x, &lt;em&gt;&lt;strong&gt;SparkSession&lt;/strong&gt;&lt;/em&gt; was created to &lt;strong&gt;encapsulate&lt;/strong&gt; SparkContext functionalities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;SparkContext&lt;/code&gt; then refers to a &lt;em&gt;&lt;strong&gt;Cluster Manager&lt;/strong&gt;&lt;/em&gt; to interact with the various Workers.&lt;/li&gt;
+&lt;li&gt;Each Worker consists of &lt;strong&gt;one Executor and one or more Tasks&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;It is the responsibility of the driver program to communicate&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;rdd-transformations-vs-actions&#34;&gt;RDD Transformations vs Actions&lt;/h2&gt;
+&lt;h2 id=&#34;run-a-job&#34;&gt;&lt;strong&gt;Run a Job&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_job.png&#34;
+         alt=&#34;spark run job&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
+Basic code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pyspark
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pyspark &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; SparkContext, SparkConf, SQLContext
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pyspark.sql &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; SparkSession
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;spark &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; SparkSession&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;builder \
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;appName(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;HW7_spark_session&amp;#34;&lt;/span&gt;) \
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;getOrCreate()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Spark application name:&amp;#34;&lt;/span&gt;, spark&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sparkContext&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;appName)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Master: &amp;#34;&lt;/span&gt;, spark&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sparkContext&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;master)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;dataframe-operations&#34;&gt;&lt;strong&gt;DataFrame Operations&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;readwrite&#34;&gt;&lt;strong&gt;Read/Write&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The basic of reading data in Spark is through &lt;code&gt;DataFrameReader&lt;/code&gt;. This can be accessed through SparkSession through the read attribute&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pyspark &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; SparkFiles
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dataframe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; spark&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;csv(SparkFiles&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;data.csv&amp;#34;&lt;/span&gt;), header&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, inferSchema&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Or simply&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dataframe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; spark&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;csv(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;data.csv&amp;#34;&lt;/span&gt;, header&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, inferSchema&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;dataframe-schema&#34;&gt;&lt;strong&gt;DataFrame Schema&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Think about each dataframe as a table. The table &lt;strong&gt;MUST&lt;/strong&gt; have a structure (e.g. column names and data types). In Spark, this structure is called &lt;strong&gt;Schema&lt;/strong&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_schema.png&#34;
+         alt=&#34;spark dataframe schema&#34; width=&#34;45%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;data-types&#34;&gt;&lt;strong&gt;Data Types&lt;/strong&gt;&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Data type&lt;/th&gt;
+&lt;th&gt;Value assigned in Python&lt;/th&gt;
+&lt;th&gt;API to instantiate&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ByteType&lt;/td&gt;
+&lt;td&gt;int&lt;/td&gt;
+&lt;td&gt;DataTypes.ByteType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ShortType&lt;/td&gt;
+&lt;td&gt;int&lt;/td&gt;
+&lt;td&gt;DataTypes.ShortType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IntegerType&lt;/td&gt;
+&lt;td&gt;int&lt;/td&gt;
+&lt;td&gt;DataTypes.IntegerType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LongType&lt;/td&gt;
+&lt;td&gt;int&lt;/td&gt;
+&lt;td&gt;DataTypes.LongType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FloatType&lt;/td&gt;
+&lt;td&gt;float&lt;/td&gt;
+&lt;td&gt;DataTypes.FloatType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DoubleType&lt;/td&gt;
+&lt;td&gt;float&lt;/td&gt;
+&lt;td&gt;DataTypes.DoubleType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;StringType&lt;/td&gt;
+&lt;td&gt;str&lt;/td&gt;
+&lt;td&gt;DataTypes.StringType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BooleanType&lt;/td&gt;
+&lt;td&gt;bool&lt;/td&gt;
+&lt;td&gt;DataTypes.BooleanType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DecimalType&lt;/td&gt;
+&lt;td&gt;decimal.Decimal&lt;/td&gt;
+&lt;td&gt;DecimalType&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;more-operations&#34;&gt;&lt;strong&gt;More Operations&lt;/strong&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print (dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;columns)  &lt;span style=&#34;color:#75715e&#34;&gt;# get column names&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;count())  &lt;span style=&#34;color:#75715e&#34;&gt;# get number of rows&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;, vertical&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;true)  &lt;span style=&#34;color:#75715e&#34;&gt;# show first 5 rows&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show()  &lt;span style=&#34;color:#75715e&#34;&gt;# get summary statistics, will print count, mean, stddev, min, max for numeric columns&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;spark-sql&#34;&gt;&lt;strong&gt;Spark SQL&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Spark SQL&lt;/code&gt; in Spark Ecosystem:
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_sql.png&#34;
+         alt=&#34;spark sql&#34; width=&#34;40%&#34;/&gt;
+&lt;/figure&gt;
+
+Once you have read-in your dataframe, you may want to conduct some operations on it. Most of these operations belong to the &lt;strong&gt;Spark SQL&lt;/strong&gt; library.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spark SQL is part of the core distribution since Spark 1.0 (April 2014)&lt;/li&gt;
+&lt;li&gt;Spark SQL runs SQL and HiveQL queries together.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;sql-dataframe-operations&#34;&gt;&lt;strong&gt;SQL DataFrame Operations&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Relational operations (e.g., select, where, join, groupBy) via a Domain
+Specific Language&lt;/li&gt;
+&lt;li&gt;Operators take &lt;em&gt;&lt;strong&gt;expression&lt;/strong&gt;&lt;/em&gt; objects&lt;/li&gt;
+&lt;li&gt;Operators build up an Abstract Syntax Tree (AST), which is then
+optimized by &lt;em&gt;&lt;strong&gt;Catalyst&lt;/strong&gt;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;e.g.
+&lt;ul&gt;
+&lt;li&gt;display number of players with first name as &amp;ldquo;John&amp;rdquo;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pyspark.sql.functions &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; col
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(col(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;first_name&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;John&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;count()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Create a Subset Dataframe from your Dataframe
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;subset_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;select(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;first_name&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;last_name&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;age&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;subset_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Display unique values from a column in your dataframe
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;select(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;LastName&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;distinct()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show(&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Filter records in your dataframe
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pyspark.sql.functions &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; col
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;select(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;nflId&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;FirstName&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;LastName&amp;#34;&lt;/span&gt;) \
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;where(col(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;FirstName&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;John&amp;#34;&lt;/span&gt;))&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Convert SparkDataFrame into RDD and Vice Versa:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dataframe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rdd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;updated_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;toDF()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;How does &lt;em&gt;Catalyst&lt;/em&gt; work?
+&lt;figure&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/spark_catalyst.png&#34;
+           alt=&#34;spark catalyst optimizer&#34; width=&#34;50%&#34;/&gt;
+  &lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;advantages-over-relational-query-languages&#34;&gt;&lt;strong&gt;Advantages over Relational Query Languages&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Holistic optimization across functions composed in different languages.&lt;/li&gt;
+&lt;li&gt;Control structures (e.g., if, for)&lt;/li&gt;
+&lt;li&gt;Logical plan analyzed eagerly → identify code errors associated with data &lt;em&gt;&lt;strong&gt;schema&lt;/strong&gt;&lt;/em&gt; issues on the fly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;rdd-operations&#34;&gt;&lt;strong&gt;RDD Operations&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;transformations-vs-actions&#34;&gt;&lt;strong&gt;Transformations vs Actions&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;transformations&#34;&gt;&lt;strong&gt;Transformations&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Transformations&lt;/strong&gt; are where the Spark machinery can do its magic with lazy evaluation and clever algorithms to minimize communication and parallelize the processing.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Generate a new RDD from existing one&lt;/li&gt;
 &lt;li&gt;Lazy/delay evaluation (not until an action performs): e.g. several transformations will be sent to catalyst optimizer, and it will not execute until an &lt;strong&gt;action&lt;/strong&gt;. &lt;strong&gt;Actions&lt;/strong&gt; are eagerly evaluated&lt;/li&gt;
 &lt;li&gt;If a job is to create another RDD from the input data, it is a transformation&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3 id=&#34;actions&#34;&gt;&lt;strong&gt;Actions&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Actions are mostly used either &lt;em&gt;&lt;strong&gt;at the end of the analysis&lt;/strong&gt;&lt;/em&gt; when the data have been distilled down (collect), or &lt;em&gt;&lt;strong&gt;along the way to &amp;ldquo;peek&amp;rdquo; at the process&lt;/strong&gt;&lt;/em&gt; (count, take).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Trigger a computation on RDD and do something with the results either
+returning them to the user (driver) or saving them to external storage&lt;/li&gt;
+&lt;li&gt;Have immediate effect&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;programming-1&#34;&gt;&lt;strong&gt;Programming&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;single-rdd&#34;&gt;&lt;strong&gt;Single RDD&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Transformations&lt;/strong&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Transformation&lt;/th&gt;
+&lt;th&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;map&lt;/strong&gt;&lt;/em&gt;(func)&lt;/td&gt;
+&lt;td&gt;Return a new RDD by passing each element through &lt;em&gt;func&lt;/em&gt;. (Same Size)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;filter&lt;/strong&gt;&lt;/em&gt;(func)&lt;/td&gt;
+&lt;td&gt;Return a new RDD by selecting the elements for which &lt;em&gt;func&lt;/em&gt; returns true. (Fewer Elements)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;flatMap&lt;/strong&gt;&lt;/em&gt;(func)&lt;/td&gt;
+&lt;td&gt;&lt;em&gt;func&lt;/em&gt; can return multiple items and generate a sequence, allowing flattening nested entries into a list. (More Elements)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;distinct&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Return an RDD with only distinct entries.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;sample&lt;/strong&gt;&lt;/em&gt;(&amp;hellip;)&lt;/td&gt;
+&lt;td&gt;Various options to create a subset of the RDD.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;union&lt;/strong&gt;&lt;/em&gt;(RDD)&lt;/td&gt;
+&lt;td&gt;Return a union of the RDDs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;intersection&lt;/strong&gt;&lt;/em&gt;(RDD)&lt;/td&gt;
+&lt;td&gt;Return an intersection of the RDDs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;subtract&lt;/strong&gt;&lt;/em&gt;(RDD)&lt;/td&gt;
+&lt;td&gt;Remove argument RDD from other.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;cartesian&lt;/strong&gt;&lt;/em&gt;(RDD)&lt;/td&gt;
+&lt;td&gt;Cartesian product of the RDDs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;parallelize&lt;/strong&gt;&lt;/em&gt;(list)&lt;/td&gt;
+&lt;td&gt;Create an RDD from this (Python) list (using a spark context).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Actions&lt;/strong&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Action&lt;/th&gt;
+&lt;th&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;collect&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Return all the elements from the RDD.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;count&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Number of elements in RDD.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;countByValue&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;List of times each value occurs in the RDD.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;reduce&lt;/strong&gt;&lt;/em&gt;(func)&lt;/td&gt;
+&lt;td&gt;Aggregate the elements of the RDD by providing a function which combines any two into one (sum, min, max, …).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;first&lt;/strong&gt;&lt;/em&gt;(), &lt;em&gt;&lt;strong&gt;take&lt;/strong&gt;&lt;/em&gt;(n)&lt;/td&gt;
+&lt;td&gt;Return the first, or first n elements.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;top&lt;/strong&gt;&lt;/em&gt;(n)&lt;/td&gt;
+&lt;td&gt;Return the n highest valued elements of the RDDs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;takeSample&lt;/strong&gt;&lt;/em&gt;(&amp;hellip;)&lt;/td&gt;
+&lt;td&gt;Various options to return a subset of the RDD.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;saveAsTextFile&lt;/strong&gt;&lt;/em&gt;(path)&lt;/td&gt;
+&lt;td&gt;Write the elements as a text file.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;foreach&lt;/strong&gt;&lt;/em&gt;(func)&lt;/td&gt;
+&lt;td&gt;Run the &lt;em&gt;func&lt;/em&gt; on each element. Used for side-effects (updating accumulator variables) or interacting with external systems.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;pair-rdd&#34;&gt;&lt;strong&gt;Pair RDD&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Key/Value organization is a simple, but often requires very efficient schema.&lt;/p&gt;
+&lt;p&gt;Spark provides special operations on RDDs that contain key/value pairs.&lt;/p&gt;
+&lt;p&gt;On the language (Python, Scala, Java) side, key/values are simply tuples. If you have an RDD all of whose elements happen to be tuples of two items, it is a Pair RDD and you can use the key/value operations that follow.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Transformation&lt;/strong&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Transformation&lt;/th&gt;
+&lt;th&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;reduceByKey&lt;/strong&gt;&lt;/em&gt;(func)&lt;/td&gt;
+&lt;td&gt;Reduce values using &lt;em&gt;func&lt;/em&gt;, but on a key-by-key basis. That is, combine values with the same key.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;groupByKey&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Combine values with same key. Each key ends up with a list.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;sortByKey&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Return an RDD sorted by key.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;mapValues&lt;/strong&gt;&lt;/em&gt;(func)&lt;/td&gt;
+&lt;td&gt;Use &lt;em&gt;func&lt;/em&gt; to change values, but not key.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;keys&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Return an RDD of only keys.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;values&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Return an RDD of only values.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Action&lt;/strong&gt;:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Action&lt;/th&gt;
+&lt;th&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;countByKey&lt;/strong&gt;&lt;/em&gt;()&lt;/td&gt;
+&lt;td&gt;Count the number of elements for each key.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;lookup&lt;/strong&gt;&lt;/em&gt;(key)&lt;/td&gt;
+&lt;td&gt;Return all the values for this key.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;two-pair&#34;&gt;&lt;strong&gt;Two Pair&lt;/strong&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Transformation&lt;/th&gt;
+&lt;th&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;subtractByKey&lt;/strong&gt;&lt;/em&gt;(otherRDD)&lt;/td&gt;
+&lt;td&gt;Remove elements with a key present in other RDD.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;join&lt;/strong&gt;&lt;/em&gt;(otherRDD)&lt;/td&gt;
+&lt;td&gt;Inner join: Return an RDD containing all pairs of elements with matching keys in self and other. Each pair of elements will be returned as a &lt;code&gt;(k, (v1, v2))&lt;/code&gt; tuple, where &lt;code&gt;(k, v1)&lt;/code&gt; is in self and &lt;code&gt;(k, v2)&lt;/code&gt; is in other.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;leftOuterJoin&lt;/strong&gt;&lt;/em&gt;(otherRDD)&lt;/td&gt;
+&lt;td&gt;For each element &lt;code&gt;(k, v)&lt;/code&gt; in self, the resulting RDD will either contain all pairs &lt;code&gt;(k, (v, w))&lt;/code&gt; for w in other, or the pair &lt;code&gt;(k, (v, None))&lt;/code&gt; if no elements in other have key k.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;rightOuterJoin&lt;/strong&gt;&lt;/em&gt;(otherRDD)&lt;/td&gt;
+&lt;td&gt;For each element (k, w) in other, the resulting RDD will either contain all pairs &lt;code&gt;(k, (v, w))&lt;/code&gt; for v in this, or the pair (k, (None, w)) if no elements in self have key k.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;&lt;strong&gt;cogroup&lt;/strong&gt;&lt;/em&gt;(otherRDD)&lt;/td&gt;
+&lt;td&gt;Group data from both RDDs by key.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&#34;top-n-example&#34;&gt;&lt;strong&gt;Top-N Example&lt;/strong&gt;&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lines_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; scl&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;textFile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;inputData.txt&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Count the number of lines&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lines_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;count()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Number of words&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;words_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; lines_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flatMap(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: x&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;words_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;count()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Number of distinct words&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;words_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;distinct()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;count()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Count the occurrences of each word &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;key_value_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; words_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: (x, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;word_count_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; key_value_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reduceByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x, y: x &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; y)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# find top-n frequent words&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;flipped_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; word_count_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: (x[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;], x[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sorted_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; flipped_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sortByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Combine all in one&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;results_rdd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; lines_rdd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flatMap(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: x&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split())&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: (x,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reduceByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x,y: x&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;y)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;map(&lt;span style=&#34;color:#66d9ef&#34;&gt;lambda&lt;/span&gt; x: (x[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;],x[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]))&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sortByKey(&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;extra-reading&#34;&gt;&lt;strong&gt;Extra Reading&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://spark.apache.org/docs/2.3.0/sql-programming-guide.html&#34;&gt;Spark SQL, Dataframe and Dataset Guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://spark.apache.org/docs/latest/sql-performance-tuning.html&#34;&gt;Spark Optimizations&lt;/a&gt;&lt;/p&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/spark/ - This is a customized copyright.</description>
         </item>
     
