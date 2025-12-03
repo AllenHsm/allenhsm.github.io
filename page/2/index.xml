@@ -122,10 +122,10 @@ We define the resources that users or service providers manage as follows:
         <pubDate>Fri, 21 Nov 2025 02:03:20 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ -&lt;h1 id=&#34;credit&#34;&gt;Credit:&lt;/h1&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/cloud_infra_basics/ -&lt;h1 id=&#34;credit&#34;&gt;&lt;strong&gt;Credit&lt;/strong&gt;:&lt;/h1&gt;
 &lt;p&gt;This is a review and summary of the concepts and techniques I have learned so far in CMU course &lt;code&gt;14848&lt;/code&gt;. This course is designed and delivered by &lt;strong&gt;Professor Mohamed Farag&lt;/strong&gt;, a helpful and passionate lecturer, a knowledgeable and chill guy. So most of the materials in this series of posts are from his lectures and slides.&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+&lt;h1 id=&#34;intro&#34;&gt;&lt;strong&gt;Intro&lt;/strong&gt;&lt;/h1&gt;
 &lt;p&gt;This course consists of two parts:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;cloud infrastructure components&lt;/strong&gt;&lt;/li&gt;
@@ -133,7 +133,7 @@ We define the resources that users or service providers manage as follows:
 &lt;/ul&gt;
 &lt;p&gt;This series of posts will follow the same structure and review each specific topics separately.&lt;/p&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;table-of-contents&#34;&gt;Table of Contents&lt;/h1&gt;
+&lt;h1 id=&#34;table-of-contents-&#34;&gt;**Table of Contents **&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/intro_to_cloud&#34;&gt;Brief Intro to Cloud&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://allenhsm.github.io/tech/cloud_infra_basics/virtualization&#34;&gt;Virtualization&lt;/a&gt;&lt;/li&gt;

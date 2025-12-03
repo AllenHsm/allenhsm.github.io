@@ -527,7 +527,7 @@
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="intro">Intro</h1>
+                    <h1 id="intro"><strong>Intro</strong></h1>
 <ul>
 <li>How <em>traditional</em> distributed system dealing with data:
 <figure class="img-center"><img src="/images/cloudInfraBasics/traditional_DS.png"
@@ -537,8 +537,8 @@
 It is too complicated to build a distributed system from scratch</li>
 <li>Now <em><strong>MapReduce</strong></em> comes in and abbreviates this process by taking care of most parts, except for collecting results, and processing the data before handling failures.</li>
 </ul>
-<h1 id="mapreduce">MapReduce</h1>
-<h2 id="definition">Definition</h2>
+<h1 id="mapreduce"><strong>MapReduce</strong></h1>
+<h2 id="definition"><strong>Definition</strong></h2>
 <ul>
 <li>A <strong>programming model</strong> and an <strong>associated implementation</strong> for <em><strong>processing and generating large data sets</strong></em> with a <em><strong>parallel, distributed algorithm</strong></em> on a Hadoop cluster.</li>
 <li>It abstracts the problem from disk reads and writes, transforming it into a <strong>computation over sets for keys and values</strong></li>
@@ -548,8 +548,8 @@ It is too complicated to build a distributed system from scratch</li>
   </figure>
 </li>
 </ul>
-<h2 id="scalability-and-parallelism">Scalability and Parallelism</h2>
-<h3 id="word-count-example">Word Count Example:</h3>
+<h2 id="scalability-and-parallelism"><strong>Scalability and Parallelism</strong></h2>
+<h3 id="word-count-example"><strong>Word Count Example</strong>:</h3>
 <ul>
 <li>Input: a large collection of documents</li>
 <li>Output: a list of (word, count) pairs</li>
@@ -603,7 +603,7 @@ It is too complicated to build a distributed system from scratch</li>
 </ul>
 </li>
 </ul>
-<h3 id="details-in-mapreduce">Details in MapReduce</h3>
+<h3 id="details-in-mapreduce"><strong>Details in MapReduce</strong></h3>
 <ul>
 <li>A <strong>data intensive</strong> programming model as a framework for <em><strong>key-based operations</strong></em></li>
 <li>Underlying runtime system (<strong>YARN + HDFS</strong>)
@@ -640,7 +640,7 @@ It is too complicated to build a distributed system from scratch</li>
 </ul>
 </li>
 </ul>
-<h2 id="job-components">Job Components</h2>
+<h2 id="job-components"><strong>Job Components</strong></h2>
 <ul>
 <li><strong>Definition</strong>: A MapReduce <strong>Job</strong> is a unit of work that the user wants to be performed. The <em>job</em> consists of:
 <ul>
@@ -659,7 +659,7 @@ Example command:</li>
 </span></span></code></pre></div></li>
 <li>The <code>Hadoop</code> <strong>keeps the source code in the local cluster</strong>, but data in HDFS. Because when we are dealing with Big data, we keep the data where they are and we move the source codes, processes to the place where the data are stored. This is called <em><strong>Data localization</strong></em>.</li>
 </ul>
-<h2 id="data-flow---map">Data Flow - Map</h2>
+<h2 id="data-flow---map"><strong>Data Flow - Map</strong></h2>
 <ul>
 <li>The Input data are divided into fixed-size pieces called splits
 <ul>
@@ -670,7 +670,7 @@ Example command:</li>
 </ul>
 </li>
 </ul>
-<h3 id="from-map-to-reduce">From Map to Reduce</h3>
+<h3 id="from-map-to-reduce"><strong>From Map to Reduce</strong></h3>
 <ol>
 <li>Select a number R of reduce tasks.</li>
 <li>Divide the intermediate keys into R groups,</li>
@@ -679,7 +679,7 @@ Example command:</li>
 <li>Once all mapper task results are transferred to the reducer, the reducer merges the results and computes the final output</li>
 <li>All values with the same key are reduced together. The reducer then writes the output to HDFS</li>
 </ol>
-<h2 id="decomposing-a-problem">Decomposing a Problem</h2>
+<h2 id="decomposing-a-problem"><strong>Decomposing a Problem</strong></h2>
 <ul>
 <li><strong>Map</strong> task focuses on:
 <ul>
@@ -699,7 +699,7 @@ Example command:</li>
 </ul>
 </li>
 </ul>
-<h2 id="read-output">Read Output</h2>
+<h2 id="read-output"><strong>Read Output</strong></h2>
 <ul>
 <li>Each reducer writes the output in a separate file on HDFS.</li>
 <li>Merge the output files and copy them to your local cluster:
@@ -707,7 +707,7 @@ Example command:</li>
 </span></span><span style="display:flex;"><span>cat local_output
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="improvements">Improvements</h2>
+<h2 id="improvements"><strong>Improvements</strong></h2>
 <ul>
 <li>
 <p><strong>Combiner</strong> function:</p>
@@ -741,7 +741,7 @@ Example command:</li>
 </ul>
 </li>
 </ul>
-<h2 id="customization-parameters">Customization Parameters</h2>
+<h2 id="customization-parameters"><strong>Customization Parameters</strong></h2>
 <ul>
 <li>Control number of reducers in your app: <code>-numReduceTasks N</code></li>
 <li>Partitioners can help you create compound keys: <code>-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner</code></li>
@@ -755,7 +755,7 @@ Example command:</li>
 </span></span><span style="display:flex;"><span>  &lt;!-- Sort keys by their second field numerically in descending order. --&gt;
 </span></span><span style="display:flex;"><span>  -D mapreduce.partition.keycomparator.options<span style="color:#f92672">=</span>-k2,2nr <span style="color:#ae81ff">\
 </span></span></span></code></pre></div></li>
-<li>Reading: more on Partitioners and Comparators: <a href="https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized">https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized</a></li>
+<li>Reading: <a href="https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized">more on Partitioners and Comparators</a></li>
 </ul>
 
                     

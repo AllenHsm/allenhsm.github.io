@@ -578,9 +578,9 @@ returning them to the user (driver) or saving them to external storage&lt;/li&gt
         <pubDate>Sat, 29 Nov 2025 04:56:00 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/ -&lt;h1 id=&#34;yarn&#34;&gt;Yarn&lt;/h1&gt;
-&lt;h2 id=&#34;brief-history&#34;&gt;Brief History&lt;/h2&gt;
-&lt;h3 id=&#34;hadoop-1x&#34;&gt;Hadoop 1.x&lt;/h3&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/ -&lt;h1 id=&#34;yarn&#34;&gt;&lt;strong&gt;Yarn&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;brief-history&#34;&gt;&lt;strong&gt;Brief History&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;hadoop-1x&#34;&gt;&lt;strong&gt;Hadoop 1.x&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Core components: &lt;strong&gt;MapReduce&lt;/strong&gt; and &lt;strong&gt;HDFS&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;Structure:
@@ -600,7 +600,7 @@ MapReduce (MRv1):
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hadoop-2x&#34;&gt;Hadoop 2.x&lt;/h3&gt;
+&lt;h3 id=&#34;hadoop-2x&#34;&gt;&lt;strong&gt;Hadoop 2.x&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Now &lt;code&gt;Hadoop&lt;/code&gt; has three logical layers:
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HDFS: storage layer
@@ -621,7 +621,7 @@ MapReduce (MRv2): computation layer
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hadoop-3x&#34;&gt;Hadoop 3.x&lt;/h3&gt;
+&lt;h3 id=&#34;hadoop-3x&#34;&gt;&lt;strong&gt;Hadoop 3.x&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Structure:
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Namespace Federation:
@@ -639,15 +639,15 @@ YARN:
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;definition&#34;&gt;Definition&lt;/h2&gt;
+&lt;h2 id=&#34;definition&#34;&gt;&lt;strong&gt;Definition&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;Yet Another Resource Negotiator&lt;/em&gt;&lt;/li&gt;
 &lt;li&gt;It is the &lt;strong&gt;orchestrator&lt;/strong&gt; of the Hadoop MapReduce jobs starting from Hadoop 2.x.&lt;/li&gt;
 &lt;li&gt;As the amount of data increases and 4k nodes are not enough, starting from 2.x. the two main components of Hadoop changed from MapReduce and HDFS to Yarn and HDFS.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;daemons&#34;&gt;Daemons&lt;/h2&gt;
+&lt;h2 id=&#34;daemons&#34;&gt;&lt;strong&gt;Daemons&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;: provides resource management&lt;/p&gt;
-&lt;h3 id=&#34;two-long-running&#34;&gt;Two Long Running&lt;/h3&gt;
+&lt;h3 id=&#34;two-long-running&#34;&gt;&lt;strong&gt;Two Long Running&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Resource manager&lt;/strong&gt;&lt;/em&gt; - 1 / cluster
 &lt;ul&gt;
@@ -662,7 +662,7 @@ YARN:
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;dynamic-components&#34;&gt;Dynamic Components&lt;/h2&gt;
+&lt;h2 id=&#34;dynamic-components&#34;&gt;&lt;strong&gt;Dynamic Components&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;(They are only created when a job have to run)&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -686,7 +686,7 @@ node&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;anatomy-of-mapreduce-job&#34;&gt;Anatomy of MapReduce job&lt;/h2&gt;
+&lt;h2 id=&#34;anatomy-of-mapreduce-job&#34;&gt;&lt;strong&gt;Anatomy of MapReduce job&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;5 Phases:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Job Submission&lt;/li&gt;
@@ -793,7 +793,7 @@ node&lt;/li&gt;
 &lt;li&gt;MRAppMaster prints a message, some statistics, and counters to the console&lt;/li&gt;
 &lt;li&gt;MRAppMaster and its tasks clean up their working state&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;edit-yarn-daemon-config&#34;&gt;Edit YARN Daemon Config&lt;/h2&gt;
+&lt;h2 id=&#34;edit-yarn-daemon-config&#34;&gt;&lt;strong&gt;Edit YARN Daemon Config&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the &lt;code&gt;hadoop.env&lt;/code&gt; file and look for YARN configurations starting from line number 11.&lt;/li&gt;
 &lt;li&gt;Can change things like:
@@ -808,7 +808,7 @@ node&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;spark-on-yarn-client-mode&#34;&gt;Spark on Yarn: Client mode&lt;/h2&gt;
+&lt;h2 id=&#34;spark-on-yarn-client-mode&#34;&gt;&lt;strong&gt;Spark on Yarn: Client mode&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/yarn_with_spark.png&#34;
          alt=&#34;spark on yarn client mode&#34; width=&#34;60%&#34;/&gt;
 &lt;/figure&gt;
@@ -827,11 +827,9 @@ node&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;reading&#34;&gt;Reading&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Hadoop YARN Architecture: &lt;a href=&#34;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html&#34;&gt;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Hadoop YARN Commands: &lt;a href=&#34;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html&#34;&gt;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&#34;reading&#34;&gt;&lt;strong&gt;Reading&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html&#34;&gt;Hadoop YARN Architecture&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html&#34;&gt;Hadoop YARN Commands&lt;/a&gt;&lt;/p&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_yarn/ - This is a customized copyright.</description>
         </item>
     
@@ -843,7 +841,7 @@ node&lt;/li&gt;
         <pubDate>Sat, 29 Nov 2025 04:55:54 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/ -&lt;h1 id=&#34;intro&#34;&gt;Intro&lt;/h1&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/ -&lt;h1 id=&#34;intro&#34;&gt;&lt;strong&gt;Intro&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;How &lt;em&gt;traditional&lt;/em&gt; distributed system dealing with data:
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/traditional_DS.png&#34;
@@ -853,8 +851,8 @@ node&lt;/li&gt;
 It is too complicated to build a distributed system from scratch&lt;/li&gt;
 &lt;li&gt;Now &lt;em&gt;&lt;strong&gt;MapReduce&lt;/strong&gt;&lt;/em&gt; comes in and abbreviates this process by taking care of most parts, except for collecting results, and processing the data before handling failures.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;mapreduce&#34;&gt;MapReduce&lt;/h1&gt;
-&lt;h2 id=&#34;definition&#34;&gt;Definition&lt;/h2&gt;
+&lt;h1 id=&#34;mapreduce&#34;&gt;&lt;strong&gt;MapReduce&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;definition&#34;&gt;&lt;strong&gt;Definition&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;A &lt;strong&gt;programming model&lt;/strong&gt; and an &lt;strong&gt;associated implementation&lt;/strong&gt; for &lt;em&gt;&lt;strong&gt;processing and generating large data sets&lt;/strong&gt;&lt;/em&gt; with a &lt;em&gt;&lt;strong&gt;parallel, distributed algorithm&lt;/strong&gt;&lt;/em&gt; on a Hadoop cluster.&lt;/li&gt;
 &lt;li&gt;It abstracts the problem from disk reads and writes, transforming it into a &lt;strong&gt;computation over sets for keys and values&lt;/strong&gt;&lt;/li&gt;
@@ -864,8 +862,8 @@ It is too complicated to build a distributed system from scratch&lt;/li&gt;
   &lt;/figure&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;scalability-and-parallelism&#34;&gt;Scalability and Parallelism&lt;/h2&gt;
-&lt;h3 id=&#34;word-count-example&#34;&gt;Word Count Example:&lt;/h3&gt;
+&lt;h2 id=&#34;scalability-and-parallelism&#34;&gt;&lt;strong&gt;Scalability and Parallelism&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;word-count-example&#34;&gt;&lt;strong&gt;Word Count Example&lt;/strong&gt;:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Input: a large collection of documents&lt;/li&gt;
 &lt;li&gt;Output: a list of (word, count) pairs&lt;/li&gt;
@@ -919,7 +917,7 @@ It is too complicated to build a distributed system from scratch&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;details-in-mapreduce&#34;&gt;Details in MapReduce&lt;/h3&gt;
+&lt;h3 id=&#34;details-in-mapreduce&#34;&gt;&lt;strong&gt;Details in MapReduce&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;A &lt;strong&gt;data intensive&lt;/strong&gt; programming model as a framework for &lt;em&gt;&lt;strong&gt;key-based operations&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
 &lt;li&gt;Underlying runtime system (&lt;strong&gt;YARN + HDFS&lt;/strong&gt;)
@@ -956,7 +954,7 @@ It is too complicated to build a distributed system from scratch&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;job-components&#34;&gt;Job Components&lt;/h2&gt;
+&lt;h2 id=&#34;job-components&#34;&gt;&lt;strong&gt;Job Components&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Definition&lt;/strong&gt;: A MapReduce &lt;strong&gt;Job&lt;/strong&gt; is a unit of work that the user wants to be performed. The &lt;em&gt;job&lt;/em&gt; consists of:
 &lt;ul&gt;
@@ -975,7 +973,7 @@ Example command:&lt;/li&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;The &lt;code&gt;Hadoop&lt;/code&gt; &lt;strong&gt;keeps the source code in the local cluster&lt;/strong&gt;, but data in HDFS. Because when we are dealing with Big data, we keep the data where they are and we move the source codes, processes to the place where the data are stored. This is called &lt;em&gt;&lt;strong&gt;Data localization&lt;/strong&gt;&lt;/em&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;data-flow---map&#34;&gt;Data Flow - Map&lt;/h2&gt;
+&lt;h2 id=&#34;data-flow---map&#34;&gt;&lt;strong&gt;Data Flow - Map&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;The Input data are divided into fixed-size pieces called splits
 &lt;ul&gt;
@@ -986,7 +984,7 @@ Example command:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;from-map-to-reduce&#34;&gt;From Map to Reduce&lt;/h3&gt;
+&lt;h3 id=&#34;from-map-to-reduce&#34;&gt;&lt;strong&gt;From Map to Reduce&lt;/strong&gt;&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Select a number R of reduce tasks.&lt;/li&gt;
 &lt;li&gt;Divide the intermediate keys into R groups,&lt;/li&gt;
@@ -995,7 +993,7 @@ Example command:&lt;/li&gt;
 &lt;li&gt;Once all mapper task results are transferred to the reducer, the reducer merges the results and computes the final output&lt;/li&gt;
 &lt;li&gt;All values with the same key are reduced together. The reducer then writes the output to HDFS&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;decomposing-a-problem&#34;&gt;Decomposing a Problem&lt;/h2&gt;
+&lt;h2 id=&#34;decomposing-a-problem&#34;&gt;&lt;strong&gt;Decomposing a Problem&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Map&lt;/strong&gt; task focuses on:
 &lt;ul&gt;
@@ -1015,7 +1013,7 @@ Example command:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;read-output&#34;&gt;Read Output&lt;/h2&gt;
+&lt;h2 id=&#34;read-output&#34;&gt;&lt;strong&gt;Read Output&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Each reducer writes the output in a separate file on HDFS.&lt;/li&gt;
 &lt;li&gt;Merge the output files and copy them to your local cluster:
@@ -1023,7 +1021,7 @@ Example command:&lt;/li&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat local_output
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;improvements&#34;&gt;Improvements&lt;/h2&gt;
+&lt;h2 id=&#34;improvements&#34;&gt;&lt;strong&gt;Improvements&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Combiner&lt;/strong&gt; function:&lt;/p&gt;
@@ -1057,7 +1055,7 @@ Example command:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;customization-parameters&#34;&gt;Customization Parameters&lt;/h2&gt;
+&lt;h2 id=&#34;customization-parameters&#34;&gt;&lt;strong&gt;Customization Parameters&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Control number of reducers in your app: &lt;code&gt;-numReduceTasks N&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Partitioners can help you create compound keys: &lt;code&gt;-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner&lt;/code&gt;&lt;/li&gt;
@@ -1071,7 +1069,7 @@ Example command:&lt;/li&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;!-- Sort keys by their second field numerically in descending order. --&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -D mapreduce.partition.keycomparator.options&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;-k2,2nr &lt;span style=&#34;color:#ae81ff&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;Reading: more on Partitioners and Comparators: &lt;a href=&#34;https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized&#34;&gt;https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Reading: &lt;a href=&#34;https://www.softcover.io/read/f0b3ea72/introbigdata_book/hadoop_optimized&#34;&gt;more on Partitioners and Comparators&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_mapreduce/ - This is a customized copyright.</description>
         </item>
@@ -1085,7 +1083,7 @@ Example command:&lt;/li&gt;
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/</guid>
         <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/hadoop_hdfs/ -&lt;h1 id=&#34;intro&#34;&gt;&lt;strong&gt;Intro&lt;/strong&gt;&lt;/h1&gt;
-&lt;h2 id=&#34;motivation-for-hadoop&#34;&gt;Motivation for Hadoop&lt;/h2&gt;
+&lt;h2 id=&#34;motivation-for-hadoop&#34;&gt;&lt;strong&gt;Motivation for Hadoop&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Handle &lt;em&gt;&lt;strong&gt;big data!&lt;/strong&gt;&lt;/em&gt; that exceeds single machine&amp;rsquo;s storage and computing capacity&lt;/li&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Storage and Analysis&lt;/strong&gt;&lt;/em&gt;
@@ -1100,7 +1098,7 @@ Example command:&lt;/li&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Shared access&lt;/strong&gt;&lt;/em&gt; for efficiency and scalability&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;challenges&#34;&gt;Challenges&lt;/h2&gt;
+&lt;h2 id=&#34;challenges&#34;&gt;&lt;strong&gt;Challenges&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Analysis tasks need to combine data from multiple sources
 &lt;ul&gt;
@@ -1113,13 +1111,13 @@ Example command:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;why-hadoop&#34;&gt;Why Hadoop&lt;/h2&gt;
+&lt;h2 id=&#34;why-hadoop&#34;&gt;&lt;strong&gt;Why Hadoop&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;We need Open-source software framework for storing data and running applications on clusters of commodity hardware -&amp;gt; Hadoop is &lt;em&gt;&lt;strong&gt;cheap&lt;/strong&gt;&lt;/em&gt; to implement and expand&lt;/li&gt;
 &lt;li&gt;Provides massive storage for any kind of data, enormous processing power and the ability to handle virtually limitless concurrent tasks or jobs -&amp;gt; Hadoop is &lt;em&gt;&lt;strong&gt;scalable&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;hadoop-basics&#34;&gt;Hadoop Basics&lt;/h1&gt;
-&lt;h2 id=&#34;component-architecture&#34;&gt;Component Architecture&lt;/h2&gt;
+&lt;h1 id=&#34;hadoop-basics&#34;&gt;&lt;strong&gt;Hadoop Basics&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;component-architecture&#34;&gt;&lt;strong&gt;Component Architecture&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hadoop_architecture.png&#34;
          alt=&#34;hadoop architecture&#34; width=&#34;60%&#34;/&gt;
 &lt;/figure&gt;
@@ -1136,7 +1134,7 @@ Example command:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;history&#34;&gt;History&lt;/h2&gt;
+&lt;h2 id=&#34;history&#34;&gt;&lt;strong&gt;History&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/hadoop_history.png&#34;
          alt=&#34;hadoop history&#34; width=&#34;100%&#34;/&gt;
 &lt;/figure&gt;
@@ -1153,7 +1151,7 @@ Example command:&lt;/li&gt;
 &lt;li&gt;More complex than regular disk file systems: &lt;em&gt;&lt;strong&gt;network based&lt;/strong&gt;&lt;/em&gt; and high level of &lt;em&gt;&lt;strong&gt;fault tolerance&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
 &lt;li&gt;Main motivation: &lt;em&gt;&lt;strong&gt;BIG DATA&lt;/strong&gt;&lt;/em&gt;: datasets outgrows the storage capacity of a single physical machine, so data are partitioned across separate machines&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;basics&#34;&gt;Basics&lt;/h2&gt;
+&lt;h2 id=&#34;basics&#34;&gt;&lt;strong&gt;Basics&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;HDFS is a file system designed for storing &lt;em&gt;&lt;strong&gt;very large files&lt;/strong&gt;&lt;/em&gt; with &lt;em&gt;&lt;strong&gt;streaming data access&lt;/strong&gt;&lt;/em&gt; patterns, running on clusters that are using &lt;em&gt;&lt;strong&gt;commodity hardware&lt;/strong&gt;&lt;/em&gt;.
 &lt;ul&gt;
@@ -1350,7 +1348,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;key-takeaways&#34;&gt;Key Takeaways&lt;/h2&gt;
+&lt;h2 id=&#34;key-takeaways&#34;&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;HDFS is for &lt;em&gt;&lt;strong&gt;high thoughput&lt;/strong&gt;&lt;/em&gt;, not low latency.&lt;/li&gt;
 &lt;li&gt;Not for a large number of small files but for &lt;em&gt;&lt;strong&gt;large files&lt;/strong&gt;&lt;/em&gt;
@@ -1372,13 +1370,13 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
         <pubDate>Fri, 28 Nov 2025 19:28:43 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/ -&lt;h1 id=&#34;cloud-types&#34;&gt;Cloud Types&lt;/h1&gt;
-&lt;h2 id=&#34;public-cloud&#34;&gt;Public Cloud&lt;/h2&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/concepts_in_cloud_infra/ -&lt;h1 id=&#34;cloud-types&#34;&gt;&lt;strong&gt;Cloud Types&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;public-cloud&#34;&gt;&lt;strong&gt;Public Cloud&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Services offered over the public internet and available to anyone who wants to purchase them. Typically owned and operated by third-party cloud service providers (e.g., AWS, Azure, Google Cloud). It exists on the premise of the cloud service provider&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Advantage&lt;/strong&gt;: cost. &lt;strong&gt;Concern&lt;/strong&gt;: Security. However there are some public cloud providers that have demonstrated strong security measures.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;private-cloud&#34;&gt;Private Cloud&lt;/h2&gt;
+&lt;h2 id=&#34;private-cloud&#34;&gt;&lt;strong&gt;Private Cloud&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Implemented within the internal IT environment of the company, typically managed by the company or a third party vendor&lt;/li&gt;
 &lt;li&gt;In private clouds, the servers and storage devices may exist on premist or off-premise&lt;/li&gt;
@@ -1386,18 +1384,18 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;Examples of services delivered through the private cloud include database on demand, email on demand, and storage on demand.&lt;/li&gt;
 &lt;li&gt;A key motivation for opting-in for a private cloud is &lt;em&gt;&lt;strong&gt;security&lt;/strong&gt;&lt;/em&gt;. A private cloud infrastructure offers tighter controls over the geographic location of data storage and other aspects of security. Other benefits include easy resource sharing and rapid deployment to organizational entities.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;hybrid-cloud&#34;&gt;Hybrid cloud&lt;/h2&gt;
+&lt;h2 id=&#34;hybrid-cloud&#34;&gt;&lt;strong&gt;Hybrid cloud&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;In Hybrid Cloud, constituting private and public clouds are bound together by standardized technology that enables data and application portability (e.g., cloud bursting for load balancing between clouds).&lt;/li&gt;
 &lt;li&gt;With a hybrid cloud solution, sensitive information can be placed in a private area of the cloud, and less sensitive data can take advantage of the benefits of the public cloud. So Using a hybrid cloud requires proper management of data transfers and replication between public and private clouds&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;comparison&#34;&gt;Comparison&lt;/h2&gt;
+&lt;h2 id=&#34;comparison&#34;&gt;&lt;strong&gt;Comparison&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cloud_comparison.png&#34;
          alt=&#34;cloud types&#34; width=&#34;60%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h1 id=&#34;data-centers&#34;&gt;Data Centers&lt;/h1&gt;
-&lt;h2 id=&#34;elements&#34;&gt;Elements:&lt;/h2&gt;
+&lt;h1 id=&#34;data-centers&#34;&gt;&lt;strong&gt;Data Centers&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;elements&#34;&gt;&lt;strong&gt;Elements&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Facility&lt;/strong&gt;: location and &amp;ldquo;white space&amp;rdquo; (space for IT equipment)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;IT Equipment&lt;/strong&gt;: servers, storage hardware, cables, racks, firewalls, etc.&lt;/li&gt;
@@ -1410,7 +1408,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Operations Staff&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;clouds-on-data-centers&#34;&gt;Clouds on Data Centers&lt;/h2&gt;
+&lt;h2 id=&#34;clouds-on-data-centers&#34;&gt;&lt;strong&gt;Clouds on Data Centers&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Range in size from &lt;em&gt;edge&lt;/em&gt; facilities to &lt;em&gt;mega&lt;/em&gt; scale&lt;/li&gt;
 &lt;li&gt;Economies of scale: approximate costs for a small size center (1000 servers) and a larger, 100K server center
@@ -1419,7 +1417,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/figure&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;data-center-efficiency&#34;&gt;Data Center Efficiency&lt;/h2&gt;
+&lt;h2 id=&#34;data-center-efficiency&#34;&gt;&lt;strong&gt;Data Center Efficiency&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/data_center_efficiency.png&#34;
          alt=&#34;data center efficiency&#34; width=&#34;60%&#34;/&gt;
 &lt;/figure&gt;
@@ -1437,7 +1435,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;To improve DC Deployment: since Building racks of servers &amp;amp; complex cooling systems all separately is not efficient, they package and deploy into &lt;em&gt;bigger units&lt;/em&gt;, like &lt;code&gt;ICE Cube&lt;/code&gt; as a modular data center.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;cloud-computing-limitations&#34;&gt;Cloud Computing Limitations&lt;/h1&gt;
+&lt;h1 id=&#34;cloud-computing-limitations&#34;&gt;&lt;strong&gt;Cloud Computing Limitations&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Connectivity&lt;/strong&gt;&lt;/em&gt;
 &lt;ul&gt;
@@ -1458,12 +1456,12 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;Security&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;solutions&#34;&gt;Solutions&lt;/h2&gt;
+&lt;h2 id=&#34;solutions&#34;&gt;&lt;strong&gt;Solutions&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cloud_computing_limitations_solutions.png&#34;
          alt=&#34;solution to cloud computing limitations&#34; width=&#34;80%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h3 id=&#34;fog-computing&#34;&gt;&lt;em&gt;Fog Computing&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;fog-computing&#34;&gt;&lt;em&gt;&lt;strong&gt;Fog Computing&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Fog computing&lt;/strong&gt;&lt;/em&gt; is an extra layer between the edge layer and the cloud layer.&lt;/li&gt;
 &lt;li&gt;The main benefit of Fog computing is &lt;strong&gt;efficiency of data traffic&lt;/strong&gt; and a &lt;strong&gt;reduction in latency&lt;/strong&gt;.
@@ -1473,13 +1471,13 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;According to Mung Chiang, Dean of the Purdue University, “fog provides the missing link for what data needs to be pushed to the cloud, and what can be analyzed locally, at the edge.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;edge-computing&#34;&gt;&lt;em&gt;Edge Computing&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;edge-computing&#34;&gt;&lt;em&gt;&lt;strong&gt;Edge Computing&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Edge computing is the data computation that happens at the network’s edge where the data are created.&lt;/li&gt;
 &lt;li&gt;Fog computing acts as a &lt;strong&gt;mediator&lt;/strong&gt; between the edge and the cloud for several purposes, such as data filtering.&lt;/li&gt;
 &lt;li&gt;&lt;em&gt;&lt;strong&gt;Fog computing can’t replace edge computing&lt;/strong&gt;&lt;/em&gt; while edge computing can live without fog computing in many applications.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;comparison-1&#34;&gt;Comparison&lt;/h3&gt;
+&lt;h3 id=&#34;comparison-1&#34;&gt;&lt;strong&gt;Comparison&lt;/strong&gt;&lt;/h3&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/cloud_fog_comparison.png&#34;
          alt=&#34;fog vs edge computing&#34; width=&#34;80%&#34;/&gt;
 &lt;/figure&gt;
@@ -1495,49 +1493,49 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
         <pubDate>Fri, 28 Nov 2025 00:04:22 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/terraform/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/terraform/ -&lt;h1 id=&#34;infrastructure-as-code&#34;&gt;Infrastructure as Code&lt;/h1&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/terraform/ -&lt;h1 id=&#34;infrastructure-as-code&#34;&gt;&lt;strong&gt;Infrastructure as Code&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Definition&lt;/strong&gt;: Write and execute code to define, deploy update, and destroy our infra.&lt;/li&gt;
 &lt;li&gt;Why we automate deployment? reliable, efficient, repeatable, safe releases, multiple environment, maximum scalability&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;types-of-iac-tools&#34;&gt;Types of IaC tools&lt;/h2&gt;
+&lt;h2 id=&#34;types-of-iac-tools&#34;&gt;&lt;strong&gt;Types of IaC tools&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/types_of_iac.png&#34;
          alt=&#34;IaC Tools&#34; width=&#34;50%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h3 id=&#34;ad-hoc-scripts&#34;&gt;Ad-hoc Scripts&lt;/h3&gt;
+&lt;h3 id=&#34;ad-hoc-scripts&#34;&gt;&lt;strong&gt;Ad-hoc Scripts&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;The &lt;strong&gt;easiest&lt;/strong&gt; and most straightforward approach of automating anything&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;ad-hoc tools&lt;/strong&gt; run on single core tool, like cloud shell, which connects to a VM with only 5GB storage space, if you need more, you have to upload the file to cloud bucket or sth, and use the shell to read from it.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;examples&lt;/strong&gt; : Bash, Ruby, Perl&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;configuration-management-tools&#34;&gt;Configuration Management Tools&lt;/h3&gt;
+&lt;h3 id=&#34;configuration-management-tools&#34;&gt;&lt;strong&gt;Configuration Management Tools&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Designed to install and manage software on existing servers.&lt;/li&gt;
 &lt;li&gt;These tools offer coding conventions and ability to run scripts on multiple servers.&lt;/li&gt;
 &lt;li&gt;ansible assumes the multiple servers that you use work in completely the same way with same hard tool structure. In these cases, even though the servers are of the same, some external small errors, like a sudden network error, cause the machines to diverge in some way, like having different file system structure.&lt;/li&gt;
 &lt;li&gt;Examples: Chef, Puppet and Ansible.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;server-templating-tools&#34;&gt;Server Templating Tools&lt;/h3&gt;
+&lt;h3 id=&#34;server-templating-tools&#34;&gt;&lt;strong&gt;Server Templating Tools&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;The idea of server templating tools is to create an image of a server that captures a fully self-contained “snapshot” of the operating system (OS), the software, the files, and all other relevant details.&lt;/li&gt;
 &lt;li&gt;Examples: Docker, Packer, Vagrant&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;provisioning-tools&#34;&gt;Provisioning Tools&lt;/h3&gt;
+&lt;h3 id=&#34;provisioning-tools&#34;&gt;&lt;strong&gt;Provisioning Tools&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Most &lt;strong&gt;advanced&lt;/strong&gt; IaC tools.&lt;/li&gt;
 &lt;li&gt;Provisioning tools are responsible for &lt;strong&gt;creating&lt;/strong&gt; these servers, rather than running software or scripts on top of existing servers like other categories.&lt;/li&gt;
 &lt;li&gt;You can use provisioning tools to create databases, caches, load balancers, queues, network configurations and SSL certificates.&lt;/li&gt;
 &lt;li&gt;Examples: Terraform, CloudFormation, OpenStack Heat, and Pulumi, actively deal with hardware&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;orchestration-tools&#34;&gt;Orchestration Tools&lt;/h3&gt;
+&lt;h3 id=&#34;orchestration-tools&#34;&gt;&lt;strong&gt;Orchestration Tools&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;We mentioned previously. Orchestration tools are responsible for managing the lifecycle of containers, including deployment, scaling, and networking.&lt;/p&gt;
-&lt;h2 id=&#34;iac-tool-comparison&#34;&gt;IaC Tool Comparison&lt;/h2&gt;
+&lt;h2 id=&#34;iac-tool-comparison&#34;&gt;&lt;strong&gt;IaC Tool Comparison&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/iac_comparison.png&#34;
          alt=&#34;IaC Tool Comparison&#34; width=&#34;100%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h3 id=&#34;mutable-vs-_immutable_&#34;&gt;Mutable vs. &lt;em&gt;&lt;strong&gt;Immutable&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;mutable-vs-_immutable_&#34;&gt;&lt;strong&gt;Mutable vs. &lt;em&gt;&lt;strong&gt;Immutable&lt;/strong&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Mutable&lt;/strong&gt;: Configuration management tools (e.g., chef, puppet) default to a mutable infrastructure paradigm.
 &lt;ul&gt;
@@ -1547,7 +1545,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Immutable&lt;/strong&gt; infrastructure tools don’t allow this deviation to happen.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;declarative-vs-procedural&#34;&gt;&lt;em&gt;&lt;strong&gt;Declarative&lt;/strong&gt;&lt;/em&gt; vs. Procedural&lt;/h3&gt;
+&lt;h3 id=&#34;declarative-vs-procedural&#34;&gt;&lt;strong&gt;&lt;em&gt;&lt;strong&gt;Declarative&lt;/strong&gt;&lt;/em&gt; vs. Procedural&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;In &lt;strong&gt;Procedural&lt;/strong&gt; scripting style, developers will code the application flow in step-by-step commands that does not care about the outcome or the final state, but just complete the preset steps. e.g. chef and ansible&lt;/li&gt;
 &lt;li&gt;In &lt;strong&gt;Declarative&lt;/strong&gt; scripting style, developers will write code that specifies their desired end state, and the IaC tool itself is responsible for figuring out how to achieve that state.
@@ -1556,13 +1554,13 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;general-purpose-vs-domain-specific&#34;&gt;&lt;em&gt;&lt;strong&gt;General Purpose&lt;/strong&gt;&lt;/em&gt; vs. Domain-specific&lt;/h3&gt;
+&lt;h3 id=&#34;general-purpose-vs-domain-specific&#34;&gt;&lt;strong&gt;&lt;em&gt;&lt;strong&gt;General Purpose&lt;/strong&gt;&lt;/em&gt; vs. Domain-specific&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;DSLs&lt;/code&gt; are designed for use in &lt;strong&gt;one specific domain&lt;/strong&gt;, whereas &lt;code&gt;GPLs&lt;/code&gt; can be used across a &lt;strong&gt;broad range of domains&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;GPL&lt;/code&gt; Examples: Chef supports Ruby; Pulumi supports a wide variety of GPLs, including JavaScript, TypeScript, Python, Go, C#, Java, and others.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;DSL&lt;/code&gt; Examples: Terraform uses HCL; Puppet uses Puppet Language; Ansible, CloudFormation, and OpenStack Heat use YAML (CloudFormation also supports JSON).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;master-vs-masterless&#34;&gt;Master vs. &lt;em&gt;&lt;strong&gt;Masterless&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;master-vs-masterless&#34;&gt;&lt;strong&gt;Master vs. &lt;em&gt;&lt;strong&gt;Masterless&lt;/strong&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;In &lt;strong&gt;Master-centered&lt;/strong&gt; infrastructure tools, you should &lt;strong&gt;dedicate a server&lt;/strong&gt; to run the IaC tool (e.g., Chef, Puppet).
 &lt;ul&gt;
@@ -1575,7 +1573,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;agent-k8s-vs-agentless&#34;&gt;Agent (k8s) vs. &lt;em&gt;&lt;strong&gt;Agentless&lt;/strong&gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;agent-k8s-vs-agentless&#34;&gt;&lt;strong&gt;Agent (k8s) vs. &lt;em&gt;&lt;strong&gt;Agentless&lt;/strong&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Some IaC tools require the installation of agent software on each node you need to configure. The agent typically runs in the background on each server and is responsible for installing the latest configuration management updates.
 &lt;ul&gt;
@@ -1583,25 +1581,25 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;community-support&#34;&gt;Community Support&lt;/h3&gt;
+&lt;h3 id=&#34;community-support&#34;&gt;&lt;strong&gt;Community Support&lt;/strong&gt;&lt;/h3&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/iac_community_support.png&#34;
          alt=&#34;IaC Community Support&#34; width=&#34;40%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h1 id=&#34;terraform&#34;&gt;Terraform&lt;/h1&gt;
+&lt;h1 id=&#34;terraform&#34;&gt;&lt;strong&gt;Terraform&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;An open-source IaC provisioning tool created by HashiCorp and written in GO Lang.&lt;/li&gt;
 &lt;li&gt;script automatically detects the environment it is running on (GCP, AWS, etc) and install the corresponding libraries and use a hash map to map the compatible APIs.&lt;/li&gt;
 &lt;li&gt;Good readability, can deploy to K8s, declarative, paves the way for massive scalability, Management of infrastructure will be automated, Source of truth for the infra&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;hashicorp-configuration-language-hcl&#34;&gt;HashiCorp Configuration Language (HCL)&lt;/h2&gt;
+&lt;h2 id=&#34;hashicorp-configuration-language-hcl&#34;&gt;&lt;strong&gt;HashiCorp Configuration Language (HCL)&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;The most basic construct is called a &lt;code&gt;block&lt;/code&gt;, defined as a “container for other content”.&lt;/li&gt;
 &lt;li&gt;The body of the block is nested with {}&lt;/li&gt;
 &lt;li&gt;Each block has a type (e.g., resource)&lt;/li&gt;
 &lt;li&gt;Each block is identified using labels, the number of labels is identified based on the block type&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;block-types&#34;&gt;Block types&lt;/h3&gt;
+&lt;h3 id=&#34;block-types&#34;&gt;&lt;strong&gt;Block types&lt;/strong&gt;&lt;/h3&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/terraform_block_types.png&#34;
          alt=&#34;Terraform Block Types&#34; width=&#34;90%&#34;/&gt;
 &lt;/figure&gt;
@@ -1614,7 +1612,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;&lt;strong&gt;Provisioner&lt;/strong&gt;: To execute a script &lt;strong&gt;after your resources have been created&lt;/strong&gt;. It waits for your service to be deployed successfully and then run some codes.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Local&lt;/strong&gt;: To create local variables within a specific resource block&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;workflow&#34;&gt;Workflow&lt;/h2&gt;
+&lt;h2 id=&#34;workflow&#34;&gt;&lt;strong&gt;Workflow&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;A basic Terraform workflow consists of the following two steps:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Initialization&lt;/strong&gt;: using &lt;code&gt;terraform init&lt;/code&gt;. Install libraries, binaries executable, for the providers that you have listed in your code. The mapping tables, provider apis, etc. All stored in &lt;code&gt;.terraform&lt;/code&gt; folder.
@@ -1630,7 +1628,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;naming-conventions&#34;&gt;Naming conventions&lt;/h2&gt;
+&lt;h2 id=&#34;naming-conventions&#34;&gt;&lt;strong&gt;Naming conventions&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Terraform does &lt;strong&gt;not care about filenames&lt;/strong&gt;. It combines all files with the &lt;code&gt;.tf&lt;/code&gt; extension and then creates an execution plan using all the configurations.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;provider.tf&lt;/code&gt;: contains the provider block declaring provider, which is a translation layer between Terraform and the external API of the provider.&lt;/li&gt;
@@ -1651,12 +1649,12 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;&lt;code&gt;main.tf&lt;/code&gt;: contains all the resource blocks that define the actual components of your infrastructure. Actual creation of the resource blocks.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;terraform.tfvars&lt;/code&gt;: There are multiple ways to assign a value to a variable, either through a default value in the declaration or pass it as a value either interactively or via the command-line flag. One common way is to create a file named &lt;code&gt;terraform.tfvars&lt;/code&gt; that contains the variable assignments. You can then use them as &lt;code&gt;var.&amp;lt;variable_name&amp;gt;&lt;/code&gt; in your code.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;configuration-structure&#34;&gt;Configuration Structure&lt;/h2&gt;
+&lt;h2 id=&#34;configuration-structure&#34;&gt;&lt;strong&gt;Configuration Structure&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/terraform_configuration_structure.png&#34;
          alt=&#34;Terraform File Structure&#34; width=&#34;60%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h2 id=&#34;state&#34;&gt;State&lt;/h2&gt;
+&lt;h2 id=&#34;state&#34;&gt;&lt;strong&gt;State&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;A Terraform configuration is a declaration of the desired state, and When you run &lt;code&gt;terraform apply&lt;/code&gt;, Terraform determines the difference between the actual state and the desired state&lt;/li&gt;
 &lt;li&gt;Terraform &lt;strong&gt;state&lt;/strong&gt; is the file that tracks the current actual state of your infra, containing all the configurations that have been applied during the Terraform workflow&lt;/li&gt;
@@ -1676,7 +1674,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;&lt;code&gt;prefix&lt;/code&gt; refers to a folder on the bucket that will host the state file&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;commands&#34;&gt;Commands&lt;/h3&gt;
+&lt;h3 id=&#34;commands&#34;&gt;&lt;strong&gt;Commands&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;terraform state list&lt;/code&gt;: list all resources in the state file&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;terraform state show &amp;lt;resource_name&amp;gt;&lt;/code&gt;: show detailed information about a specific resource in the state file&lt;/li&gt;
@@ -1688,7 +1686,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;&lt;code&gt;terraform apply -refresh-only&lt;/code&gt;: to update the state file to match the real infra according to the prev plan output without making any changes to the actual resources on the cloud&lt;/li&gt;
 &lt;li&gt;Update the TF configuration file to set the same value as the manually modified value. So, if TF commands are reapplied, it won&amp;rsquo;t override the manually entered values.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;meta-arguments&#34;&gt;Meta-arguments&lt;/h2&gt;
+&lt;h2 id=&#34;meta-argumesnt&#34;&gt;&lt;strong&gt;Meta-argumesnt&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;em&gt;&lt;strong&gt;Meta-arguments&lt;/strong&gt;&lt;/em&gt; are special constructs in Terraform to enable you to write efficient Terraform code. Examples of Meta-arguments:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -1723,7 +1721,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;resource-reference-this&#34;&gt;Resource Reference &amp;ldquo;this&amp;rdquo;&lt;/h2&gt;
+&lt;h2 id=&#34;resource-reference-this&#34;&gt;&lt;strong&gt;Resource Reference &amp;ldquo;this&amp;rdquo;&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;In GCP, every resource can be uniquely identified, so it is good practice to refer to resources using &lt;code&gt;**this**&lt;/code&gt; reference, which is a &lt;em&gt;&lt;strong&gt;Unique IDentifier(UID)&lt;/strong&gt;&lt;/em&gt; containing additional information about the resource.&lt;/li&gt;
 &lt;li&gt;You can use &lt;code&gt;this&lt;/code&gt; with any resource and refer to it in other resources. It provides a clear and widely understood convention for identifying the primary resource within a module.&lt;/li&gt;
@@ -1740,7 +1738,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
         <pubDate>Tue, 25 Nov 2025 22:10:31 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka/ -&lt;h1 id=&#34;why-kafka&#34;&gt;Why Kafka?&lt;/h1&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/apache_kafka/ -&lt;h1 id=&#34;why-kafka&#34;&gt;&lt;strong&gt;Why Kafka?&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Problem of Request-Response Architecture:&lt;/strong&gt; Kubernetes offers the ability to (de)scale your applications to respond to user requests in a meaningful amount of time.
 &lt;ul&gt;
@@ -1762,7 +1760,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Solution: message queues:&lt;/strong&gt; Kafka acts as a buffer between user requests and your application to avoid message drop &amp;amp; timeout problems. It is a &lt;strong&gt;scalable&lt;/strong&gt; message queue with &lt;strong&gt;publish-subscribe&lt;/strong&gt; software support that offers &lt;strong&gt;distributed&lt;/strong&gt; &lt;strong&gt;streaming processing&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;digression-1-publish-subscribe-model&#34;&gt;Digression 1: Publish-Subscribe Model&lt;/h2&gt;
+&lt;h2 id=&#34;digression-1-publish-subscribe-model&#34;&gt;&lt;strong&gt;Digression 1: Publish-Subscribe Model&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/publish_subscribe.png&#34;
          alt=&#34;publish-subscribe models&#34; width=&#34;95%&#34;/&gt;
 &lt;/figure&gt;
@@ -1773,38 +1771,38 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;Model 2 → &lt;strong&gt;JMS, AWS Event Bridge&lt;/strong&gt;: Subscribers find the condition / set the filters in the queue such that the subs define the rules on how they get the data. The queue is like a pool, does not categorize the messages into categories. Broker applies the subscribers’ rules on every msg. (content-based pub-sub model)&lt;/li&gt;
 &lt;li&gt;Model 3 → &lt;strong&gt;Kafka combined with KSQL&lt;/strong&gt;: Hybrid version combining 1 and 2. (topic+content)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;ranking&#34;&gt;Ranking&lt;/h3&gt;
+&lt;h3 id=&#34;ranking&#34;&gt;&lt;strong&gt;Ranking&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Scalability: Best: &lt;strong&gt;Topic based&lt;/strong&gt;, worst: queue based&lt;/li&gt;
 &lt;li&gt;Speed: Best: &lt;strong&gt;topic based&lt;/strong&gt;, worst: content-based&lt;/li&gt;
 &lt;li&gt;Flexibility: Best: content-based, worst: queue-based&lt;/li&gt;
 &lt;li&gt;Therefore, topic based model is the most convenient&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;pub-sub-model-example&#34;&gt;Pub-sub model example&lt;/h3&gt;
+&lt;h3 id=&#34;pub-sub-model-example&#34;&gt;&lt;strong&gt;Pub-sub model example&lt;/strong&gt;&lt;/h3&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/pub_sub_model.png&#34;
          alt=&#34;pub-sub model example&#34; width=&#34;90%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h1 id=&#34;apache-kafka&#34;&gt;Apache Kafka&lt;/h1&gt;
-&lt;h2 id=&#34;advantages&#34;&gt;Advantages&lt;/h2&gt;
+&lt;h1 id=&#34;apache-kafka&#34;&gt;&lt;strong&gt;Apache Kafka&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;advantages&#34;&gt;&lt;strong&gt;Advantages&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;High throughput: can handle millions of messages per second (LinkedIn 3.2Million msgs/sec)&lt;/li&gt;
 &lt;li&gt;High performance: uses in-memory writes and reads&lt;/li&gt;
 &lt;li&gt;Fault tolerant: Kafka is highly available and resilient to node failures and supports automatic recovery.&lt;/li&gt;
 &lt;li&gt;Elastically scalable, low operational overhead, durable, highly available&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;structure&#34;&gt;Structure&lt;/h2&gt;
+&lt;h2 id=&#34;structure&#34;&gt;&lt;strong&gt;Structure&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/kafka_structure.png&#34;
          alt=&#34;kafka structure&#34; width=&#34;70%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h3 id=&#34;topics&#34;&gt;Topics&lt;/h3&gt;
+&lt;h3 id=&#34;topics&#34;&gt;&lt;strong&gt;Topics&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Is a particular stream of data. Is the &lt;strong&gt;unit of parallelism&lt;/strong&gt; in Apache Kafka.&lt;/li&gt;
 &lt;li&gt;You can have as many topics as you want&lt;/li&gt;
 &lt;li&gt;Identified by a name, divided into partitions&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;partitions&#34;&gt;Partitions&lt;/h3&gt;
+&lt;h3 id=&#34;partitions&#34;&gt;&lt;strong&gt;Partitions&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;To enhance scalability, we create partitions to the topics, each piece sits in independent space in the memory, and we can have as many partitions as we want for the same topic. But if the producer write  messages into the same partition, we cannot guarantee the consumer to do the changes in the same order. So within the same partition, the messages are ordered through offset, but there is no order across partitions.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Each partition is ordered&lt;/li&gt;
@@ -1812,21 +1810,21 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;To enable fault tolerance, we can get &lt;strong&gt;duplication of partition&lt;/strong&gt; in indifferent brokers.&lt;/li&gt;
 &lt;li&gt;Each partition lives in an individual machine, called broker&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;brokers&#34;&gt;Brokers&lt;/h3&gt;
+&lt;h3 id=&#34;brokers&#34;&gt;&lt;strong&gt;Brokers&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;A Kafka cluster is made up of multiple &lt;code&gt;brokers&lt;/code&gt; (servers)&lt;/li&gt;
 &lt;li&gt;Each broker is identified by an id (integer)&lt;/li&gt;
 &lt;li&gt;Each broker contains one or more partitions for one or more topics&lt;/li&gt;
 &lt;li&gt;After connecting to any broker, you will be connected to the entire cluster (If i have the addr of B1, I also got the addr of B2, B3, etc)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;producers&#34;&gt;Producers&lt;/h3&gt;
+&lt;h3 id=&#34;producers&#34;&gt;&lt;strong&gt;Producers&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Producers publish/write data to topics (which are made of partitions) while does not know which partition it will write to. Broker will deal with that&lt;/li&gt;
 &lt;li&gt;Producers automatically know to which broker and partition they should write to&lt;/li&gt;
 &lt;li&gt;In case of Broker failure, producers will automatically recover the failed broker&lt;/li&gt;
 &lt;li&gt;Producers choose whether to receive an &lt;strong&gt;acknowledgment&lt;/strong&gt; of a successful write (&lt;code&gt;ack&lt;/code&gt;), and whether to send a &lt;strong&gt;key&lt;/strong&gt; with the message. If two msgs are sent with the same key, we can guarantee they will be sent to the same partition, even though we don&amp;rsquo;t know which partition it is.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;consumers&#34;&gt;Consumers&lt;/h3&gt;
+&lt;h3 id=&#34;consumers&#34;&gt;&lt;strong&gt;Consumers&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Consumers read data from a topic (identified by a topic name)&lt;/li&gt;
 &lt;li&gt;Consumers know which broker to read from.&lt;/li&gt;
@@ -1841,7 +1839,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;zookeeper&#34;&gt;Zookeeper&lt;/h3&gt;
+&lt;h3 id=&#34;zookeeper&#34;&gt;&lt;strong&gt;Zookeeper&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Connects Partition and OS adding ports or system calls to OS such that partition can interact with the memory, to write and read the memory.&lt;/li&gt;
 &lt;li&gt;Manages and coordinates the brokers (keeps a list of them)&lt;/li&gt;
@@ -1850,7 +1848,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;An important component of Kafka.&lt;/li&gt;
 &lt;li&gt;Causes the hardness of deploying Kafka as it is on the top of OS to build the communication, and enable the Kafka to run smoothly and directly in different platforms and OS.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;parallelism&#34;&gt;Parallelism&lt;/h2&gt;
+&lt;h2 id=&#34;parallelism&#34;&gt;&lt;strong&gt;Parallelism&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;A topic partition is the unit of parallelism in Kafka. Each partition can be hosted on a different broker (server) in the Kafka cluster.&lt;/li&gt;
 &lt;li&gt;Producers and brokers:
@@ -1870,14 +1868,14 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;Keyed messages caution: exercise caution when messages are produced with keys, as they are deterministically assigned to partitions.&lt;/li&gt;
 &lt;li&gt;Consistent routing: kafka ensures that messages with identical keys are consistently routed to the same partition, preserving the integrity of order-dependent applications.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;digression-2-microservices&#34;&gt;Digression 2: Microservices&lt;/h2&gt;
+&lt;h2 id=&#34;digression-2-microservices&#34;&gt;&lt;strong&gt;Digression 2: Microservices&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Stateless&lt;/strong&gt;: each component does not store any state between requests. Each request is independent.&lt;/li&gt;
 &lt;li&gt;In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm&lt;/li&gt;
 &lt;li&gt;Reading: Example of Ecommerce microservice app deployed on GKE: &lt;a href=&#34;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&#34;&gt;https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;digression-3-rest&#34;&gt;Digression 3: REST&lt;/h2&gt;
+&lt;h2 id=&#34;digression-3-rest&#34;&gt;&lt;strong&gt;Digression 3: REST&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;provide an interface for distributed hypermedia systems, created by Roy Fielding in 2000&lt;/li&gt;
 &lt;li&gt;The key abstraction of information in REST is a resource
@@ -1892,12 +1890,12 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;The clients and servers exchange representations of resources by using a standardized interface and protocol typically HTTP&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;kafka--mircroservices&#34;&gt;Kafka + Mircroservices&lt;/h2&gt;
+&lt;h2 id=&#34;kafka--mircroservices&#34;&gt;&lt;strong&gt;Kafka + Mircroservices&lt;/strong&gt;&lt;/h2&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/kafka_microservices.png&#34;
          alt=&#34;kafka microservices&#34; width=&#34;100%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h2 id=&#34;code-example&#34;&gt;Code Example&lt;/h2&gt;
+&lt;h2 id=&#34;code-example&#34;&gt;&lt;strong&gt;Code Example&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Producer example (Python):
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; socket
@@ -1980,7 +1978,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    display_kafka_data()
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;confluent-kafka&#34;&gt;Confluent Kafka&lt;/h1&gt;
+&lt;h1 id=&#34;confluent-kafka&#34;&gt;&lt;strong&gt;Confluent Kafka&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Since Handling Kafka requires managing low-level, complex data infrastructure, we have &lt;strong&gt;Confluent Kafka&lt;/strong&gt;. It is built on top of Apache Kafka to offer complete, fully managed, cloud-native data streaming that&amp;rsquo;s available wherever your data and applications reside.&lt;/li&gt;
 &lt;/ul&gt;
@@ -1995,15 +1993,15 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
         <pubDate>Sun, 23 Nov 2025 21:01:28 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration/ -&lt;h1 id=&#34;container-orchestration&#34;&gt;Container Orchestration&lt;/h1&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration/ -&lt;h1 id=&#34;container-orchestration&#34;&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;&lt;/h1&gt;
 &lt;p&gt;The &lt;strong&gt;automatic&lt;/strong&gt; process of managing or scheduling the work of individual containers for applications based on &lt;strong&gt;microservices&lt;/strong&gt; within &lt;strong&gt;multiple clusters&lt;/strong&gt;.
 &lt;strong&gt;Orchestration tools&lt;/strong&gt;: Kubernetes, Docker Swarm, Apache Mesos, CoreOS rkt&lt;/p&gt;
-&lt;h1 id=&#34;kubernetes&#34;&gt;Kubernetes&lt;/h1&gt;
+&lt;h1 id=&#34;kubernetes&#34;&gt;&lt;strong&gt;Kubernetes&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;An open-source container management tool which automates container deployment, container (de)scaling, container load balancing&lt;/li&gt;
 &lt;li&gt;Can group &amp;ldquo;n&amp;rdquo; number of containers into one logical unit called &amp;ldquo;&lt;strong&gt;POD&lt;/strong&gt;&amp;rdquo;, easy to manage and deploy&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
+&lt;h2 id=&#34;features&#34;&gt;&lt;strong&gt;Features&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Automated bin packing&lt;/strong&gt;: via packaging software and automatically placing it/containers based on their resource requirements and other constraints, while not sacrificing availability. Mix critical and best-effort workloads in order to drive up utilization and save more resources.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Service Discovery and Load Balancing&lt;/strong&gt;: Using auto networking and load balancing configurations&lt;/li&gt;
@@ -2065,7 +2063,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
          alt=&#34;deployment and service&#34; width=&#34;40%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h3 id=&#34;commands-on-gke&#34;&gt;Commands on GKE&lt;/h3&gt;
+&lt;h3 id=&#34;commands-on-gke&#34;&gt;&lt;strong&gt;Commands on GKE&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Create a GKE cluster:
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gcloud container clusters create &lt;span style=&#34;color:#ae81ff&#34;&gt;\
@@ -2097,8 +2095,8 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/li&gt;
 &lt;li&gt;To debug K8s application: &lt;a href=&#34;https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/&#34;&gt;https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;yaml&#34;&gt;YAML&lt;/h1&gt;
-&lt;h2 id=&#34;basics&#34;&gt;Basics&lt;/h2&gt;
+&lt;h1 id=&#34;yaml&#34;&gt;&lt;strong&gt;YAML&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;basics&#34;&gt;&lt;strong&gt;Basics&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;YAML (YAML Ain&amp;rsquo;t Markup Language) is a human-readable data serialization standard that can be used in conjunction with all programming languages and is often used to write configuration files.&lt;/li&gt;
 &lt;li&gt;There are two main structures in YAML: &lt;strong&gt;Maps&lt;/strong&gt; (key-value pairs) and &lt;strong&gt;Lists&lt;/strong&gt; (ordered lists).
@@ -2131,7 +2129,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;create-pods&#34;&gt;Create Pods&lt;/h2&gt;
+&lt;h2 id=&#34;create-pods&#34;&gt;&lt;strong&gt;Create Pods&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;A &lt;code&gt;Pod&lt;/code&gt; is the smallest and most basic deployable object in K8s. A Pod represents a &lt;strong&gt;single instance of a running process&lt;/strong&gt; in your cluster.&lt;/li&gt;
 &lt;li&gt;Each pod can obtain &lt;strong&gt;one or more containers&lt;/strong&gt;, such as Docker Containers.&lt;/li&gt;
@@ -2145,7 +2143,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;You can consider a Pod to be a self-contained unit, isolated &amp;ldquo;logical host&amp;rdquo; that contains the systemic needs of the application it servers.&lt;/li&gt;
 &lt;li&gt;A Pod is meant to run a single instance of your application on your cluster. However, it is not recommended to create individual Pods directly. Instead, you generally create a set of identical Pods, called &lt;code&gt;replicas&lt;/code&gt;, to run your application. Such a set of replicated Pods are created and managed by a &lt;code&gt;Deployment&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;deployment&#34;&gt;Deployment&lt;/h2&gt;
+&lt;h2 id=&#34;deployment&#34;&gt;&lt;strong&gt;Deployment&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;A deployment is a file that defines a pod&amp;rsquo;s desired behavior or characteristics. You create it to:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Ensure workload &lt;strong&gt;availability&lt;/strong&gt;&lt;/li&gt;
@@ -2178,7 +2176,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    - &lt;span style=&#34;color:#f92672&#34;&gt;containerPort&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;80&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To create it, we run: &lt;code&gt;kubectl apply -f deployment.yaml&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;service&#34;&gt;Service&lt;/h2&gt;
+&lt;h2 id=&#34;service&#34;&gt;&lt;strong&gt;Service&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Motivation&lt;/strong&gt;: We need a way of consistently being able to access our pod-set even if the pods themselves are recreated or lost. This should be transparent to any application or other pods trying to access this pod-set.
 &lt;ul&gt;
@@ -2210,11 +2208,9 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;nodePort&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;30500&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# points to our Nginx deployment&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;To create this service, we run: &lt;code&gt;kubectl apply -f service.yaml&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;reading&#34;&gt;Reading&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Kubernetes basics first 6 chapters: &lt;a href=&#34;https://kubernetes.io/docs/tutorials/kubernetes-basics/&#34;&gt;https://kubernetes.io/docs/tutorials/kubernetes-basics/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Deploy a Docker containerized web app to GKE: &lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app&#34;&gt;https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h1 id=&#34;reading&#34;&gt;&lt;strong&gt;Reading&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/tutorials/kubernetes-basics/&#34;&gt;Kubernetes basics first 6 chapters&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app&#34;&gt;Deploy a Docker containerized web app to GKE&lt;/a&gt;&lt;/p&gt;
 - http://allenhsm.github.io/tech/cloud_infra_basics/deployment_orchestration/ - This is a customized copyright.</description>
         </item>
     
@@ -2226,28 +2222,39 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
         <pubDate>Sat, 22 Nov 2025 22:25:09 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/containerization/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/containerization/ -&lt;h1 id=&#34;virtual-machines-to-containers&#34;&gt;Virtual Machines to Containers&lt;/h1&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/containerization/ -&lt;h1 id=&#34;virtual-machines-to-containers&#34;&gt;&lt;strong&gt;Virtual Machines to Containers&lt;/strong&gt;&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;VM is too &lt;strong&gt;heavy&lt;/strong&gt; for a simple process as it boots a whole OS every time.&lt;/li&gt;
-&lt;li&gt;Containers are &lt;strong&gt;isolated&lt;/strong&gt;, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app. &lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/vm_to_container.png&#34; alt=&#34;VM to Container&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Containers are &lt;strong&gt;isolated&lt;/strong&gt;, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app.
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/vm_to_container.png&#34;
+           alt=&#34;vm to container&#34; width=&#34;40%&#34;/&gt;
+  &lt;/figure&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Comparison:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Lightweight&lt;/strong&gt;: Containerization avoids duplication of app Bins/libs, and only save the modifications did by different containers, without changing the original binaries.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: VM is more secure because of full isolation while Container has only process level isolation.
-&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/vm_vs_container.png&#34; alt=&#34;VM vs. Container&#34;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: VM is more secure because of full isolation while Container has only process level isolation.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;motivation-of-containerization&#34;&gt;Motivation of Containerization&lt;/h1&gt;
-&lt;h2 id=&#34;development-challenges&#34;&gt;Development challenges:&lt;/h2&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/vm_vs_container.png&#34;
+         alt=&#34;VM vs. Container&#34; width=&#34;40%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&#34;motivation-of-containerization&#34;&gt;&lt;strong&gt;Motivation of Containerization&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;development-challenges&#34;&gt;&lt;strong&gt;Development challenges&lt;/strong&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;Containerization makes version control much more easier, and more importantly, safer, to avoid a simple app influence the whole system.&lt;/li&gt;
 &lt;li&gt;Solves the conflict of different dependencies, versions, environments(&lt;code&gt;N x M&lt;/code&gt; configurations， multiplicity of hardware env), multiplicity of stacks, and contents.&lt;/li&gt;
 &lt;li&gt;Modularity and scalability: can be quickly and smoothly migrated &amp;amp; scaled, ensuring compatibility across different environments.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;solution-containerization&#34;&gt;Solution: Containerization&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/sol_by_containerization.png&#34; alt=&#34;solution by containerization&#34;&gt;&lt;/p&gt;
-&lt;h1 id=&#34;docker---leading-container&#34;&gt;Docker - leading container&lt;/h1&gt;
-&lt;h2 id=&#34;why-popular&#34;&gt;Why popular&lt;/h2&gt;
+&lt;h2 id=&#34;solution-containerization&#34;&gt;&lt;strong&gt;Solution: Containerization&lt;/strong&gt;&lt;/h2&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/sol_by_containerization.png&#34;
+         alt=&#34;solution by containerization&#34; width=&#34;50%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&#34;docker---leading-container&#34;&gt;&lt;strong&gt;Docker - leading container&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id=&#34;why-popular&#34;&gt;&lt;strong&gt;Why popular&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;By mid-2013, &lt;code&gt;dotCloud&lt;/code&gt; company released a tool that used these ideas to provide a better way to deploy encapsulated applications. The tool later became Docker and &lt;code&gt;dotCloud&lt;/code&gt; became Docker Inc&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Most widely known, and used&lt;/li&gt;
@@ -2257,7 +2264,7 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;Docker Hub: public registry of container images&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Its file system!&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;union-file-systemufs&#34;&gt;Union File System(UFS)&lt;/h2&gt;
+&lt;h2 id=&#34;union-file-systemufs&#34;&gt;&lt;strong&gt;Union File System(UFS)&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Union File Systems&lt;/strong&gt; basically allow you to take different file systems and create a union of their contents with the top-most layer superseding any similar files found in the file systems below it.
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/layers_of_image.png&#34;
@@ -2279,19 +2286,18 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;li&gt;Thus, typically only a little of the container image needs to be actually loaded when a container is run, which means that containers can load and run much faster than virtual machines. Launching a container typically takes less than a second.&lt;/li&gt;
 &lt;li&gt;In addition to the file system layers in the container image, you can mount a &lt;strong&gt;host machine directory&lt;/strong&gt; as a file system in the container’s OS. In this way, a container can share data with the host. Multiple containers can also share these &lt;strong&gt;mounted directories&lt;/strong&gt; and can use them for basic communication of shared data.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;docker-dev-workflow&#34;&gt;Docker Dev Workflow&lt;/h2&gt;
+&lt;h2 id=&#34;docker-dev-workflow&#34;&gt;&lt;strong&gt;Docker Dev Workflow&lt;/strong&gt;&lt;/h2&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/docker_workflow.png&#34;
            alt=&#34;docker workflow&#34; width=&#34;50%&#34;/&gt;
   &lt;/figure&gt;
 
-&lt;h3 id=&#34;docker-lifecycle-overview&#34;&gt;Docker Lifecycle Overview&lt;/h3&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;docker-lifecycle-overview&#34;&gt;&lt;strong&gt;Docker Lifecycle Overview&lt;/strong&gt;&lt;/h3&gt;
 &lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/docker_lifecycle.png&#34;
          alt=&#34;docker lifecycle&#34; width=&#34;60%&#34;/&gt;
 &lt;/figure&gt;
 
-&lt;h3 id=&#34;dockerfile&#34;&gt;Dockerfile&lt;/h3&gt;
+&lt;h3 id=&#34;dockerfile&#34;&gt;&lt;strong&gt;Dockerfile&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;Most important commands:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -2375,9 +2381,12 @@ DN1 DN2     DN1 DN3       DN2 DN3  (shared DataNode pool)
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;dockerfile-vs-docker-union-filesystem&#34;&gt;Dockerfile vs. Docker Union Filesystem&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/dockerfile_vs_ufs.png&#34; alt=&#34;dockerfile vs UFS&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;docker-commands&#34;&gt;Docker commands&lt;/h3&gt;
+&lt;h3 id=&#34;dockerfile-vs-docker-union-filesystem&#34;&gt;&lt;strong&gt;Dockerfile vs. Docker Union Filesystem&lt;/strong&gt;&lt;/h3&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/dockerfile_vs_ufs.png&#34;
+         alt=&#34;dockerfile vs UFS&#34; width=&#34;75%&#34;/&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;docker-commands&#34;&gt;&lt;strong&gt;Docker commands&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;Build Your Docker Image (and tag it) – Notice the period at the end&lt;/p&gt;
@@ -2409,7 +2418,7 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;multiple-containers&#34;&gt;Multiple containers&lt;/h3&gt;
+&lt;h3 id=&#34;multiple-containers&#34;&gt;&lt;strong&gt;Multiple containers&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;Solutions to connect several containers:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Docker networking&lt;/strong&gt;&lt;/li&gt;
@@ -2441,7 +2450,7 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;docker-limitations&#34;&gt;Docker Limitations&lt;/h2&gt;
+&lt;h2 id=&#34;docker-limitations&#34;&gt;&lt;strong&gt;Docker Limitations&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Security&lt;/strong&gt;: Containers share the host OS kernel, so a malicious container could potentially exploit vulnerabilities in the kernel to compromise the host system or other containers.&lt;/li&gt;
 &lt;li&gt;Does not offer &lt;strong&gt;cross-hardware-architecture portability&lt;/strong&gt;&lt;/li&gt;
@@ -2459,9 +2468,9 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
         <pubDate>Sat, 22 Nov 2025 21:01:07 -0500</pubDate>
         
         <guid>http://allenhsm.github.io/tech/cloud_infra_basics/virtualization/</guid>
-        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/virtualization/ -&lt;h1 id=&#34;virtualization&#34;&gt;Virtualization&lt;/h1&gt;
+        <description>Allen&#39;s Blog http://allenhsm.github.io/tech/cloud_infra_basics/virtualization/ -&lt;h1 id=&#34;virtualization&#34;&gt;&lt;strong&gt;Virtualization&lt;/strong&gt;&lt;/h1&gt;
 &lt;p&gt;to create independent execution environment, leveraging the abstract form of the hardware capability.&lt;/p&gt;
-&lt;h2 id=&#34;more-defi-of-virtualization&#34;&gt;More Defi of Virtualization&lt;/h2&gt;
+&lt;h2 id=&#34;more-defi-of-virtualization&#34;&gt;&lt;strong&gt;More Defi of Virtualization&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;abstracts the hardware of computing infrastructure into several different execution environments.
 &lt;ul&gt;
@@ -2475,7 +2484,7 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;related-concepts&#34;&gt;Related concepts&lt;/h3&gt;
+&lt;h3 id=&#34;related-concepts&#34;&gt;&lt;strong&gt;Related concepts&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;virtual machine (VM)&lt;/strong&gt;: an instance of a virtualized computing environment that behaves like a separate computer with its own OS, CPU, memory, storage, and network interfaces. A visual representation of a physical machine.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;hypervisor&lt;/strong&gt; or &lt;strong&gt;Virtual machine monitor&lt;/strong&gt;: A process that separates a computer’s operating system and applications from the underlying physical hardware.
@@ -2486,7 +2495,7 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 &lt;li&gt;&lt;strong&gt;host machine&lt;/strong&gt;: the physical machine on which the virtual machine runs.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;guest machine&lt;/strong&gt;: the virtual machine that runs on the host machine.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;virtualization-types&#34;&gt;Virtualization types&lt;/h2&gt;
+&lt;h2 id=&#34;virtualization-types&#34;&gt;&lt;strong&gt;Virtualization types&lt;/strong&gt;&lt;/h2&gt;
 &lt;p&gt;The most important three types of virtualization:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Network: the process of combining hardware and software network resources and network functionality into a single, software-based administrative entity, a virtual network
@@ -2502,8 +2511,8 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;virtualization-in-practice&#34;&gt;Virtualization in Practice&lt;/h2&gt;
-&lt;h3 id=&#34;traditional-server-concept&#34;&gt;Traditional server concept&lt;/h3&gt;
+&lt;h2 id=&#34;virtualization-in-practice&#34;&gt;&lt;strong&gt;Virtualization in Practice&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;traditional-server-concept&#34;&gt;&lt;strong&gt;Traditional server concept&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Servers are viewed as an &lt;strong&gt;integral&lt;/strong&gt; computing unit that each unit includes the hardware, OS, storage, and related apps.&lt;/li&gt;
 &lt;li&gt;Servers are often identified and referred to by their &lt;strong&gt;functions&lt;/strong&gt;
@@ -2513,7 +2522,10 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 &lt;/li&gt;
 &lt;li&gt;When current server is overloaded, we need to add more physical servers to share the load.&lt;/li&gt;
 &lt;li&gt;In the pic below, which is a traditional server infrastructure, server is the combination of hardware and software(软硬件互相绑定)
-&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/traditional_server_failure.png&#34; alt=&#34;Traditional server failure&#34;&gt;&lt;/li&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/traditional_server_failure.png&#34;
+         alt=&#34;traditional server failure&#34; width=&#34;40%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/li&gt;
 &lt;li&gt;Disadvantages:
 &lt;ul&gt;
 &lt;li&gt;Maintenance cost is high: acquisition and hardware repair cost&lt;/li&gt;
@@ -2524,7 +2536,7 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;virtual-server-infrastructure&#34;&gt;Virtual server infrastructure&lt;/h3&gt;
+&lt;h3 id=&#34;virtual-server-infrastructure&#34;&gt;&lt;strong&gt;Virtual server infrastructure&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Server sprawl&lt;/strong&gt; happens especially for on-promise and is the most threat for traditional server. To avoid this, we do virtualization.
 The difference with traditional server infrastructure is that here the server is decoupled from the hardware. We add a new layer between {app, OS, storage} and hardware, which is the virtualization(&lt;strong&gt;hypervisor&lt;/strong&gt;) layer.&lt;/p&gt;
 &lt;ul&gt;
@@ -2548,17 +2560,23 @@ The difference with traditional server infrastructure is that here the server is
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;Virtual servers can be migrated from host to host dynamically, as needed.
-&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/virtualization_structure.png&#34; alt=&#34;virtualization image&#34;&gt;&lt;/li&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/virtualization_structure.png&#34;
+         alt=&#34;virtualization structure&#34; width=&#34;50%&#34;/&gt;
+&lt;/figure&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;virtualization-advantages&#34;&gt;Virtualization advantages:&lt;/h3&gt;
+&lt;h3 id=&#34;virtualization-advantages&#34;&gt;&lt;strong&gt;Virtualization advantages&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Resource optimization&lt;/strong&gt; that would result in reducing hardware, power and space requirement.&lt;/li&gt;
 &lt;li&gt;Virtualization allows for the &lt;strong&gt;quick deployment, migration, and replication of VMs&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;Support for &lt;strong&gt;Legacy Systems&lt;/strong&gt;: Virtualization allows legacy applications to run in a modern cloud environment without requiring significant changes to the underlying infrastructure&lt;/li&gt;
 &lt;li&gt;Better &lt;strong&gt;automation&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hypervisors&#34;&gt;Hypervisors:&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/types_of_hypervisor.png&#34; alt=&#34;Two types of hypervisor&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;hypervisors&#34;&gt;&lt;strong&gt;Hypervisors&lt;/strong&gt;&lt;/h3&gt;
+&lt;figure class=&#34;img-center&#34;&gt;&lt;img src=&#34;http://allenhsm.github.io/images/cloudInfraBasics/types_of_hypervisor.png&#34;
+         alt=&#34;two types of hypervisor&#34; width=&#34;60%&#34;/&gt;
+&lt;/figure&gt;
+
 &lt;ul&gt;
 &lt;li&gt;Type 1 native hypervisor(bare-metal): runs directly on the host&amp;rsquo;s hardware to control the hardware and to manage guest operating systems. Examples: VMware ESXi, Microsoft Hyper-V, Xen&lt;/li&gt;
 &lt;li&gt;Type 2 hosted hypervisor: runs as an application on a conventional operating system and supports virtual machines running as individual processes. Examples: VMware Workstation, Oracle VirtualBox, QEMU, JVM, UTM&lt;/li&gt;

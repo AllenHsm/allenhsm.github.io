@@ -644,7 +644,7 @@
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="why-kafka">Why Kafka?</h1>
+                    <h1 id="why-kafka"><strong>Why Kafka?</strong></h1>
 <ul>
 <li><strong>Problem of Request-Response Architecture:</strong> Kubernetes offers the ability to (de)scale your applications to respond to user requests in a meaningful amount of time.
 <ul>
@@ -666,7 +666,7 @@
 </li>
 <li><strong>Solution: message queues:</strong> Kafka acts as a buffer between user requests and your application to avoid message drop &amp; timeout problems. It is a <strong>scalable</strong> message queue with <strong>publish-subscribe</strong> software support that offers <strong>distributed</strong> <strong>streaming processing</strong>.</li>
 </ul>
-<h2 id="digression-1-publish-subscribe-model">Digression 1: Publish-Subscribe Model</h2>
+<h2 id="digression-1-publish-subscribe-model"><strong>Digression 1: Publish-Subscribe Model</strong></h2>
 <figure class="img-center"><img src="/images/cloudInfraBasics/publish_subscribe.png"
          alt="publish-subscribe models" width="95%"/>
 </figure>
@@ -677,38 +677,38 @@
 <li>Model 2 → <strong>JMS, AWS Event Bridge</strong>: Subscribers find the condition / set the filters in the queue such that the subs define the rules on how they get the data. The queue is like a pool, does not categorize the messages into categories. Broker applies the subscribers’ rules on every msg. (content-based pub-sub model)</li>
 <li>Model 3 → <strong>Kafka combined with KSQL</strong>: Hybrid version combining 1 and 2. (topic+content)</li>
 </ul>
-<h3 id="ranking">Ranking</h3>
+<h3 id="ranking"><strong>Ranking</strong></h3>
 <ul>
 <li>Scalability: Best: <strong>Topic based</strong>, worst: queue based</li>
 <li>Speed: Best: <strong>topic based</strong>, worst: content-based</li>
 <li>Flexibility: Best: content-based, worst: queue-based</li>
 <li>Therefore, topic based model is the most convenient</li>
 </ul>
-<h3 id="pub-sub-model-example">Pub-sub model example</h3>
+<h3 id="pub-sub-model-example"><strong>Pub-sub model example</strong></h3>
 <figure class="img-center"><img src="/images/cloudInfraBasics/pub_sub_model.png"
          alt="pub-sub model example" width="90%"/>
 </figure>
 
-<h1 id="apache-kafka">Apache Kafka</h1>
-<h2 id="advantages">Advantages</h2>
+<h1 id="apache-kafka"><strong>Apache Kafka</strong></h1>
+<h2 id="advantages"><strong>Advantages</strong></h2>
 <ul>
 <li>High throughput: can handle millions of messages per second (LinkedIn 3.2Million msgs/sec)</li>
 <li>High performance: uses in-memory writes and reads</li>
 <li>Fault tolerant: Kafka is highly available and resilient to node failures and supports automatic recovery.</li>
 <li>Elastically scalable, low operational overhead, durable, highly available</li>
 </ul>
-<h2 id="structure">Structure</h2>
+<h2 id="structure"><strong>Structure</strong></h2>
 <figure class="img-center"><img src="/images/cloudInfraBasics/kafka_structure.png"
          alt="kafka structure" width="70%"/>
 </figure>
 
-<h3 id="topics">Topics</h3>
+<h3 id="topics"><strong>Topics</strong></h3>
 <ul>
 <li>Is a particular stream of data. Is the <strong>unit of parallelism</strong> in Apache Kafka.</li>
 <li>You can have as many topics as you want</li>
 <li>Identified by a name, divided into partitions</li>
 </ul>
-<h3 id="partitions">Partitions</h3>
+<h3 id="partitions"><strong>Partitions</strong></h3>
 <p>To enhance scalability, we create partitions to the topics, each piece sits in independent space in the memory, and we can have as many partitions as we want for the same topic. But if the producer write  messages into the same partition, we cannot guarantee the consumer to do the changes in the same order. So within the same partition, the messages are ordered through offset, but there is no order across partitions.</p>
 <ul>
 <li>Each partition is ordered</li>
@@ -716,21 +716,21 @@
 <li>To enable fault tolerance, we can get <strong>duplication of partition</strong> in indifferent brokers.</li>
 <li>Each partition lives in an individual machine, called broker</li>
 </ul>
-<h3 id="brokers">Brokers</h3>
+<h3 id="brokers"><strong>Brokers</strong></h3>
 <ul>
 <li>A Kafka cluster is made up of multiple <code>brokers</code> (servers)</li>
 <li>Each broker is identified by an id (integer)</li>
 <li>Each broker contains one or more partitions for one or more topics</li>
 <li>After connecting to any broker, you will be connected to the entire cluster (If i have the addr of B1, I also got the addr of B2, B3, etc)</li>
 </ul>
-<h3 id="producers">Producers</h3>
+<h3 id="producers"><strong>Producers</strong></h3>
 <ul>
 <li>Producers publish/write data to topics (which are made of partitions) while does not know which partition it will write to. Broker will deal with that</li>
 <li>Producers automatically know to which broker and partition they should write to</li>
 <li>In case of Broker failure, producers will automatically recover the failed broker</li>
 <li>Producers choose whether to receive an <strong>acknowledgment</strong> of a successful write (<code>ack</code>), and whether to send a <strong>key</strong> with the message. If two msgs are sent with the same key, we can guarantee they will be sent to the same partition, even though we don&rsquo;t know which partition it is.</li>
 </ul>
-<h3 id="consumers">Consumers</h3>
+<h3 id="consumers"><strong>Consumers</strong></h3>
 <ul>
 <li>Consumers read data from a topic (identified by a topic name)</li>
 <li>Consumers know which broker to read from.</li>
@@ -745,7 +745,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="zookeeper">Zookeeper</h3>
+<h3 id="zookeeper"><strong>Zookeeper</strong></h3>
 <ul>
 <li>Connects Partition and OS adding ports or system calls to OS such that partition can interact with the memory, to write and read the memory.</li>
 <li>Manages and coordinates the brokers (keeps a list of them)</li>
@@ -754,7 +754,7 @@
 <li>An important component of Kafka.</li>
 <li>Causes the hardness of deploying Kafka as it is on the top of OS to build the communication, and enable the Kafka to run smoothly and directly in different platforms and OS.</li>
 </ul>
-<h2 id="parallelism">Parallelism</h2>
+<h2 id="parallelism"><strong>Parallelism</strong></h2>
 <ul>
 <li>A topic partition is the unit of parallelism in Kafka. Each partition can be hosted on a different broker (server) in the Kafka cluster.</li>
 <li>Producers and brokers:
@@ -774,14 +774,14 @@
 <li>Keyed messages caution: exercise caution when messages are produced with keys, as they are deterministically assigned to partitions.</li>
 <li>Consistent routing: kafka ensures that messages with identical keys are consistently routed to the same partition, preserving the integrity of order-dependent applications.</li>
 </ul>
-<h2 id="digression-2-microservices">Digression 2: Microservices</h2>
+<h2 id="digression-2-microservices"><strong>Digression 2: Microservices</strong></h2>
 <ul>
 <li>Divide a computation into small, mostly stateless components that can be: easily replicated for scale, communicate with simple protocols, computation is as a swarm of communicating workers.</li>
 <li><strong>Stateless</strong>: each component does not store any state between requests. Each request is independent.</li>
 <li>In cloud, it typically runs as containers using a service deployment and management service on systems like: Amazon Elastic Container service, GKE, DCOS from Berkeley/Mesosphere, Docker Swarm</li>
 <li>Reading: Example of Ecommerce microservice app deployed on GKE: <a href="https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke">https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke</a></li>
 </ul>
-<h2 id="digression-3-rest">Digression 3: REST</h2>
+<h2 id="digression-3-rest"><strong>Digression 3: REST</strong></h2>
 <ul>
 <li>provide an interface for distributed hypermedia systems, created by Roy Fielding in 2000</li>
 <li>The key abstraction of information in REST is a resource
@@ -796,12 +796,12 @@
 </li>
 <li>The clients and servers exchange representations of resources by using a standardized interface and protocol typically HTTP</li>
 </ul>
-<h2 id="kafka--mircroservices">Kafka + Mircroservices</h2>
+<h2 id="kafka--mircroservices"><strong>Kafka + Mircroservices</strong></h2>
 <figure class="img-center"><img src="/images/cloudInfraBasics/kafka_microservices.png"
          alt="kafka microservices" width="100%"/>
 </figure>
 
-<h2 id="code-example">Code Example</h2>
+<h2 id="code-example"><strong>Code Example</strong></h2>
 <ul>
 <li>Producer example (Python):
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
@@ -884,7 +884,7 @@
 </span></span><span style="display:flex;"><span>    display_kafka_data()
 </span></span></code></pre></div></li>
 </ul>
-<h1 id="confluent-kafka">Confluent Kafka</h1>
+<h1 id="confluent-kafka"><strong>Confluent Kafka</strong></h1>
 <ul>
 <li>Since Handling Kafka requires managing low-level, complex data infrastructure, we have <strong>Confluent Kafka</strong>. It is built on top of Apache Kafka to offer complete, fully managed, cloud-native data streaming that&rsquo;s available wherever your data and applications reside.</li>
 </ul>

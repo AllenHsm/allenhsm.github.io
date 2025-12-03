@@ -629,8 +629,8 @@
 						
 						
 							<li>
-								<a href="#meta-arguments" class="nav-meta-arguments">
-									Meta-arguments
+								<a href="#meta-argumesnt" class="nav-meta-argumesnt">
+									Meta-argumesnt
 								</a>
 							</li>
 						
@@ -750,49 +750,49 @@
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="infrastructure-as-code">Infrastructure as Code</h1>
+                    <h1 id="infrastructure-as-code"><strong>Infrastructure as Code</strong></h1>
 <ul>
 <li><strong>Definition</strong>: Write and execute code to define, deploy update, and destroy our infra.</li>
 <li>Why we automate deployment? reliable, efficient, repeatable, safe releases, multiple environment, maximum scalability</li>
 </ul>
-<h2 id="types-of-iac-tools">Types of IaC tools</h2>
+<h2 id="types-of-iac-tools"><strong>Types of IaC tools</strong></h2>
 <figure class="img-center"><img src="/images/cloudInfraBasics/types_of_iac.png"
          alt="IaC Tools" width="50%"/>
 </figure>
 
-<h3 id="ad-hoc-scripts">Ad-hoc Scripts</h3>
+<h3 id="ad-hoc-scripts"><strong>Ad-hoc Scripts</strong></h3>
 <ul>
 <li>The <strong>easiest</strong> and most straightforward approach of automating anything</li>
 <li><strong>ad-hoc tools</strong> run on single core tool, like cloud shell, which connects to a VM with only 5GB storage space, if you need more, you have to upload the file to cloud bucket or sth, and use the shell to read from it.</li>
 <li><strong>examples</strong> : Bash, Ruby, Perl</li>
 </ul>
-<h3 id="configuration-management-tools">Configuration Management Tools</h3>
+<h3 id="configuration-management-tools"><strong>Configuration Management Tools</strong></h3>
 <ul>
 <li>Designed to install and manage software on existing servers.</li>
 <li>These tools offer coding conventions and ability to run scripts on multiple servers.</li>
 <li>ansible assumes the multiple servers that you use work in completely the same way with same hard tool structure. In these cases, even though the servers are of the same, some external small errors, like a sudden network error, cause the machines to diverge in some way, like having different file system structure.</li>
 <li>Examples: Chef, Puppet and Ansible.</li>
 </ul>
-<h3 id="server-templating-tools">Server Templating Tools</h3>
+<h3 id="server-templating-tools"><strong>Server Templating Tools</strong></h3>
 <ul>
 <li>The idea of server templating tools is to create an image of a server that captures a fully self-contained “snapshot” of the operating system (OS), the software, the files, and all other relevant details.</li>
 <li>Examples: Docker, Packer, Vagrant</li>
 </ul>
-<h3 id="provisioning-tools">Provisioning Tools</h3>
+<h3 id="provisioning-tools"><strong>Provisioning Tools</strong></h3>
 <ul>
 <li>Most <strong>advanced</strong> IaC tools.</li>
 <li>Provisioning tools are responsible for <strong>creating</strong> these servers, rather than running software or scripts on top of existing servers like other categories.</li>
 <li>You can use provisioning tools to create databases, caches, load balancers, queues, network configurations and SSL certificates.</li>
 <li>Examples: Terraform, CloudFormation, OpenStack Heat, and Pulumi, actively deal with hardware</li>
 </ul>
-<h3 id="orchestration-tools">Orchestration Tools</h3>
+<h3 id="orchestration-tools"><strong>Orchestration Tools</strong></h3>
 <p>We mentioned previously. Orchestration tools are responsible for managing the lifecycle of containers, including deployment, scaling, and networking.</p>
-<h2 id="iac-tool-comparison">IaC Tool Comparison</h2>
+<h2 id="iac-tool-comparison"><strong>IaC Tool Comparison</strong></h2>
 <figure class="img-center"><img src="/images/cloudInfraBasics/iac_comparison.png"
          alt="IaC Tool Comparison" width="100%"/>
 </figure>
 
-<h3 id="mutable-vs-_immutable_">Mutable vs. <em><strong>Immutable</strong></em></h3>
+<h3 id="mutable-vs-_immutable_"><strong>Mutable vs. <em><strong>Immutable</strong></em></strong></h3>
 <ul>
 <li><strong>Mutable</strong>: Configuration management tools (e.g., chef, puppet) default to a mutable infrastructure paradigm.
 <ul>
@@ -802,7 +802,7 @@
 </li>
 <li><strong>Immutable</strong> infrastructure tools don’t allow this deviation to happen.</li>
 </ul>
-<h3 id="declarative-vs-procedural"><em><strong>Declarative</strong></em> vs. Procedural</h3>
+<h3 id="declarative-vs-procedural"><strong><em><strong>Declarative</strong></em> vs. Procedural</strong></h3>
 <ul>
 <li>In <strong>Procedural</strong> scripting style, developers will code the application flow in step-by-step commands that does not care about the outcome or the final state, but just complete the preset steps. e.g. chef and ansible</li>
 <li>In <strong>Declarative</strong> scripting style, developers will write code that specifies their desired end state, and the IaC tool itself is responsible for figuring out how to achieve that state.
@@ -811,13 +811,13 @@
 </ul>
 </li>
 </ul>
-<h3 id="general-purpose-vs-domain-specific"><em><strong>General Purpose</strong></em> vs. Domain-specific</h3>
+<h3 id="general-purpose-vs-domain-specific"><strong><em><strong>General Purpose</strong></em> vs. Domain-specific</strong></h3>
 <ul>
 <li><code>DSLs</code> are designed for use in <strong>one specific domain</strong>, whereas <code>GPLs</code> can be used across a <strong>broad range of domains</strong>.</li>
 <li><code>GPL</code> Examples: Chef supports Ruby; Pulumi supports a wide variety of GPLs, including JavaScript, TypeScript, Python, Go, C#, Java, and others.</li>
 <li><code>DSL</code> Examples: Terraform uses HCL; Puppet uses Puppet Language; Ansible, CloudFormation, and OpenStack Heat use YAML (CloudFormation also supports JSON).</li>
 </ul>
-<h3 id="master-vs-masterless">Master vs. <em><strong>Masterless</strong></em></h3>
+<h3 id="master-vs-masterless"><strong>Master vs. <em><strong>Masterless</strong></em></strong></h3>
 <ul>
 <li>In <strong>Master-centered</strong> infrastructure tools, you should <strong>dedicate a server</strong> to run the IaC tool (e.g., Chef, Puppet).
 <ul>
@@ -830,7 +830,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="agent-k8s-vs-agentless">Agent (k8s) vs. <em><strong>Agentless</strong></em></h3>
+<h3 id="agent-k8s-vs-agentless"><strong>Agent (k8s) vs. <em><strong>Agentless</strong></em></strong></h3>
 <ul>
 <li>Some IaC tools require the installation of agent software on each node you need to configure. The agent typically runs in the background on each server and is responsible for installing the latest configuration management updates.
 <ul>
@@ -838,25 +838,25 @@
 </ul>
 </li>
 </ul>
-<h3 id="community-support">Community Support</h3>
+<h3 id="community-support"><strong>Community Support</strong></h3>
 <figure class="img-center"><img src="/images/cloudInfraBasics/iac_community_support.png"
          alt="IaC Community Support" width="40%"/>
 </figure>
 
-<h1 id="terraform">Terraform</h1>
+<h1 id="terraform"><strong>Terraform</strong></h1>
 <ul>
 <li>An open-source IaC provisioning tool created by HashiCorp and written in GO Lang.</li>
 <li>script automatically detects the environment it is running on (GCP, AWS, etc) and install the corresponding libraries and use a hash map to map the compatible APIs.</li>
 <li>Good readability, can deploy to K8s, declarative, paves the way for massive scalability, Management of infrastructure will be automated, Source of truth for the infra</li>
 </ul>
-<h2 id="hashicorp-configuration-language-hcl">HashiCorp Configuration Language (HCL)</h2>
+<h2 id="hashicorp-configuration-language-hcl"><strong>HashiCorp Configuration Language (HCL)</strong></h2>
 <ul>
 <li>The most basic construct is called a <code>block</code>, defined as a “container for other content”.</li>
 <li>The body of the block is nested with {}</li>
 <li>Each block has a type (e.g., resource)</li>
 <li>Each block is identified using labels, the number of labels is identified based on the block type</li>
 </ul>
-<h3 id="block-types">Block types</h3>
+<h3 id="block-types"><strong>Block types</strong></h3>
 <figure class="img-center"><img src="/images/cloudInfraBasics/terraform_block_types.png"
          alt="Terraform Block Types" width="90%"/>
 </figure>
@@ -869,7 +869,7 @@
 <li><strong>Provisioner</strong>: To execute a script <strong>after your resources have been created</strong>. It waits for your service to be deployed successfully and then run some codes.</li>
 <li><strong>Local</strong>: To create local variables within a specific resource block</li>
 </ul>
-<h2 id="workflow">Workflow</h2>
+<h2 id="workflow"><strong>Workflow</strong></h2>
 <p>A basic Terraform workflow consists of the following two steps:</p>
 <ul>
 <li><strong>Initialization</strong>: using <code>terraform init</code>. Install libraries, binaries executable, for the providers that you have listed in your code. The mapping tables, provider apis, etc. All stored in <code>.terraform</code> folder.
@@ -885,7 +885,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="naming-conventions">Naming conventions</h2>
+<h2 id="naming-conventions"><strong>Naming conventions</strong></h2>
 <ul>
 <li>Terraform does <strong>not care about filenames</strong>. It combines all files with the <code>.tf</code> extension and then creates an execution plan using all the configurations.</li>
 <li><code>provider.tf</code>: contains the provider block declaring provider, which is a translation layer between Terraform and the external API of the provider.</li>
@@ -906,12 +906,12 @@
 <li><code>main.tf</code>: contains all the resource blocks that define the actual components of your infrastructure. Actual creation of the resource blocks.</li>
 <li><code>terraform.tfvars</code>: There are multiple ways to assign a value to a variable, either through a default value in the declaration or pass it as a value either interactively or via the command-line flag. One common way is to create a file named <code>terraform.tfvars</code> that contains the variable assignments. You can then use them as <code>var.&lt;variable_name&gt;</code> in your code.</li>
 </ul>
-<h2 id="configuration-structure">Configuration Structure</h2>
+<h2 id="configuration-structure"><strong>Configuration Structure</strong></h2>
 <figure class="img-center"><img src="/images/cloudInfraBasics/terraform_configuration_structure.png"
          alt="Terraform File Structure" width="60%"/>
 </figure>
 
-<h2 id="state">State</h2>
+<h2 id="state"><strong>State</strong></h2>
 <ul>
 <li>A Terraform configuration is a declaration of the desired state, and When you run <code>terraform apply</code>, Terraform determines the difference between the actual state and the desired state</li>
 <li>Terraform <strong>state</strong> is the file that tracks the current actual state of your infra, containing all the configurations that have been applied during the Terraform workflow</li>
@@ -931,7 +931,7 @@
 </li>
 <li><code>prefix</code> refers to a folder on the bucket that will host the state file</li>
 </ul>
-<h3 id="commands">Commands</h3>
+<h3 id="commands"><strong>Commands</strong></h3>
 <ul>
 <li><code>terraform state list</code>: list all resources in the state file</li>
 <li><code>terraform state show &lt;resource_name&gt;</code>: show detailed information about a specific resource in the state file</li>
@@ -943,7 +943,7 @@
 <li><code>terraform apply -refresh-only</code>: to update the state file to match the real infra according to the prev plan output without making any changes to the actual resources on the cloud</li>
 <li>Update the TF configuration file to set the same value as the manually modified value. So, if TF commands are reapplied, it won&rsquo;t override the manually entered values.</li>
 </ul>
-<h2 id="meta-arguments">Meta-arguments</h2>
+<h2 id="meta-argumesnt"><strong>Meta-argumesnt</strong></h2>
 <p><em><strong>Meta-arguments</strong></em> are special constructs in Terraform to enable you to write efficient Terraform code. Examples of Meta-arguments:</p>
 <ul>
 <li>
@@ -978,7 +978,7 @@
 </p>
 </li>
 </ul>
-<h2 id="resource-reference-this">Resource Reference &ldquo;this&rdquo;</h2>
+<h2 id="resource-reference-this"><strong>Resource Reference &ldquo;this&rdquo;</strong></h2>
 <ul>
 <li>In GCP, every resource can be uniquely identified, so it is good practice to refer to resources using <code>**this**</code> reference, which is a <em><strong>Unique IDentifier(UID)</strong></em> containing additional information about the resource.</li>
 <li>You can use <code>this</code> with any resource and refer to it in other resources. It provides a clear and widely understood convention for identifying the primary resource within a module.</li>
@@ -1611,8 +1611,8 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 						
 							<li>
-								<a href="#meta-arguments" class="nav-meta-arguments">
-									Meta-arguments
+								<a href="#meta-argumesnt" class="nav-meta-argumesnt">
+									Meta-argumesnt
 								</a>
 							</li>
 						

@@ -224,7 +224,7 @@ Lightweight: Containerization avoids duplication of app Bins/libs, and only save
 						
 							<li>
 								<a href="#development-challenges" class="nav-development-challenges">
-									Development challenges:
+									Development challenges
 								</a>
 							</li>
 						
@@ -544,28 +544,39 @@ Lightweight: Containerization avoids duplication of app Bins/libs, and only save
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="virtual-machines-to-containers">Virtual Machines to Containers</h1>
+                    <h1 id="virtual-machines-to-containers"><strong>Virtual Machines to Containers</strong></h1>
 <ul>
 <li>VM is too <strong>heavy</strong> for a simple process as it boots a whole OS every time.</li>
-<li>Containers are <strong>isolated</strong>, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app. <img src="/images/cloudInfraBasics/vm_to_container.png" alt="VM to Container"></li>
+<li>Containers are <strong>isolated</strong>, but share OS, and where appropriate, also bins/libs. So SDE focuses more on app.
+<figure class="img-center"><img src="/images/cloudInfraBasics/vm_to_container.png"
+           alt="vm to container" width="40%"/>
+  </figure>
+</li>
 </ul>
 <p>Comparison:</p>
 <ul>
 <li><strong>Lightweight</strong>: Containerization avoids duplication of app Bins/libs, and only save the modifications did by different containers, without changing the original binaries.</li>
-<li><strong>Security</strong>: VM is more secure because of full isolation while Container has only process level isolation.
-<img src="/images/cloudInfraBasics/vm_vs_container.png" alt="VM vs. Container"></li>
+<li><strong>Security</strong>: VM is more secure because of full isolation while Container has only process level isolation.</li>
 </ul>
-<h1 id="motivation-of-containerization">Motivation of Containerization</h1>
-<h2 id="development-challenges">Development challenges:</h2>
+<!-- raw HTML omitted -->
+<figure class="img-center"><img src="/images/cloudInfraBasics/vm_vs_container.png"
+         alt="VM vs. Container" width="40%"/>
+</figure>
+
+<h1 id="motivation-of-containerization"><strong>Motivation of Containerization</strong></h1>
+<h2 id="development-challenges"><strong>Development challenges</strong></h2>
 <ol>
 <li>Containerization makes version control much more easier, and more importantly, safer, to avoid a simple app influence the whole system.</li>
 <li>Solves the conflict of different dependencies, versions, environments(<code>N x M</code> configurations， multiplicity of hardware env), multiplicity of stacks, and contents.</li>
 <li>Modularity and scalability: can be quickly and smoothly migrated &amp; scaled, ensuring compatibility across different environments.</li>
 </ol>
-<h2 id="solution-containerization">Solution: Containerization</h2>
-<p><img src="/images/cloudInfraBasics/sol_by_containerization.png" alt="solution by containerization"></p>
-<h1 id="docker---leading-container">Docker - leading container</h1>
-<h2 id="why-popular">Why popular</h2>
+<h2 id="solution-containerization"><strong>Solution: Containerization</strong></h2>
+<figure class="img-center"><img src="/images/cloudInfraBasics/sol_by_containerization.png"
+         alt="solution by containerization" width="50%"/>
+</figure>
+
+<h1 id="docker---leading-container"><strong>Docker - leading container</strong></h1>
+<h2 id="why-popular"><strong>Why popular</strong></h2>
 <p>By mid-2013, <code>dotCloud</code> company released a tool that used these ideas to provide a better way to deploy encapsulated applications. The tool later became Docker and <code>dotCloud</code> became Docker Inc</p>
 <ul>
 <li>Most widely known, and used</li>
@@ -575,7 +586,7 @@ Lightweight: Containerization avoids duplication of app Bins/libs, and only save
 <li>Docker Hub: public registry of container images</li>
 <li><strong>Its file system!</strong></li>
 </ul>
-<h2 id="union-file-systemufs">Union File System(UFS)</h2>
+<h2 id="union-file-systemufs"><strong>Union File System(UFS)</strong></h2>
 <ul>
 <li><strong>Union File Systems</strong> basically allow you to take different file systems and create a union of their contents with the top-most layer superseding any similar files found in the file systems below it.
 <figure class="img-center"><img src="/images/cloudInfraBasics/layers_of_image.png"
@@ -597,19 +608,18 @@ Lightweight: Containerization avoids duplication of app Bins/libs, and only save
 <li>Thus, typically only a little of the container image needs to be actually loaded when a container is run, which means that containers can load and run much faster than virtual machines. Launching a container typically takes less than a second.</li>
 <li>In addition to the file system layers in the container image, you can mount a <strong>host machine directory</strong> as a file system in the container’s OS. In this way, a container can share data with the host. Multiple containers can also share these <strong>mounted directories</strong> and can use them for basic communication of shared data.</li>
 </ul>
-<h2 id="docker-dev-workflow">Docker Dev Workflow</h2>
+<h2 id="docker-dev-workflow"><strong>Docker Dev Workflow</strong></h2>
 <!-- raw HTML omitted -->
 <figure class="img-center"><img src="/images/cloudInfraBasics/docker_workflow.png"
            alt="docker workflow" width="50%"/>
   </figure>
 
-<h3 id="docker-lifecycle-overview">Docker Lifecycle Overview</h3>
-<!-- raw HTML omitted -->
+<h3 id="docker-lifecycle-overview"><strong>Docker Lifecycle Overview</strong></h3>
 <figure class="img-center"><img src="/images/cloudInfraBasics/docker_lifecycle.png"
          alt="docker lifecycle" width="60%"/>
 </figure>
 
-<h3 id="dockerfile">Dockerfile</h3>
+<h3 id="dockerfile"><strong>Dockerfile</strong></h3>
 <p>Most important commands:</p>
 <table>
 <thead>
@@ -693,9 +703,12 @@ Lightweight: Containerization avoids duplication of app Bins/libs, and only save
 </tr>
 </tbody>
 </table>
-<h3 id="dockerfile-vs-docker-union-filesystem">Dockerfile vs. Docker Union Filesystem</h3>
-<p><img src="/images/cloudInfraBasics/dockerfile_vs_ufs.png" alt="dockerfile vs UFS"></p>
-<h3 id="docker-commands">Docker commands</h3>
+<h3 id="dockerfile-vs-docker-union-filesystem"><strong>Dockerfile vs. Docker Union Filesystem</strong></h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/dockerfile_vs_ufs.png"
+         alt="dockerfile vs UFS" width="75%"/>
+</figure>
+
+<h3 id="docker-commands"><strong>Docker commands</strong></h3>
 <ul>
 <li>
 <p>Build Your Docker Image (and tag it) – Notice the period at the end</p>
@@ -727,7 +740,7 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 </ul>
 </li>
 </ul>
-<h3 id="multiple-containers">Multiple containers</h3>
+<h3 id="multiple-containers"><strong>Multiple containers</strong></h3>
 <p>Solutions to connect several containers:</p>
 <ul>
 <li><strong>Docker networking</strong></li>
@@ -759,7 +772,7 @@ docker tag hw2-jupyter allenhu28/hw2-jupyter:latest
 </ul>
 </li>
 </ul>
-<h2 id="docker-limitations">Docker Limitations</h2>
+<h2 id="docker-limitations"><strong>Docker Limitations</strong></h2>
 <ul>
 <li><strong>Security</strong>: Containers share the host OS kernel, so a malicious container could potentially exploit vulnerabilities in the kernel to compromise the host system or other containers.</li>
 <li>Does not offer <strong>cross-hardware-architecture portability</strong></li>
@@ -986,7 +999,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 							<li>
 								<a href="#development-challenges" class="nav-development-challenges">
-									Development challenges:
+									Development challenges
 								</a>
 							</li>
 						

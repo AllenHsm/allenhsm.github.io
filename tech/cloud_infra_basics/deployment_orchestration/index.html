@@ -546,15 +546,15 @@ Kubernetes An open-source container management tool which automates container de
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="container-orchestration">Container Orchestration</h1>
+                    <h1 id="container-orchestration"><strong>Container Orchestration</strong></h1>
 <p>The <strong>automatic</strong> process of managing or scheduling the work of individual containers for applications based on <strong>microservices</strong> within <strong>multiple clusters</strong>.
 <strong>Orchestration tools</strong>: Kubernetes, Docker Swarm, Apache Mesos, CoreOS rkt</p>
-<h1 id="kubernetes">Kubernetes</h1>
+<h1 id="kubernetes"><strong>Kubernetes</strong></h1>
 <ul>
 <li>An open-source container management tool which automates container deployment, container (de)scaling, container load balancing</li>
 <li>Can group &ldquo;n&rdquo; number of containers into one logical unit called &ldquo;<strong>POD</strong>&rdquo;, easy to manage and deploy</li>
 </ul>
-<h2 id="features">Features</h2>
+<h2 id="features"><strong>Features</strong></h2>
 <ul>
 <li><strong>Automated bin packing</strong>: via packaging software and automatically placing it/containers based on their resource requirements and other constraints, while not sacrificing availability. Mix critical and best-effort workloads in order to drive up utilization and save more resources.</li>
 <li><strong>Service Discovery and Load Balancing</strong>: Using auto networking and load balancing configurations</li>
@@ -616,7 +616,7 @@ Kubernetes An open-source container management tool which automates container de
          alt="deployment and service" width="40%"/>
 </figure>
 
-<h3 id="commands-on-gke">Commands on GKE</h3>
+<h3 id="commands-on-gke"><strong>Commands on GKE</strong></h3>
 <ul>
 <li>Create a GKE cluster:
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gcloud container clusters create <span style="color:#ae81ff">\
@@ -648,8 +648,8 @@ Kubernetes An open-source container management tool which automates container de
 </li>
 <li>To debug K8s application: <a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/">https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/</a></li>
 </ul>
-<h1 id="yaml">YAML</h1>
-<h2 id="basics">Basics</h2>
+<h1 id="yaml"><strong>YAML</strong></h1>
+<h2 id="basics"><strong>Basics</strong></h2>
 <ul>
 <li>YAML (YAML Ain&rsquo;t Markup Language) is a human-readable data serialization standard that can be used in conjunction with all programming languages and is often used to write configuration files.</li>
 <li>There are two main structures in YAML: <strong>Maps</strong> (key-value pairs) and <strong>Lists</strong> (ordered lists).
@@ -682,7 +682,7 @@ Kubernetes An open-source container management tool which automates container de
 </ul>
 </li>
 </ul>
-<h2 id="create-pods">Create Pods</h2>
+<h2 id="create-pods"><strong>Create Pods</strong></h2>
 <ul>
 <li>A <code>Pod</code> is the smallest and most basic deployable object in K8s. A Pod represents a <strong>single instance of a running process</strong> in your cluster.</li>
 <li>Each pod can obtain <strong>one or more containers</strong>, such as Docker Containers.</li>
@@ -696,7 +696,7 @@ Kubernetes An open-source container management tool which automates container de
 <li>You can consider a Pod to be a self-contained unit, isolated &ldquo;logical host&rdquo; that contains the systemic needs of the application it servers.</li>
 <li>A Pod is meant to run a single instance of your application on your cluster. However, it is not recommended to create individual Pods directly. Instead, you generally create a set of identical Pods, called <code>replicas</code>, to run your application. Such a set of replicated Pods are created and managed by a <code>Deployment</code>.</li>
 </ul>
-<h2 id="deployment">Deployment</h2>
+<h2 id="deployment"><strong>Deployment</strong></h2>
 <p>A deployment is a file that defines a pod&rsquo;s desired behavior or characteristics. You create it to:</p>
 <ul>
 <li>Ensure workload <strong>availability</strong></li>
@@ -729,7 +729,7 @@ Kubernetes An open-source container management tool which automates container de
 </span></span><span style="display:flex;"><span>                <span style="color:#f92672">ports</span>:
 </span></span><span style="display:flex;"><span>                    - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
 </span></span></code></pre></div><p>To create it, we run: <code>kubectl apply -f deployment.yaml</code></p>
-<h2 id="service">Service</h2>
+<h2 id="service"><strong>Service</strong></h2>
 <ul>
 <li><strong>Motivation</strong>: We need a way of consistently being able to access our pod-set even if the pods themselves are recreated or lost. This should be transparent to any application or other pods trying to access this pod-set.
 <ul>
@@ -761,11 +761,9 @@ Kubernetes An open-source container management tool which automates container de
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30500</span> <span style="color:#75715e"># points to our Nginx deployment</span>
 </span></span></code></pre></div>To create this service, we run: <code>kubectl apply -f service.yaml</code></li>
 </ul>
-<h1 id="reading">Reading</h1>
-<ul>
-<li>Kubernetes basics first 6 chapters: <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/">https://kubernetes.io/docs/tutorials/kubernetes-basics/</a></li>
-<li>Deploy a Docker containerized web app to GKE: <a href="https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app">https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app</a></li>
-</ul>
+<h1 id="reading"><strong>Reading</strong></h1>
+<p><a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/">Kubernetes basics first 6 chapters</a></p>
+<p><a href="https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app">Deploy a Docker containerized web app to GKE</a></p>
 
                     
                     <HR width="100%" id="EOF">

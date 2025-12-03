@@ -627,9 +627,9 @@
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="yarn">Yarn</h1>
-<h2 id="brief-history">Brief History</h2>
-<h3 id="hadoop-1x">Hadoop 1.x</h3>
+                    <h1 id="yarn"><strong>Yarn</strong></h1>
+<h2 id="brief-history"><strong>Brief History</strong></h2>
+<h3 id="hadoop-1x"><strong>Hadoop 1.x</strong></h3>
 <ul>
 <li>Core components: <strong>MapReduce</strong> and <strong>HDFS</strong></li>
 <li>Structure:
@@ -649,7 +649,7 @@ MapReduce (MRv1):
 </ul>
 </li>
 </ul>
-<h3 id="hadoop-2x">Hadoop 2.x</h3>
+<h3 id="hadoop-2x"><strong>Hadoop 2.x</strong></h3>
 <ul>
 <li>Now <code>Hadoop</code> has three logical layers:
 <pre tabindex="0"><code>HDFS: storage layer
@@ -670,7 +670,7 @@ MapReduce (MRv2): computation layer
 </ul>
 </li>
 </ul>
-<h3 id="hadoop-3x">Hadoop 3.x</h3>
+<h3 id="hadoop-3x"><strong>Hadoop 3.x</strong></h3>
 <ul>
 <li>Structure:
 <pre tabindex="0"><code>Namespace Federation:
@@ -688,15 +688,15 @@ YARN:
 </ul>
 </li>
 </ul>
-<h2 id="definition">Definition</h2>
+<h2 id="definition"><strong>Definition</strong></h2>
 <ul>
 <li><em>Yet Another Resource Negotiator</em></li>
 <li>It is the <strong>orchestrator</strong> of the Hadoop MapReduce jobs starting from Hadoop 2.x.</li>
 <li>As the amount of data increases and 4k nodes are not enough, starting from 2.x. the two main components of Hadoop changed from MapReduce and HDFS to Yarn and HDFS.</li>
 </ul>
-<h2 id="daemons">Daemons</h2>
+<h2 id="daemons"><strong>Daemons</strong></h2>
 <p>: provides resource management</p>
-<h3 id="two-long-running">Two Long Running</h3>
+<h3 id="two-long-running"><strong>Two Long Running</strong></h3>
 <ul>
 <li><em><strong>Resource manager</strong></em> - 1 / cluster
 <ul>
@@ -711,7 +711,7 @@ YARN:
 </ul>
 </li>
 </ul>
-<h2 id="dynamic-components">Dynamic Components</h2>
+<h2 id="dynamic-components"><strong>Dynamic Components</strong></h2>
 <p>(They are only created when a job have to run)</p>
 <ul>
 <li>
@@ -735,7 +735,7 @@ node</li>
 </ul>
 </li>
 </ul>
-<h2 id="anatomy-of-mapreduce-job">Anatomy of MapReduce job</h2>
+<h2 id="anatomy-of-mapreduce-job"><strong>Anatomy of MapReduce job</strong></h2>
 <p>5 Phases:</p>
 <ol>
 <li>Job Submission</li>
@@ -842,7 +842,7 @@ node</li>
 <li>MRAppMaster prints a message, some statistics, and counters to the console</li>
 <li>MRAppMaster and its tasks clean up their working state</li>
 </ul>
-<h2 id="edit-yarn-daemon-config">Edit YARN Daemon Config</h2>
+<h2 id="edit-yarn-daemon-config"><strong>Edit YARN Daemon Config</strong></h2>
 <ul>
 <li>Check the <code>hadoop.env</code> file and look for YARN configurations starting from line number 11.</li>
 <li>Can change things like:
@@ -857,7 +857,7 @@ node</li>
 </ul>
 </li>
 </ul>
-<h2 id="spark-on-yarn-client-mode">Spark on Yarn: Client mode</h2>
+<h2 id="spark-on-yarn-client-mode"><strong>Spark on Yarn: Client mode</strong></h2>
 <figure class="img-center"><img src="/images/cloudInfraBasics/yarn_with_spark.png"
          alt="spark on yarn client mode" width="60%"/>
 </figure>
@@ -876,11 +876,9 @@ node</li>
 </ul>
 </li>
 </ul>
-<h2 id="reading">Reading</h2>
-<ul>
-<li>Hadoop YARN Architecture: <a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html">https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html</a></li>
-<li>Hadoop YARN Commands: <a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html">https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html</a></li>
-</ul>
+<h2 id="reading"><strong>Reading</strong></h2>
+<p><a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YARN.html">Hadoop YARN Architecture</a></p>
+<p><a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/YarnCommands.html">Hadoop YARN Commands</a></p>
 
                     
                     <HR width="100%" id="EOF">

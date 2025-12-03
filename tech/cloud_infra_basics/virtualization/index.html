@@ -330,7 +330,7 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
 						
 							<li>
 								<a href="#virtualization-advantages" class="nav-virtualization-advantages">
-									Virtualization advantages:
+									Virtualization advantages
 								</a>
 							</li>
 						
@@ -348,7 +348,7 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
 						
 							<li>
 								<a href="#hypervisors" class="nav-hypervisors">
-									Hypervisors:
+									Hypervisors
 								</a>
 							</li>
 						
@@ -450,9 +450,9 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
                 
                 <div class="post-body" v-pre>
                 
-                    <h1 id="virtualization">Virtualization</h1>
+                    <h1 id="virtualization"><strong>Virtualization</strong></h1>
 <p>to create independent execution environment, leveraging the abstract form of the hardware capability.</p>
-<h2 id="more-defi-of-virtualization">More Defi of Virtualization</h2>
+<h2 id="more-defi-of-virtualization"><strong>More Defi of Virtualization</strong></h2>
 <ul>
 <li>abstracts the hardware of computing infrastructure into several different execution environments.
 <ul>
@@ -466,7 +466,7 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
 </ul>
 </li>
 </ul>
-<h3 id="related-concepts">Related concepts</h3>
+<h3 id="related-concepts"><strong>Related concepts</strong></h3>
 <ul>
 <li><strong>virtual machine (VM)</strong>: an instance of a virtualized computing environment that behaves like a separate computer with its own OS, CPU, memory, storage, and network interfaces. A visual representation of a physical machine.</li>
 <li><strong>hypervisor</strong> or <strong>Virtual machine monitor</strong>: A process that separates a computer’s operating system and applications from the underlying physical hardware.
@@ -477,7 +477,7 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
 <li><strong>host machine</strong>: the physical machine on which the virtual machine runs.</li>
 <li><strong>guest machine</strong>: the virtual machine that runs on the host machine.</li>
 </ul>
-<h2 id="virtualization-types">Virtualization types</h2>
+<h2 id="virtualization-types"><strong>Virtualization types</strong></h2>
 <p>The most important three types of virtualization:</p>
 <ul>
 <li>Network: the process of combining hardware and software network resources and network functionality into a single, software-based administrative entity, a virtual network
@@ -493,8 +493,8 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
 </ul>
 </li>
 </ul>
-<h2 id="virtualization-in-practice">Virtualization in Practice</h2>
-<h3 id="traditional-server-concept">Traditional server concept</h3>
+<h2 id="virtualization-in-practice"><strong>Virtualization in Practice</strong></h2>
+<h3 id="traditional-server-concept"><strong>Traditional server concept</strong></h3>
 <ul>
 <li>Servers are viewed as an <strong>integral</strong> computing unit that each unit includes the hardware, OS, storage, and related apps.</li>
 <li>Servers are often identified and referred to by their <strong>functions</strong>
@@ -504,7 +504,10 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
 </li>
 <li>When current server is overloaded, we need to add more physical servers to share the load.</li>
 <li>In the pic below, which is a traditional server infrastructure, server is the combination of hardware and software(软硬件互相绑定)
-<img src="/images/cloudInfraBasics/traditional_server_failure.png" alt="Traditional server failure"></li>
+<figure class="img-center"><img src="/images/cloudInfraBasics/traditional_server_failure.png"
+         alt="traditional server failure" width="40%"/>
+</figure>
+</li>
 <li>Disadvantages:
 <ul>
 <li>Maintenance cost is high: acquisition and hardware repair cost</li>
@@ -515,7 +518,7 @@ More Defi of Virtualization abstracts the hardware of computing infrastructure i
 </ul>
 </li>
 </ul>
-<h3 id="virtual-server-infrastructure">Virtual server infrastructure</h3>
+<h3 id="virtual-server-infrastructure"><strong>Virtual server infrastructure</strong></h3>
 <p><strong>Server sprawl</strong> happens especially for on-promise and is the most threat for traditional server. To avoid this, we do virtualization.
 The difference with traditional server infrastructure is that here the server is decoupled from the hardware. We add a new layer between {app, OS, storage} and hardware, which is the virtualization(<strong>hypervisor</strong>) layer.</p>
 <ul>
@@ -539,17 +542,23 @@ The difference with traditional server infrastructure is that here the server is
 </ul>
 </li>
 <li>Virtual servers can be migrated from host to host dynamically, as needed.
-<img src="/images/cloudInfraBasics/virtualization_structure.png" alt="virtualization image"></li>
+<figure class="img-center"><img src="/images/cloudInfraBasics/virtualization_structure.png"
+         alt="virtualization structure" width="50%"/>
+</figure>
+</li>
 </ul>
-<h3 id="virtualization-advantages">Virtualization advantages:</h3>
+<h3 id="virtualization-advantages"><strong>Virtualization advantages</strong></h3>
 <ul>
 <li><strong>Resource optimization</strong> that would result in reducing hardware, power and space requirement.</li>
 <li>Virtualization allows for the <strong>quick deployment, migration, and replication of VMs</strong></li>
 <li>Support for <strong>Legacy Systems</strong>: Virtualization allows legacy applications to run in a modern cloud environment without requiring significant changes to the underlying infrastructure</li>
 <li>Better <strong>automation</strong>.</li>
 </ul>
-<h3 id="hypervisors">Hypervisors:</h3>
-<p><img src="/images/cloudInfraBasics/types_of_hypervisor.png" alt="Two types of hypervisor"></p>
+<h3 id="hypervisors"><strong>Hypervisors</strong></h3>
+<figure class="img-center"><img src="/images/cloudInfraBasics/types_of_hypervisor.png"
+         alt="two types of hypervisor" width="60%"/>
+</figure>
+
 <ul>
 <li>Type 1 native hypervisor(bare-metal): runs directly on the host&rsquo;s hardware to control the hardware and to manage guest operating systems. Examples: VMware ESXi, Microsoft Hyper-V, Xen</li>
 <li>Type 2 hosted hypervisor: runs as an application on a conventional operating system and supports virtual machines running as individual processes. Examples: VMware Workstation, Oracle VirtualBox, QEMU, JVM, UTM</li>
@@ -880,7 +889,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 							<li>
 								<a href="#virtualization-advantages" class="nav-virtualization-advantages">
-									Virtualization advantages:
+									Virtualization advantages
 								</a>
 							</li>
 						
@@ -898,7 +907,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 						
 							<li>
 								<a href="#hypervisors" class="nav-hypervisors">
-									Hypervisors:
+									Hypervisors
 								</a>
 							</li>
 						
